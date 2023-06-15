@@ -14,4 +14,23 @@ export const Container = styled.header`
     input {
         text-align: center;
     }
+
+    button {
+        max-width: 21.6rem;
+        min-width: 17rem;
+        height: 5.6rem;
+
+        svg {
+            font-size: 2.6rem;
+            margin-right: 1rem;
+        }
+    }
+
+    > div:last-child {
+        font-size: 2.4rem;
+    }
+
+    @media (max-width: 1050px) {
+        justify-content: space-between;
+    }
 `

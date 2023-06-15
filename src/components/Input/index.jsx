@@ -1,10 +1,10 @@
 import { Container } from './styles';
 import { Placeholder } from '../Placeholder';
 
-export function Input({ placeholder = false, ...rest }) {
+export function Input({ searchPlaceholder, ...rest }) {
     return (
         <Container>
-            {placeholder && <Placeholder />}
+            {searchPlaceholder && <Placeholder />}
             <input {...rest} />
         </Container>
     )
