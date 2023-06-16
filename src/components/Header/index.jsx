@@ -10,9 +10,10 @@ import { Menu } from '../Menu';
 export function Header() {
     const isAdmin = false;
     const order = 5;
+    let queryWidth = 1050;
     const [search, setSearch] = useState("");
     const [hasSearchPlaceholder, setHasSearchPlaceholder] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(0);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         setHasSearchPlaceholder(!search);
@@ -34,7 +35,7 @@ export function Header() {
         <Container>
             <Menu />
             <Brand isAdmin={isAdmin} />
-            {windowWidth >= 1050 && (
+            {windowWidth >= queryWidth && (
                 <Input
                     id="searchDishes"
                     type="text"
@@ -43,18 +44,31 @@ export function Header() {
                     searchPlaceholder={hasSearchPlaceholder}
                 />
             )}
-            {isAdmin ? (
-                <Button>
-                    Novo prato
-                </Button>
+            {windowWidth >= queryWidth ? (
+                isAdmin ? (
+                    <Button>
+                        Novo prato
+                    </Button>
+                ) : (
+                    <Button>
+                        <TfiReceipt />{`Pedidos (${order})`}
+                    </Button>
+                )
             ) : (
-                <Button>
-                    <TfiReceipt />{`Pedidos (${order})`}
-                </Button>
+                isAdmin ? null : (
+                    <div className="receiptOrders">
+                        <TfiReceipt />
+                        <div>
+                            {order}
+                        </div>
+                    </div>
+                )
             )}
-            <div>
-                <FiLogOut />
-            </div>
+            {windowWidth >= queryWidth && (
+                <div>
+                    <FiLogOut />
+                </div>
+            )}
         </Container>
     );
 }

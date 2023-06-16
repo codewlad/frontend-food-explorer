@@ -10,8 +10,10 @@ export const Container = styled.div`
         font: ${({ theme }) => theme.FONTS.ROBOTO_BIGGER_BOLD};
         color: ${({ theme }) => theme.COLORS.LIGHT_100};
 
-        img {
+        svg {
             margin-right: 1rem;
+            font-size: 2.5rem;
+            color: ${({ theme }) => theme.COLORS.CAKE_100};
         }
     }
 
@@ -20,5 +22,16 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.COLORS.CAKE_200};
         text-align: right;
         margin-top: -0.7rem;
+    }
+
+    @media (max-width: 1049px) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        div:nth-child(2) {
+            margin: 0 0 0 0.8rem;
+        }
     }
 `

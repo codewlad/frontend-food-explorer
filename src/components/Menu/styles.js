@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Container = styled.div`
-    display: none;    
+    display: none;   
     
     .iconMenu {
         display: none;
@@ -55,15 +55,32 @@ export const Container = styled.div`
         cursor: pointer;
     }
 
+    .titleMenu {
+        ${({ theme }) => theme.COLORS.LIGHT_100};
+        font: normal 2.16rem/24.8rem Roboto, sans-serif;
+        margin-left: 1.6rem;
+        z-index: 2;
+        animation-name: openMenu;
+        animation-duration: 0.3s;
+        position: fixed;
+        top: -7.2rem;
+        left: 5rem;
+    }
+
     .hide {
         display: none;
     }
 
-    @media (max-width: 1050px) {
+    .expandedMenu{
+        display: none;
+    }
+
+    @media (max-width: 1049px) {
         display: flex;
 
         .iconMenu {
             display: flex;
+            z-index: 2;
         }
 
         .checkMenu {
@@ -73,12 +90,58 @@ export const Container = styled.div`
             z-index: -1;
         }
 
+        .expandedMenu {
+            position: relative;
+            display: none;
+            flex-direction: column;
+            position: fixed;
+            top: 0rem;
+            left: 0rem;
+            background-color: ${({ theme }) => theme.COLORS.DARK_400};
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .expandedMenu::before {
+            content: "";
+            height: 10.4rem;
+            background-color: ${({ theme }) => theme.COLORS.DARK_600};
+        }
+
+        .footerMenu {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 7.7rem;
+            bottom: 0;
+            color: ${({ theme }) => theme.COLORS.LIGHT_700};
+            background-color: ${({ theme }) => theme.COLORS.DARK_600};
+            font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
+            font-weight: 700;
+            width: 100%;
+            
+            > svg {
+                margin-right: 0.65rem;
+            }
+
+            > span {
+                color: ${({ theme }) => theme.COLORS.LIGHT_200};
+                font: ${({ theme }) => theme.FONTS.ROBOTO_SMALLEST_REGULAR};
+                margin-left: 0.8rem;
+                padding-top: 0.5rem;
+            }
+        }
+
         .animateOpenMenu {
             animation-name: openMenu;
             animation-duration: 0.3s;
+            display: flex;
         }
 
         .animateCloseMenu {
+            display: flex;
             animation-name: closeMenu;
             animation-duration: 0.3s;
             animation-fill-mode: forwards;
