@@ -57,13 +57,13 @@ export const Container = styled.div`
 
     .titleMenu {
         ${({ theme }) => theme.COLORS.LIGHT_100};
-        font: normal 2.16rem/24.8rem Roboto, sans-serif;
+        font: normal 2.16rem/2.48rem Roboto, sans-serif;
         margin-left: 1.6rem;
         z-index: 2;
         animation-name: openMenu;
         animation-duration: 0.3s;
         position: fixed;
-        top: -7.2rem;
+        top: 4rem;
         left: 5rem;
     }
 
@@ -101,11 +101,30 @@ export const Container = styled.div`
             height: 100%;
             width: 100%;
             z-index: 1;
+
+            > div:first-child {
+                margin: 3.6rem 2.8rem 1.4rem;
+                padding-bottom: 7.7rem;
+                overflow-y: auto;
+
+                div:first-child {
+                    margin-bottom: 3.6rem;
+                }
+
+                input {
+                    text-align: left;
+                }
+
+                svg {
+                    margin-left: 1.4rem;
+                    width: 2.4rem;
+                }
+            }
         }
 
         .expandedMenu::before {
             content: "";
-            height: 10.4rem;
+            min-height: 10.4rem;
             background-color: ${({ theme }) => theme.COLORS.DARK_600};
         }
 
