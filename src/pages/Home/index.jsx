@@ -1,9 +1,28 @@
 import { Header } from '../../components/Header';
 import { Container } from './styles';
 import { Content } from './styles';
-
+import { Card } from '../../components/Card';
+import { Carousel } from '../../components/Carousel';
 
 export function Home() {
+
+  const meals = [
+    { id: 1, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+    { id: 2, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+    { id: 3, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+    { id: 4, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+  ];
+
+  const desserts = [
+    { id: 1, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+    { id: 2, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+    { id: 3, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+    { id: 4, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+    { id: 5, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
+  ];
+
+  const mealsContent = meals.map(meal => <Card key={meal.id} data={meal} />);
+  const dessertsContent = desserts.map(dessert => <Card key={dessert.id} data={dessert} />);
 
   return (
     <Container>
@@ -18,6 +37,8 @@ export function Home() {
           <div className="bgBanner"></div>
         </div>
       </Content>
+      <Carousel title="Refeições" content={mealsContent} />
+      <Carousel title="Sobremesas" content={dessertsContent} />
     </Container>
   )
 }

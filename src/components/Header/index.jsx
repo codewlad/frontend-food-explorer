@@ -8,7 +8,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { Menu } from '../Menu';
 
 export function Header() {
-    const isAdmin = true;
+    const isAdmin = false;
     const order = 5;
     let queryWidth = 1050;
     const [search, setSearch] = useState("");

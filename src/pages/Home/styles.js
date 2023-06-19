@@ -3,6 +3,7 @@ import banner from '../../assets/banner.png';
 
 export const Container = styled.div`
     width: 100%;
+    gap: 4.8rem;
 
     display: grid;
     grid-template-rows: 10.4rem auto;
@@ -13,7 +14,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     grid-area: content;
-    margin: 2.6rem 12.3rem 6.2rem;
+    margin: 2.6rem 12.3rem 0;
 
     .banner { 
         display: flex;

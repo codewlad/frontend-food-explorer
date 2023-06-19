@@ -6,7 +6,7 @@ import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
 
 export function Menu() {
-    const isAdmin = true;
+    const isAdmin = false;
     const [isChecked, setIsChecked] = useState(false);
     const titleMenu = !isChecked ? "titleMenu hide" : "titleMenu";
 

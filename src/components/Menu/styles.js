@@ -59,7 +59,7 @@ export const Container = styled.div`
         ${({ theme }) => theme.COLORS.LIGHT_100};
         font: normal 2.16rem/2.48rem Roboto, sans-serif;
         margin-left: 1.6rem;
-        z-index: 2;
+        z-index: 3;
         animation-name: openMenu;
         animation-duration: 0.3s;
         position: fixed;
@@ -80,7 +80,7 @@ export const Container = styled.div`
 
         .iconMenu {
             display: flex;
-            z-index: 2;
+            z-index: 3;
         }
 
         .checkMenu {
@@ -100,7 +100,7 @@ export const Container = styled.div`
             background-color: ${({ theme }) => theme.COLORS.DARK_400};
             height: 100%;
             width: 100%;
-            z-index: 1;
+            z-index: 2;
 
             > div:first-child {
                 margin: 3.6rem 2.8rem 1.4rem;
