@@ -35,7 +35,9 @@ export default {
         CAKE_200: "#82F3FF"
     },
     FONTS: {
+        POPPINS_050: "normal 1.2rem/1.68rem Poppins, sans-serif",
         POPPINS_100: "normal 1.4rem/2.4rem Poppins, sans-serif",
+        POPPINS_150: "normal 1.8rem/2.52rem Poppins, sans-serif",
         POPPINS_200: "normal 2rem/160% Poppins, sans-serif",
         POPPINS_300_BOLD: "bold 2.4rem/140% Poppins, sans-serif",
         POPPINS_300_REGULAR: "normal 2.4rem/140% Poppins, sans-serif",

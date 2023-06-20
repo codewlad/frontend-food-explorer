@@ -7,7 +7,7 @@ export function Card({ data }) {
     return (
         <Container>
             <img src={`../../src/assets/${data.image}`} alt={`Imagem de ${data.description.toLowerCase()}`} />
-            <h2>{data.name} &gt;</h2>
+            <h3>{data.name} &gt;</h3>
             <p>{data.description}</p>
             <span>{data.price}</span>
             {isAdmin ? (

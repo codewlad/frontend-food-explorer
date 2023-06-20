@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-    grid-area: header;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -51,6 +54,6 @@ export const Container = styled.header`
     }
 
     @media (max-width: 1049px) {
-        padding: 2.8rem 2.8rem;
+        padding: 2.8rem;
     }
 `

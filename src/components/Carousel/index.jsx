@@ -1,4 +1,3 @@
-import { Card } from '../Card';
 import { Container, Content } from './styles';
 import { useRef } from 'react';
 import { TfiAngleLeft, TfiAngleRight } from 'react-icons/tfi';
@@ -22,8 +21,10 @@ export function Carousel({ content, title }) {
             <Content ref={carouselOfDishes}>
                 {content}
             </Content>
-            <div className='carouselControls'>
+            <div className="controlLeft">
                 <TfiAngleLeft onClick={scrollToLeft} />
+            </div>
+            <div className="controlRight">
                 <TfiAngleRight onClick={scrollToRight} />
             </div>
             <div className="gradientLeft"></div>

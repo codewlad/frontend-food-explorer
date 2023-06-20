@@ -4,7 +4,6 @@ export const Container = styled.div`
     max-width: 100%;
     overflow-x: auto;
     white-space: nowrap;
-    margin: 0 12.3rem;
     position: relative;
 
     > h2 {
@@ -25,13 +24,36 @@ export const Container = styled.div`
         height: 100%;
         width: 100%;
         padding: 0 1rem;
-        //background-color: rgb(0,0,255,0.5);
+        background-color: rgb(0,0,255,0.5);
         font-size: 2.7rem;
         z-index: 1;
 
         :hover {
             cursor: pointer;
         }
+    }
+
+    .controlLeft, .controlRight {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 25rem;
+        height: 2.7rem;
+        width: 2.7rem;
+        font-size: 2.7rem;
+        z-index: 1;
+
+        :hover {
+            cursor: pointer;
+        }
+    }
+
+    .controlLeft {
+        left: 1.8rem;
+    }
+
+    .controlRight {
+        right: 1.8rem;
     }
 
     .gradientLeft, .gradientRight {
@@ -51,28 +73,23 @@ export const Container = styled.div`
     .gradientRight {
         right: 0rem;
     }
-
-    @media (max-width: 1049px) {
-        margin: 0 2.8rem;
-    }
 `
 
 export const Content = styled.div`
     position: relative;
     display: flex;
     gap: 2.7rem;   
-    white-space: nowrap; /* Impede a quebra de linha do conteúdo */
-    //border: 1px solid red;
+    white-space: nowrap;
     padding: 0 15rem;
 
-    overflow-x: auto; /* Adiciona rolagem horizontal quando necessário */
+    overflow-x: auto;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
-    -ms-overflow-style: none; /* Oculta a barra de rolagem no Internet Explorer e Microsoft Edge */
-    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar {
-        display: none; /* Oculta a barra de rolagem no Chrome, Safari e Opera */
+        display: none;
     }
 
     > div {

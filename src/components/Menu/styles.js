@@ -103,9 +103,10 @@ export const Container = styled.div`
             z-index: 2;
 
             > div:first-child {
-                margin: 3.6rem 2.8rem 1.4rem;
+                padding: 3.6rem 2.8rem 1.4rem;
                 padding-bottom: 7.7rem;
                 overflow-y: auto;
+                height: 100%;
 
                 div:first-child {
                     margin-bottom: 3.6rem;

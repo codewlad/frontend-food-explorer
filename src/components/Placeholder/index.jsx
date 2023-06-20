@@ -1,4 +1,4 @@
-import { Container } from "./styles";
+import { Container } from './styles';
 import { TfiSearch } from 'react-icons/tfi'
 
 export function Placeholder() {

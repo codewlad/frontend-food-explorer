@@ -3,18 +3,18 @@ import banner from '../../assets/banner.png';
 
 export const Container = styled.div`
     width: 100%;
-    gap: 4.8rem;
-
-    display: grid;
-    grid-template-rows: 10.4rem auto;
-    grid-template-areas:
-    "header"
-    "content";
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 `
 
 export const Content = styled.div`
-    grid-area: content;
-    margin: 2.6rem 12.3rem 0;
+    padding-top: 10.4rem;
+    margin: 2.8rem 12.3rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4.8rem;
 
     .banner { 
         display: flex;
@@ -61,7 +61,7 @@ export const Content = styled.div`
     }
 
     @media (max-width: 1049px) {
-        margin: 2.6rem 2.8rem 6.2rem;
+        margin: 2.8rem;
 
         .banner { 
             display: flex;
@@ -92,15 +92,14 @@ export const Content = styled.div`
             text-align: left;
 
             > h1 {
-                //font: ${({ theme }) => theme.FONTS.POPPINS_600};
-                font: normal 1.8rem/2.52rem Poppins, sans-serif;
+                font: ${({ theme }) => theme.FONTS.POPPINS_150};
                 font-weight: 600;
                 width: 20.2rem;
             }
 
             > span {
                 display: block;
-                font: normal 1.2rem/1.68rem Poppins, sans-serif;
+                font: ${({ theme }) => theme.FONTS.POPPINS_050};
                 font-weight: 400;
                 width: 20.2rem;
             }

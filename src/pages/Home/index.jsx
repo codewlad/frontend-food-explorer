@@ -3,6 +3,7 @@ import { Container } from './styles';
 import { Content } from './styles';
 import { Card } from '../../components/Card';
 import { Carousel } from '../../components/Carousel';
+import { Footer } from '../../components/Footer';
 
 export function Home() {
 
@@ -29,16 +30,17 @@ export function Home() {
       <Header />
       <Content>
         <div className="banner">
-          <div className='wrappedBanner'></div>
+          <div className="wrappedBanner"></div>
           <div className="slogan">
             <h1>Sabores inigualáveis</h1>
             <span>Sinta o cuidado do preparo com ingredientes selecionados</span>
           </div>
           <div className="bgBanner"></div>
         </div>
+        <Carousel title="Refeições" content={mealsContent} />
+        <Carousel title="Sobremesas" content={dessertsContent} />
       </Content>
-      <Carousel title="Refeições" content={mealsContent} />
-      <Carousel title="Sobremesas" content={dessertsContent} />
+      <Footer />
     </Container>
   )
 }

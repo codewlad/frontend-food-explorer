@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from './styles';
-import { BsHexagonFill } from 'react-icons/bs'
 import { TfiSearch } from 'react-icons/tfi'
 import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
+import { Footer } from '../Footer';
 
 export function Menu() {
     const isAdmin = false;
@@ -13,36 +13,38 @@ export function Menu() {
     const handleIconMenuClick = () => {
         setIsChecked(!isChecked);
 
-        const expandedMenu = document.querySelector('.expandedMenu');
+        const expandedMenu = document.querySelector(".expandedMenu");
 
         if (expandedMenu) {
             if (!isChecked) {
-                expandedMenu.classList.remove('animateCloseMenu');
-                expandedMenu.classList.add('animateOpenMenu');
+                document.documentElement.style.overflowY = "hidden";
+                expandedMenu.classList.remove("animateCloseMenu");
+                expandedMenu.classList.add("animateOpenMenu");
             } else {
-                expandedMenu.classList.remove('animateOpenMenu');
-                expandedMenu.classList.add('animateCloseMenu');
+                document.documentElement.style.overflowY = "auto";
+                expandedMenu.classList.remove("animateOpenMenu");
+                expandedMenu.classList.add("animateCloseMenu");
                 setTimeout(() => {
-                    expandedMenu.classList.remove('animateCloseMenu');
+                    expandedMenu.classList.remove("animateCloseMenu");
                 }, 300);
             }
         }
     };
 
     useEffect(() => {
-        const expandedMenu = document.querySelector('.expandedMenu');
+        const expandedMenu = document.querySelector(".expandedMenu");
 
         const handleResize = () => {
             if (window.innerWidth > 1049) {
                 setIsChecked(false);
-                expandedMenu.classList.remove('animateOpenMenu');
+                expandedMenu.classList.remove("animateOpenMenu");
             }
         };
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
     }, []);
 
@@ -85,9 +87,7 @@ export function Menu() {
                     />
                 </div>
 
-                <div className="footerMenu">
-                    <BsHexagonFill /> food explorer <span>© 2023 - Todos os direitos reservados.</span>
-                </div>
+                <Footer />
             </div>
         </Container>
     );

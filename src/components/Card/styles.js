@@ -21,7 +21,7 @@ export const Container = styled.div`
         height: auto;
     }
 
-    > h2 {
+    > h3 {
         font: ${({ theme }) => theme.FONTS.POPPINS_300_BOLD};
     }
 
