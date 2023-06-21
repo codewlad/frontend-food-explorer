@@ -38,4 +38,31 @@ export default createGlobalStyle`
     #root {
         height: 100%;
     }
+
+    ::-webkit-scrollbar {
+        width: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: ${({ theme }) => theme.COLORS.DARK_1000};
+        border-radius: 0.5rem;
+    }
+
+    * {
+        scrollbar-color: ${({ theme }) => theme.COLORS.DARK_1000} transparent;
+    }
+
+    *::-moz-scrollbar-thumb {
+        background-color: red;
+        border-radius: 0.5rem;
+    }
+
+    ::-ms-scrollbar {
+        width: 0.5rem;
+    }
+
+    ::-ms-scrollbar-thumb {
+        background-color: ${({ theme }) => theme.COLORS.DARK_1000};
+        border-radius: 0.5rem;
+    }
 `;
