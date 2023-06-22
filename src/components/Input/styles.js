@@ -10,7 +10,6 @@ export const Container = styled.div`
     position: relative;
 
     > input {
-        min-width: 30rem;
         width: 100%;
         height: 4.8rem;
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
@@ -20,5 +19,9 @@ export const Container = styled.div`
         padding: 1.6rem;
         outline: none;
         z-index: 1;
+    }
+
+    > svg {
+        margin-left: 1.6rem;
     }
 `
