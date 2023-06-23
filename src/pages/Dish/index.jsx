@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Header } from '../../components/Header';
 import { Container } from './styles';
 import { Content } from './styles';
@@ -30,7 +31,7 @@ export function Dish() {
     <Container>
       <Header />
       <Content>
-        <BackButton />
+        <Link to="/"><BackButton /></Link>
         <div className='dish'>
           <img src={`../../src/assets/${dish.image}`} alt={`Imagem de ${dish.description.toLowerCase()}`} />
           <div>
@@ -43,9 +44,11 @@ export function Dish() {
             </div>
             {isAdmin ? (
               <div className="dishButon">
-                <Button>
-                  Editar prato
-                </Button>
+                <Link to={`/edit/${dish.id}`}>
+                  <Button>
+                    Editar prato
+                  </Button>
+                </Link>
               </div>
             ) : (
               <div className="dishButon">

@@ -1,11 +1,14 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Container } from './styles';
 import { Brand } from '../Brand';
 import { Input } from '../Input';
 import { Button } from '../Button';
-import { TfiReceipt } from 'react-icons/tfi';
+import { TfiReceipt, TfiUser } from 'react-icons/tfi';
 import { FiLogOut } from 'react-icons/fi';
 import { Menu } from '../Menu';
+import { Profile } from './styles';
+import { ItemMenu } from '../ItemMenu';
 
 export function Header() {
     const isAdmin = false;
@@ -14,6 +17,8 @@ export function Header() {
     const [search, setSearch] = useState("");
     const [hasSearchPlaceholder, setHasSearchPlaceholder] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
+    const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
 
     useEffect(() => {
         setHasSearchPlaceholder(!search);
@@ -22,6 +27,13 @@ export function Header() {
     useEffect(() => {
         function handleResize() {
             setWindowWidth(window.innerWidth);
+
+            if (window.innerWidth >= queryWidth) {
+                setIsProfileMenuHidden(false);
+            } else {
+                setIsProfileMenuHidden(true);
+                setIsProfileMenuVisible(false);
+            }
         }
 
         window.addEventListener('resize', handleResize);
@@ -46,9 +58,11 @@ export function Header() {
             )}
             {windowWidth >= queryWidth ? (
                 isAdmin ? (
-                    <Button>
-                        Novo prato
-                    </Button>
+                    <Link to="/add">
+                        <Button>
+                            Novo prato
+                        </Button>
+                    </Link>
                 ) : (
                     <Button>
                         <TfiReceipt />{`Pedidos (${order})`}
@@ -65,9 +79,15 @@ export function Header() {
                 )
             )}
             {windowWidth >= queryWidth && (
-                <div>
-                    <FiLogOut />
-                </div>
+                <Profile onClick={() => setIsProfileMenuVisible(!isProfileMenuVisible)}>
+                    <TfiUser />
+                    <div className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
+                        <div>
+                            <Link to="/add"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
+                            <Link to="/dish/1"><ItemMenu icon={FiLogOut} title="Sair" /></Link>
+                        </div>
+                    </div>
+                </Profile>
             )}
         </Container>
     );

@@ -58,13 +58,22 @@ export const Container = styled.div`
     .titleMenu {
         ${({ theme }) => theme.COLORS.LIGHT_100};
         font: normal 2.16rem/2.48rem Roboto, sans-serif;
-        margin-left: 1.6rem;
         z-index: 3;
         animation-name: openMenu;
         animation-duration: 0.3s;
         position: fixed;
-        top: 4rem;
-        left: 5rem;
+        top: 0rem;
+        left: 7rem;
+        width: calc(100% - 7rem);
+        height: 10.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 2.8rem;
+
+        svg {
+            font-size: 3rem;
+        }
     }
 
     .hide {
@@ -108,7 +117,7 @@ export const Container = styled.div`
                 overflow-y: auto;
                 height: 100%;
 
-                div:first-child {
+                > div:first-child {
                     margin-bottom: 3.6rem;
                 }
 
@@ -191,4 +200,16 @@ export const Container = styled.div`
             }
         }
     }
+`
+
+export const Profile = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.COLORS.DARK_900};
+    border-radius: 50%;
+    min-width: 5.6rem;
+    min-height: 5.6rem;
+    cursor: pointer;
 `

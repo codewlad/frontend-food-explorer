@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Header } from '../../components/Header';
 import { Container } from './styles';
@@ -22,7 +23,7 @@ export function AddDish() {
     <Container>
       <Header />
       <Content>
-        <BackButton />
+        <Link to="/"><BackButton /></Link>
         <h1>Adicionar prato</h1>
         <div className='dishInformations'>
 

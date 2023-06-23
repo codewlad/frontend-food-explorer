@@ -37,23 +37,37 @@ export const Container = styled.div`
         position: absolute;
         display: flex;
         align-items: center;
+        justify-content: center;
         top: 25rem;
-        height: 2.7rem;
-        width: 2.7rem;
+        height: 5rem;
+        width: 5rem;
         font-size: 2.7rem;
-        z-index: 1;
+        z-index: 1;        
+        border-radius: 50%;
+        transition: all 0.3s;
+        background: transparent;
 
-        :hover {
+        svg {
+            transition: all ease 0.3s;
+        }        
+
+        &:hover {
             cursor: pointer;
+            background: ${({ theme }) => theme.COLORS.DARK_1000};
+        }
+
+        &:hover svg {
+            transform: scale(1.3);
         }
     }
 
     .controlLeft {
-        left: 1.8rem;
+        left: 1rem;        
     }
 
     .controlRight {
-        right: 1.8rem;
+        right: 1rem;
+        padding-left: 0.6rem;
     }
 
     .gradientLeft, .gradientRight {
@@ -72,6 +86,19 @@ export const Container = styled.div`
 
     .gradientRight {
         right: 0rem;
+    }
+
+    @media (max-width: 1049px) {
+        .controlLeft {
+            left: 0rem;
+        }
+
+        .controlRight {
+            right: 0rem;
+        }
+        .gradientLeft, .gradientRight {
+            width: 7rem;
+        }
     }
 `
 

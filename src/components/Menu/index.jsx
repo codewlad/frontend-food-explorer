@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { Container } from './styles';
-import { TfiSearch } from 'react-icons/tfi'
+import { TfiSearch, TfiUser } from 'react-icons/tfi'
 import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
 import { Footer } from '../Footer';
+import { Profile } from './styles';
 
 export function Menu() {
     const isAdmin = false;
@@ -64,7 +66,10 @@ export function Menu() {
                 <span></span>
             </div>
             <div className={titleMenu}>
-                Menu
+                <div>Menu</div>
+                <Profile>
+                    <TfiUser />
+                </Profile>
             </div>
 
             <div className="expandedMenu">
@@ -74,9 +79,11 @@ export function Menu() {
                         icon={TfiSearch}
                     />
                     {isAdmin ? (
-                        <ItemMenu
-                            title="Novo prato"
-                        />
+                        <Link to="/add" onClick={handleIconMenuClick}>
+                            <ItemMenu
+                                title="Novo prato"
+                            />
+                        </Link>
                     ) : (
                         <ItemMenu
                             title="Favoritos"

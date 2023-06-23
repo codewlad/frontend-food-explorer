@@ -9,4 +9,12 @@ export const Container = styled.div`
     color: ${({ theme }) => theme.COLORS.LIGHT_300};
     font: ${({ theme }) => theme.FONTS.POPPINS_300_REGULAR};
     border-bottom: 1px solid ${({ theme }) => theme.COLORS.DARK_1000};
+    transition: all 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.02);
+        border-radius: 0.8rem;
+        background-color: ${({ theme }) => theme.COLORS.DARK_800};
+    }
 `

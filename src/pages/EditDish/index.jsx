@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Header } from '../../components/Header';
 import { Container } from './styles';
@@ -11,7 +12,7 @@ import { Button } from '../../components/Button';
 import { DishItem } from '../../components/DishItem';
 
 export function EditDish() {
-
+  const dish_id = 1;
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleCategory = (event) => {
@@ -22,7 +23,7 @@ export function EditDish() {
     <Container>
       <Header />
       <Content>
-        <BackButton />
+        <Link to={`/dish/${dish_id}`}><BackButton /></Link>
         <h1>Editar prato</h1>
         <div className='dishInformations'>
 

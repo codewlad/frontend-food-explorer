@@ -20,7 +20,7 @@ export const Container = styled.header`
     }
 
     button {
-        max-width: 21.6rem;
+        max-width: 17rem;
         min-width: 17rem;
         height: 5.6rem;
 
@@ -55,5 +55,83 @@ export const Container = styled.header`
 
     @media (max-width: 1049px) {
         padding: 2.8rem;
+
+        > div:nth-child(2) {
+            flex-direction: row;
+            width: 100%;
+            
+            div {
+                width: max-content;
+            }
+        }
+    }
+`
+
+export const Profile = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.COLORS.DARK_900};
+    border-radius: 50%;
+    min-width: 5.6rem;
+    min-height: 5.6rem;
+    cursor: pointer;
+
+    > svg {
+        font-size: 3rem;
+    }
+
+    .profile-menu-transition {
+        opacity: 0;
+        transition: all 0.3s ease;
+        visibility: hidden;
+    }
+
+    .profile-menu-visible {
+        opacity: 1;
+        transition: all 0.3s ease;
+        visibility: visible;
+    }
+
+    > div {
+        position: absolute;
+        top: 9.6rem;
+        right: 0;
+        width: max-content;
+        box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 20px;
+
+        > div::before {
+            content: "";
+            position: absolute;
+            top: -1rem;
+            right: 2rem;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 10px solid ${({ theme }) => theme.COLORS.DARK_600};
+        }
+
+        > div {
+            border-radius: 0.8rem;
+            padding: 1.6rem;
+            color: ${({ theme }) => theme.COLORS.LIGHT_100};
+            background-color: ${({ theme }) => theme.COLORS.DARK_600};
+            
+            div {
+                font-size: 1.8rem;
+
+                &:hover {
+                    transform: scale(1.05);
+                    background-color: ${({ theme }) => theme.COLORS.DARK_900};
+                }
+            }
+
+            svg {
+                font-size: 2.4rem;
+                margin-right: 1rem;
+            }
+        }
     }
 `
