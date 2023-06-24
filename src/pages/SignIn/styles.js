@@ -1,12 +1,24 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+    height: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`
+
+export const Main = styled.div`
+    display: flex;
+    align-items: center;
     justify-content: center;
     gap: 7.3rem;
+    padding: 2.8rem 0;
 
     div:nth-child(1) {
         font: ${({ theme }) => theme.FONTS.ROBOTO_GIANT_BOLD};
+        display: flex;
+        align-items: center;
 
         > svg {
             font-size: 4.75rem;
@@ -15,18 +27,18 @@ export const Container = styled.div`
 
     @media (max-width: 1049px) {
         flex-direction: column;
-        justify-content: right;
         min-width: 39.8rem;
         max-width: 47.6rem;
-    }    
+    }
+    
+    
 `;
 
 export const Form = styled.div`
     display: flex;
     flex-direction: column;
     gap: 3.2rem;
-    max-width: 47.6rem;
-    width: 100%;
+    width: 47.6rem;
     padding: 6.4rem;
     border-radius: 1.6rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
@@ -49,5 +61,7 @@ export const Form = styled.div`
     @media (max-width: 1049px) {
         background-color: transparent;
         padding: 4.6rem;
+        max-width: 47.6rem;
+        width: 100%;
     }
 `;

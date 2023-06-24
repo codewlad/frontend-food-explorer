@@ -1,31 +1,58 @@
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Form } from './styles';
-import { Brand } from '../../components/Brand'
+import { Container, Main, Form } from './styles';
+import { Brand } from '../../components/Brand';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 
 export function SignIn() {
+    const mainRef = useRef(null);
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        function handleResize() {
+            const containerHeight = mainRef.current.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            if (containerHeight > windowHeight) {
+                containerRef.current.style.height = 'auto';
+            } else {
+                containerRef.current.style.height = '100%';
+            }
+        }
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
-        <Container>
-            <Brand />
-            <Form>
-                <h1>Faça o login</h1>
+        <Container ref={containerRef}>
+            <Main ref={mainRef}>
+                <Brand />
+                <Form>
+                    <h1>Faça o login</h1>
 
-                <Section title="Email">
-                    <Input placeholder="Exemplo: exemplo@email.com.br" />
-                </Section>
+                    <Section title="Email">
+                        <Input placeholder="Exemplo: exemplo@email.com.br" />
+                    </Section>
 
-                <Section title="Senha">
-                    <Input placeholder="No mínimo 6 caracteres" />
-                </Section>
+                    <Section title="Senha">
+                        <Input placeholder="No mínimo 6 caracteres" />
+                    </Section>
 
-                <Button>
-                    Entrar
-                </Button>
+                    <Button>
+                        Entrar
+                    </Button>
 
-                <Link to="/register">Criar uma conta</Link>
-            </Form>
+                    <Link to="/register">Criar uma conta</Link>
+                </Form>
+            </Main>
         </Container>
-    )
+    );
 }
