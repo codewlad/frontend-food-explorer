@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { FiUpload } from 'react-icons/fi';
 import { Header } from '../../components/Header';
-import { Container } from './styles';
-import { Content } from './styles';
 import { Footer } from '../../components/Footer';
 import { BackButton } from '../../components/BackButton';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
-import { FiUpload } from 'react-icons/fi';
 import { Button } from '../../components/Button';
 import { DishItem } from '../../components/DishItem';
+import { Container, Content, DishInformations } from './styles';
 
 export function AddDish() {
 
@@ -25,7 +24,7 @@ export function AddDish() {
       <Content>
         <Link to="/"><BackButton /></Link>
         <h1>Adicionar prato</h1>
-        <div className='dishInformations'>
+        <DishInformations className='dishInformations'>
 
           <Section title="Imagem do prato">
             <button>
@@ -66,7 +65,7 @@ export function AddDish() {
               Salvar alterações
             </Button>
           </div>
-        </div>
+        </DishInformations>
       </Content>
       <Footer />
     </Container>

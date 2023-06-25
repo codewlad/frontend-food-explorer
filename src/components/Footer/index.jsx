@@ -1,12 +1,12 @@
-import { Container } from './styles';
 import { BsHexagonFill } from 'react-icons/bs'
+import { Container, Logo } from './styles';
 
 export function Footer() {
     return (
         <Container>
-            <div>
+            <Logo>
                 <BsHexagonFill />food explorer
-            </div>
+            </Logo>
             <span>
                 © 2023 - Todos os direitos reservados.
             </span>

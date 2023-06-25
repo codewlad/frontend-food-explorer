@@ -34,32 +34,32 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.COLORS.CAKE_200};
         font: ${({ theme }) => theme.FONTS.ROBOTO_BIGGEST_REGULAR};
     }
+`;
 
-    .amountOfDishes {
-        display: flex;
-        gap: 1.6rem;
-        width: 100%;
+export const AmountOfDishes = styled.div`
+    display: flex;
+    gap: 1.6rem;
+    width: 100%;
 
-        > div {
-            display: flex;
-            gap: 1.4rem;
-            align-items: center;
-            font: ${({ theme }) => theme.FONTS.ROBOTO_BIG_BOLD};
-        }
-
-        > button {
-            width: 9.2rem;
-            height: 4.8rem;
-            padding: 1.2rem;
-        }
+    > button {
+        width: 9.2rem;
+        height: 4.8rem;
+        padding: 1.2rem;
     }
+`;
 
-    .topRightButton {
-        width: 2.4rem;
-        height: 2.4rem;
-        position: absolute;
-        top: 1.6rem;
-        right: 1.6rem;
-        font-size: 2.4rem;
-    }
-`
+export const DishControls = styled.div`
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+    font: ${({ theme }) => theme.FONTS.ROBOTO_BIG_BOLD};
+`;
+
+export const TopRightButton = styled.div`
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    top: 1.6rem;
+    right: 1.6rem;
+    font-size: 2.4rem;
+`;

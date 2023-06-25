@@ -1,5 +1,5 @@
-import { Container } from './styles';
 import { Placeholder } from '../Placeholder';
+import { Container } from './styles';
 
 export function Input({ icon: Icon, searchPlaceholder, ...rest }) {
     return (

@@ -6,7 +6,7 @@ export const Container = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-`
+`;
 
 export const Content = styled.div`
     padding-top: 10.4rem;
@@ -16,42 +16,99 @@ export const Content = styled.div`
     flex-direction: column;
     gap: 4.8rem;
 
-    .banner { 
+    @media (max-width: 1049px) {
+        margin: 2.8rem;
+    }
+`;
+
+export const Banner = styled.div`
+    display: flex;
+    max-width: 100%;
+    position: relative;
+
+    @media (max-width: 1049px) {
         display: flex;
         max-width: 100%;
-        position: relative;        
+        position: relative;
     }
+`;
 
-    .wrappedBanner {
-        max-width: 65.6rem;
+export const WrappedBanner = styled.div`
+    max-width: 65.6rem;
+    width: 100%;
+    height: 42rem;
+    background-image: url(${banner});
+    background-size: cover;
+    position: relative;
+    left: -6rem;
+    margin-right: -6rem;
+
+    @media (max-width: 1049px) {
+        max-width: 19.9rem;
         width: 100%;
-        height: 42rem;
+        height: 14.9rem;
         background-image: url(${banner});
         background-size: cover;
         position: relative;
-        left: -6rem;
-        margin-right: -6rem;
+        left: -3rem;
+        margin-right: -3rem;
+    }
+`;
+
+export const Slogan = styled.div`
+    min-width: 52rem;
+    width: 100%;
+    padding: 24.5rem 10rem 0 0;
+    text-align: right;
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
+
+    > h1 {
+        font: ${({ theme }) => theme.FONTS.POPPINS_500};
     }
 
-    .slogan {
-        min-width: 52rem;
+    > span {
+        font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
+    }
+
+    @media (max-width: 1049px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 23.5rem;
         width: 100%;
-        padding: 24.5rem 10rem 0 0;
+        padding: 6rem 0 0 0;
         text-align: right;
         color: ${({ theme }) => theme.COLORS.LIGHT_300};
+        text-align: left;
 
         > h1 {
-            font: ${({ theme }) => theme.FONTS.POPPINS_500};
+            font: ${({ theme }) => theme.FONTS.POPPINS_150};
+            font-weight: 600;
+            width: 20.2rem;
         }
 
         > span {
-            font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
+            display: block;
+            font: ${({ theme }) => theme.FONTS.POPPINS_050};
+            font-weight: 400;
+            width: 20.2rem;
         }
     }
+`;
 
-    .bgBanner {
+export const BgBanner = styled.div`
+    width: 100%;
+    height: 26rem;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    bottom: 0;
+    border-radius: 0.8rem;
+    background: ${({ theme }) => theme.COLORS.GRADIENTS_200};
+
+    @media (max-width: 1049px) {
         width: 100%;
-        height: 26rem;
+        height: 12rem;
         position: absolute;
         z-index: -1;
         left: 0;
@@ -59,61 +116,4 @@ export const Content = styled.div`
         border-radius: 0.8rem;
         background: ${({ theme }) => theme.COLORS.GRADIENTS_200};
     }
-
-    @media (max-width: 1049px) {
-        margin: 2.8rem;
-
-        .banner { 
-            display: flex;
-            max-width: 100%;
-            position: relative;        
-        }
-
-        .wrappedBanner {
-            max-width: 19.9rem;
-            width: 100%;
-            height: 14.9rem;
-            background-image: url(${banner});
-            background-size: cover;
-            position: relative;
-            left: -3rem;
-            margin-right: -3rem;
-        }
-
-        .slogan {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 23.5rem;
-            width: 100%;
-            padding: 6rem 0 0 0;
-            text-align: right;
-            color: ${({ theme }) => theme.COLORS.LIGHT_300};
-            text-align: left;
-
-            > h1 {
-                font: ${({ theme }) => theme.FONTS.POPPINS_150};
-                font-weight: 600;
-                width: 20.2rem;
-            }
-
-            > span {
-                display: block;
-                font: ${({ theme }) => theme.FONTS.POPPINS_050};
-                font-weight: 400;
-                width: 20.2rem;
-            }
-        }
-
-        .bgBanner {
-            width: 100%;
-            height: 12rem;
-            position: absolute;
-            z-index: -1;
-            left: 0;
-            bottom: 0;
-            border-radius: 0.8rem;
-            background: ${({ theme }) => theme.COLORS.GRADIENTS_200};
-        }
-    }
-`
+`;

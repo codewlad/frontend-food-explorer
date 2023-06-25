@@ -1,17 +1,17 @@
-import { Container } from './styles';
 import { BsHexagonFill } from 'react-icons/bs'
+import { Container, Logo, Admin } from './styles';
 
 export function Brand({ isAdmin = false }) {
     return (
         <Container>
-            <div>
+            <Logo>
                 <BsHexagonFill />
                 food explorer
-            </div>
+            </Logo>
             {isAdmin &&
-                <div>
+                <Admin>
                     admin
-                </div>
+                </Admin>
             }
         </Container>
     )

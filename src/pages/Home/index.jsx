@@ -1,9 +1,8 @@
 import { Header } from '../../components/Header';
-import { Container } from './styles';
-import { Content } from './styles';
 import { Card } from '../../components/Card';
 import { Carousel } from '../../components/Carousel';
 import { Footer } from '../../components/Footer';
+import { Container, Content, Banner, WrappedBanner, Slogan, BgBanner } from './styles';
 
 export function Home() {
 
@@ -29,14 +28,14 @@ export function Home() {
     <Container>
       <Header />
       <Content>
-        <div className="banner">
-          <div className="wrappedBanner"></div>
-          <div className="slogan">
+        <Banner className="banner">
+          <WrappedBanner className="wrappedBanner" />
+          <Slogan className="slogan">
             <h1>Sabores inigualáveis</h1>
             <span>Sinta o cuidado do preparo com ingredientes selecionados</span>
-          </div>
-          <div className="bgBanner"></div>
-        </div>
+          </Slogan>
+          <BgBanner className="bgBanner" />
+        </Banner>
         <Carousel title="Refeições" content={mealsContent} />
         <Carousel title="Sobremesas" content={dessertsContent} />
       </Content>

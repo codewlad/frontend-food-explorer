@@ -1,45 +1,41 @@
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import { Container } from './styles';
+import { useState, useEffect, useRef } from 'react';
 import { TfiSearch, TfiUser } from 'react-icons/tfi'
 import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
 import { Footer } from '../Footer';
-import { Profile } from './styles';
+import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Profile } from './styles';
 
 export function Menu() {
     const isAdmin = false;
     const [isChecked, setIsChecked] = useState(false);
     const titleMenu = !isChecked ? "titleMenu hide" : "titleMenu";
+    const expandedMenuRef = useRef(null);
 
     const handleIconMenuClick = () => {
         setIsChecked(!isChecked);
 
-        const expandedMenu = document.querySelector(".expandedMenu");
-
-        if (expandedMenu) {
+        if (expandedMenuRef) {
             if (!isChecked) {
                 document.documentElement.style.overflowY = "hidden";
-                expandedMenu.classList.remove("animateCloseMenu");
-                expandedMenu.classList.add("animateOpenMenu");
+                expandedMenuRef.current.classList.remove("animateCloseMenu");
+                expandedMenuRef.current.classList.add("animateOpenMenu");
             } else {
                 document.documentElement.style.overflowY = "auto";
-                expandedMenu.classList.remove("animateOpenMenu");
-                expandedMenu.classList.add("animateCloseMenu");
+                expandedMenuRef.current.classList.remove("animateOpenMenu");
+                expandedMenuRef.current.classList.add("animateCloseMenu");
                 setTimeout(() => {
-                    expandedMenu.classList.remove("animateCloseMenu");
+                    expandedMenuRef.current.classList.remove("animateCloseMenu");
                 }, 300);
             }
         }
     };
 
     useEffect(() => {
-        const expandedMenu = document.querySelector(".expandedMenu");
-
         const handleResize = () => {
             if (window.innerWidth > 1049) {
                 setIsChecked(false);
-                expandedMenu.classList.remove("animateOpenMenu");
+                expandedMenuRef.current.classList.remove("animateOpenMenu");
             }
         };
 
@@ -60,20 +56,20 @@ export function Menu() {
                 onClick={handleIconMenuClick}
                 onChange={() => { }}
             />
-            <div className="iconMenu" onClick={handleIconMenuClick}>
+            <IconMenu className="iconMenu" onClick={handleIconMenuClick}>
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
-            <div className={titleMenu}>
-                <div>Menu</div>
+            </IconMenu>
+            <TitleMenu className={titleMenu}>
+                <span>Menu</span>
                 <Profile>
                     <TfiUser />
                 </Profile>
-            </div>
+            </TitleMenu>
 
-            <div className="expandedMenu">
-                <div>
+            <ExpandedMenu ref={expandedMenuRef} className="expandedMenu">
+                <ExpandedMenuOptions>
                     <Input
                         placeholder="Busque por pratos ou ingredientes"
                         icon={TfiSearch}
@@ -92,10 +88,9 @@ export function Menu() {
                     <ItemMenu
                         title="Sair"
                     />
-                </div>
-
+                </ExpandedMenuOptions>
                 <Footer />
-            </div>
+            </ExpandedMenu>
         </Container>
     );
 }

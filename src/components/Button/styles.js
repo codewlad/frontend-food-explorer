@@ -11,4 +11,4 @@ export const Container = styled.button`
     padding: 1.2rem;
     border: none;
     border-radius: 0.5rem;
-`
+`;

@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { Container } from './styles';
-import { Button } from '../Button';
 import { TfiPlus, TfiMinus, TfiHeart, TfiPencil } from 'react-icons/tfi';
+import { Link } from 'react-router-dom';
+import { Button } from '../Button';
+import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
 
 export function Card({ data }) {
     const isAdmin = false;
@@ -16,24 +16,24 @@ export function Card({ data }) {
             <p>{data.description}</p>
             <span>{data.price}</span>
             {isAdmin ? (
-                <div className="topRightButton">
+                <TopRightButton>
                     <Link to={`/edit/${data.id}`}><TfiPencil /></Link>
-                </div>
+                </TopRightButton>
             ) : (
                 <div>
-                    <div className="amountOfDishes">
-                        <div>
+                    <AmountOfDishes>
+                        <DishControls>
                             <TfiMinus />
                             <span>01</span>
                             <TfiPlus />
-                        </div>
+                        </DishControls>
                         <Button>
                             incluir
                         </Button>
-                    </div>
-                    <div className="topRightButton">
+                    </AmountOfDishes>
+                    <TopRightButton>
                         <TfiHeart />
-                    </div>
+                    </TopRightButton>
                 </div>
             )}
         </Container>

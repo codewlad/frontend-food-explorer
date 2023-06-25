@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { FiUpload } from 'react-icons/fi';
 import { Header } from '../../components/Header';
-import { Container } from './styles';
-import { Content } from './styles';
 import { Footer } from '../../components/Footer';
 import { BackButton } from '../../components/BackButton';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
-import { FiUpload } from 'react-icons/fi';
 import { Button } from '../../components/Button';
 import { DishItem } from '../../components/DishItem';
+import { Container, Content, DishInformations } from './styles';
 
 export function EditDish() {
   const dish_id = 1;
@@ -25,7 +24,7 @@ export function EditDish() {
       <Content>
         <Link to={`/dish/${dish_id}`}><BackButton /></Link>
         <h1>Editar prato</h1>
-        <div className='dishInformations'>
+        <DishInformations className='dishInformations'>
 
           <Section title="Imagem do prato">
             <button>
@@ -69,7 +68,7 @@ export function EditDish() {
               Salvar alterações
             </Button>
           </div>
-        </div>
+        </DishInformations>
       </Content>
       <Footer />
     </Container>

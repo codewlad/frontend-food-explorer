@@ -11,4 +11,4 @@ export const Container = styled.div`
         width: 3.4rem;
         font-size: 2.2rem;
     }
-`
+`;

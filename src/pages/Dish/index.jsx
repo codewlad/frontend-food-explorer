@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
+import { TfiPlus, TfiMinus, TfiReceipt } from 'react-icons/tfi';
 import { Header } from '../../components/Header';
-import { Container } from './styles';
-import { Content } from './styles';
 import { Footer } from '../../components/Footer';
 import { BackButton } from '../../components/BackButton';
 import { TagIngredients } from '../../components/TagIngredients';
-import { TfiPlus, TfiMinus, TfiReceipt } from 'react-icons/tfi';
 import { Button } from '../../components/Button';
+import { Container, Content, DishDetails, DishInformation, TagsIngredients, DishButon, DishControls } from './styles';
 
 export function Dish() {
   const isAdmin = false;
@@ -32,38 +31,38 @@ export function Dish() {
       <Header />
       <Content>
         <Link to="/"><BackButton /></Link>
-        <div className='dish'>
+        <DishDetails className='dish'>
           <img src={`../../src/assets/${dish.image}`} alt={`Imagem de ${dish.description.toLowerCase()}`} />
-          <div>
-            <div className='dishInformation'>
+          <section>
+            <DishInformation className='dishInformation'>
               <h1>{dish.name}</h1>
               <p>{dish.description}</p>
-              <div className="tagsIngredients">
+              <TagsIngredients className="tagsIngredients">
                 {dish.ingredients.map((ingredient, index) => <TagIngredients title={ingredient} key={index} />)}
-              </div>
-            </div>
+              </TagsIngredients>
+            </DishInformation>
             {isAdmin ? (
-              <div className="dishButon">
+              <DishButon className="dishButon">
                 <Link to={`/edit/${dish.id}`}>
                   <Button>
                     Editar prato
                   </Button>
                 </Link>
-              </div>
+              </DishButon>
             ) : (
-              <div className="dishButon">
-                <div>
+              <DishButon className="dishButon">
+                <DishControls>
                   <TfiMinus />
                   <span>01</span>
                   <TfiPlus />
-                </div>
+                </DishControls>
                 <Button>
                   <TfiReceipt />incluir ∙ R$ {dish.price}
                 </Button>
-              </div>
+              </DishButon>
             )}
-          </div>
-        </div>
+          </section>
+        </DishDetails>
       </Content>
       <Footer />
     </Container>

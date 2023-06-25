@@ -58,4 +58,4 @@ export default {
         ROBOTO_BIGGEST_REGULAR: "normal 3.2rem/160% Roboto, sans-serif",
         ROBOTO_GIANT_BOLD: "bold 4.2rem/normal Roboto, sans-serif"
     }
-}
+};

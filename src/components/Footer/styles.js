@@ -14,11 +14,6 @@ export const Container = styled.div`
     flex-shrink: 0;
     padding: 0 12.3rem;
 
-    > div {
-        display: flex;
-        align-items: center;
-    }
-
     svg {
         margin-right: 1.1rem;
     }
@@ -41,4 +36,9 @@ export const Container = styled.div`
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALLEST_REGULAR};
     }
     }
-`
+`;
+
+export const Logo = styled.div`
+    display: flex;
+    align-items: center;
+`;

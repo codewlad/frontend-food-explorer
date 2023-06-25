@@ -10,4 +10,4 @@ export const Container = styled.div`
     font: ${({ theme }) => theme.FONTS.POPPINS_100};
     padding: 0.4rem 0.8rem;
     border-radius: 0.5rem;
-`
+`;

@@ -1,19 +1,18 @@
 import { Link } from 'react-router-dom';
+import { TfiReceipt, TfiUser } from 'react-icons/tfi';
+import { FiLogOut } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
-import { Container } from './styles';
 import { Brand } from '../Brand';
 import { Input } from '../Input';
 import { Button } from '../Button';
-import { TfiReceipt, TfiUser } from 'react-icons/tfi';
-import { FiLogOut } from 'react-icons/fi';
 import { Menu } from '../Menu';
-import { Profile } from './styles';
 import { ItemMenu } from '../ItemMenu';
+import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions } from './styles';
 
 export function Header() {
     const isAdmin = false;
     const order = 5;
-    let queryWidth = 1050;
+    const queryWidth = 1050;
     const [search, setSearch] = useState("");
     const [hasSearchPlaceholder, setHasSearchPlaceholder] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -70,23 +69,23 @@ export function Header() {
                 )
             ) : (
                 isAdmin ? null : (
-                    <div className="receiptOrders">
+                    <ReceiptOrders>
                         <TfiReceipt />
-                        <div>
+                        <Order>
                             {order}
-                        </div>
-                    </div>
+                        </Order>
+                    </ReceiptOrders>
                 )
             )}
             {windowWidth >= queryWidth && (
                 <Profile onClick={() => setIsProfileMenuVisible(!isProfileMenuVisible)}>
                     <TfiUser />
-                    <div className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
-                        <div>
+                    <ProfileMenu className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
+                        <ProfileMenuOptions>
                             <Link to="/add"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
                             <Link to="/dish/1"><ItemMenu icon={FiLogOut} title="Sair" /></Link>
-                        </div>
-                    </div>
+                        </ProfileMenuOptions>
+                    </ProfileMenu>
                 </Profile>
             )}
         </Container>

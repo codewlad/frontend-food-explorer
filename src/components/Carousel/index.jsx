@@ -1,6 +1,6 @@
-import { Container, Content } from './styles';
 import { useRef, useState, useEffect } from 'react';
 import { TfiAngleLeft, TfiAngleRight } from 'react-icons/tfi';
+import { Container, Content, ControlLeft, ControlRight, GradientLeft, GradientRight } from './styles';
 
 export function Carousel({ content, title }) {
     const carouselOfDishes = useRef(null);
@@ -14,8 +14,6 @@ export function Carousel({ content, title }) {
         );
 
         const handleResize = () => {
-            const container = carouselOfDishes.current;
-
             setIsScrollEnd(
                 carouselContainer.clientWidth >= carouselContainer.scrollWidth || ((carouselContainer.clientWidth + carouselContainer.scrollLeft + 10) >= carouselContainer.scrollWidth)
             );
@@ -51,17 +49,17 @@ export function Carousel({ content, title }) {
             <h2>{title}</h2>
             <Content ref={carouselOfDishes}>{content}</Content>
             {!isScrollStart && (
-                <div className="controlLeft" onClick={scrollToLeft}>
+                <ControlLeft onClick={scrollToLeft}>
                     <TfiAngleLeft />
-                </div>
+                </ControlLeft>
             )}
             {!isScrollEnd && (
-                <div className="controlRight" onClick={scrollToRight} >
+                <ControlRight onClick={scrollToRight} >
                     <TfiAngleRight />
-                </div>
+                </ControlRight>
             )}
-            <div className="gradientLeft"></div>
-            <div className="gradientRight"></div>
+            <GradientLeft />
+            <GradientRight />
         </Container>
     );
 }

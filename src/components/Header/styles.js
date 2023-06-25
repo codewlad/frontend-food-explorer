@@ -30,29 +30,6 @@ export const Container = styled.header`
         }
     }
 
-    > div:last-child {
-        font-size: 2.4rem;
-    }
-
-    .receiptOrders {
-        position: relative;
-        margin-right: 0.6rem;
-
-        > div {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            background-color: ${({ theme }) => theme.COLORS.TOMATO_100};
-            font: ${({ theme }) => theme.FONTS.POPPINS_100};
-            border-radius: 50%;
-            top: -0.9rem;
-            right: -0.7rem;
-        }
-    }
-
     @media (max-width: 1049px) {
         padding: 2.8rem;
 
@@ -65,7 +42,30 @@ export const Container = styled.header`
             }
         }
     }
-`
+`;
+
+export const ReceiptOrders = styled.div`
+    position: relative;
+    margin-right: 0.6rem;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    font-size: 3.2rem;
+`;
+
+export const Order = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: ${({ theme }) => theme.COLORS.TOMATO_100};
+    font: ${({ theme }) => theme.FONTS.POPPINS_100};
+    border-radius: 50%;
+    top: -0.5rem;
+    right: -0.7rem;
+`;
 
 export const Profile = styled.div`
     position: relative;
@@ -93,45 +93,45 @@ export const Profile = styled.div`
         transition: all 0.3s ease;
         visibility: visible;
     }
+`;
 
-    > div {
+export const ProfileMenu = styled.div`
+    position: absolute;
+    top: 9.6rem;
+    right: 0;
+    width: max-content;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 20px;
+
+    &::before {
+        content: "";
         position: absolute;
-        top: 9.6rem;
-        right: 0;
-        width: max-content;
-        box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 20px;
+        top: -1rem;
+        right: 2rem;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 10px solid ${({ theme }) => theme.COLORS.DARK_600};
+    }
+`;
 
-        > div::before {
-            content: "";
-            position: absolute;
-            top: -1rem;
-            right: 2rem;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 10px solid ${({ theme }) => theme.COLORS.DARK_600};
-        }
+export const ProfileMenuOptions = styled.div`
+    border-radius: 0.8rem;
+    padding: 1.6rem;
+    color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    background-color: ${({ theme }) => theme.COLORS.DARK_600};
+    
+    div {
+        font-size: 1.8rem;
 
-        > div {
-            border-radius: 0.8rem;
-            padding: 1.6rem;
-            color: ${({ theme }) => theme.COLORS.LIGHT_100};
-            background-color: ${({ theme }) => theme.COLORS.DARK_600};
-            
-            div {
-                font-size: 1.8rem;
-
-                &:hover {
-                    transform: scale(1.05);
-                    background-color: ${({ theme }) => theme.COLORS.DARK_900};
-                }
-            }
-
-            svg {
-                font-size: 2.4rem;
-                margin-right: 1rem;
-            }
+        &:hover {
+            transform: scale(1.05);
+            background-color: ${({ theme }) => theme.COLORS.DARK_900};
         }
     }
-`
+
+    svg {
+        font-size: 2.4rem;
+        margin-right: 1rem;
+    }
+`;

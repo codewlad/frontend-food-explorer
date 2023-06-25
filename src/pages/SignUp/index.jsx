@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Main, Form } from './styles';
 import { Brand } from '../../components/Brand';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+import { Container, Main, Form } from './styles';
 
 export function SignUp() {
     const mainRef = useRef(null);

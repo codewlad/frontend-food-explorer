@@ -9,4 +9,4 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.COLORS.LIGHT_400};
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
     }
-`
+`;
