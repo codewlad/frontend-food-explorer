@@ -1,12 +1,17 @@
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { useAuth } from '../hooks/auth';
 
-import { AppRoutes } from './app.routes';
 import { AuthRoutes } from './auth.routes';
+import { AdminRoutes } from './admin.routes';
+import { UserRoutes } from './user.routes';
 
 export function Routes() {
+    const { user, isAdmin } = useAuth();
+
     return (
         <BrowserRouter>
-            <AppRoutes />
+            {user ? (isAdmin ? <AdminRoutes /> : <UserRoutes />) : <AuthRoutes />}
         </BrowserRouter>
-    )
+    );
 }

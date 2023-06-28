@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { api } from '../../services/api';
 import { Brand } from '../../components/Brand';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
@@ -9,6 +10,31 @@ import { Container, Main, Form } from './styles';
 export function SignUp() {
     const mainRef = useRef(null);
     const containerRef = useRef(null);
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
+
+    function handleSignUp() {
+        if (!name || !email || !password) {
+            return alert("Preencha todos os campos.");
+        }
+
+        api.post("/users", { name, email, password })
+            .then(() => {
+                alert("Usuário cadastrado com sucesso!");
+                navigate("/");
+            })
+            .catch(error => {
+                if (error.response) {
+                    alert(error.response.data.message);
+                } else {
+                    alert("Não foi possível cadastrar.");
+                }
+            });
+    }
 
     useEffect(() => {
         function handleResize() {
@@ -39,18 +65,29 @@ export function SignUp() {
                     <h1>Crie sua conta</h1>
 
                     <Section title="Seu nome">
-                        <Input placeholder="Exemplo: Maria da Silva" />
+                        <Input
+                            placeholder="Exemplo: Maria da Silva"
+                            onChange={e => setName(e.target.value)}
+                        />
                     </Section>
 
                     <Section title="Email">
-                        <Input placeholder="Exemplo: exemplo@email.com.br" />
+                        <Input
+                            placeholder="Exemplo: exemplo@email.com.br"
+                            onChange={e => setEmail(e.target.value)}
+                        />
                     </Section>
 
                     <Section title="Senha">
-                        <Input placeholder="No mínimo 6 caracteres" />
+                        <Input
+                            placeholder="No mínimo 6 caracteres"
+                            onChange={e => setPassword(e.target.value)}
+                        />
                     </Section>
 
-                    <Button>Criar conta</Button>
+                    <Button
+                        onClick={handleSignUp}
+                    >Criar conta</Button>
 
                     <Link to="/">Já tenho uma conta</Link>
                 </Form>

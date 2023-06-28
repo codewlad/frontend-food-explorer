@@ -1,16 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { TfiSearch, TfiUser } from 'react-icons/tfi'
+import { TfiSearch, TfiUser } from 'react-icons/tfi';
+import { useAuth } from '../../hooks/auth';
 import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
 import { Footer } from '../Footer';
 import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Profile } from './styles';
 
 export function Menu() {
-    const isAdmin = false;
+    const { signOut, isAdmin } = useAuth();
+    const navigation = useNavigate();
+
     const [isChecked, setIsChecked] = useState(false);
     const titleMenu = !isChecked ? "titleMenu hide" : "titleMenu";
     const expandedMenuRef = useRef(null);
+
+    function handleSignOut() {
+        navigation("/");
+        signOut();
+    }
 
     const handleIconMenuClick = () => {
         setIsChecked(!isChecked);
@@ -87,6 +95,7 @@ export function Menu() {
                     )}
                     <ItemMenu
                         title="Sair"
+                        onClick={handleSignOut}
                     />
                 </ExpandedMenuOptions>
                 <Footer />

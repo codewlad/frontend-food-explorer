@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { TfiPlus, TfiMinus, TfiReceipt } from 'react-icons/tfi';
+import { useAuth } from '../../hooks/auth';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { BackButton } from '../../components/BackButton';
@@ -8,7 +9,7 @@ import { Button } from '../../components/Button';
 import { Container, Content, DishDetails, DishInformation, TagsIngredients, DishButon, DishControls } from './styles';
 
 export function Dish() {
-  const isAdmin = false;
+  const { isAdmin } = useAuth();
 
   const dish = {
     id: 1,

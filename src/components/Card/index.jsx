@@ -1,10 +1,11 @@
 import { TfiPlus, TfiMinus, TfiHeart, TfiPencil } from 'react-icons/tfi';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/auth';
 import { Button } from '../Button';
 import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
 
 export function Card({ data }) {
-    const isAdmin = false;
+    const { isAdmin } = useAuth();
     return (
         <Container>
             <Link to={`/dish/${data.id}`}>

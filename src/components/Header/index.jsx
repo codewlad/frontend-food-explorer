@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TfiReceipt, TfiUser } from 'react-icons/tfi';
 import { FiLogOut } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
+import { useAuth } from '../../hooks/auth';
 import { Brand } from '../Brand';
 import { Input } from '../Input';
 import { Button } from '../Button';
@@ -10,7 +11,9 @@ import { ItemMenu } from '../ItemMenu';
 import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions } from './styles';
 
 export function Header() {
-    const isAdmin = false;
+    const { signOut, isAdmin } = useAuth();
+    const navigation = useNavigate();
+
     const order = 5;
     const queryWidth = 1050;
     const [search, setSearch] = useState("");
@@ -18,6 +21,11 @@ export function Header() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
     const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
+
+    function handleSignOut() {
+        navigation("/");
+        signOut();
+    }
 
     useEffect(() => {
         setHasSearchPlaceholder(!search);
@@ -83,7 +91,11 @@ export function Header() {
                     <ProfileMenu className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
                         <ProfileMenuOptions>
                             <Link to="/add"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
-                            <Link to="/dish/1"><ItemMenu icon={FiLogOut} title="Sair" /></Link>
+                            <ItemMenu
+                                icon={FiLogOut}
+                                title="Sair"
+                                onClick={handleSignOut}
+                            />
                         </ProfileMenuOptions>
                     </ProfileMenu>
                 </Profile>
