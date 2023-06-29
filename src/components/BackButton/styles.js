@@ -7,6 +7,10 @@ export const Container = styled.div`
     color: ${({ theme }) => theme.COLORS.LIGHT_300};
     font: ${({ theme }) => theme.FONTS.POPPINS_300_BOLD};
 
+    &:hover {
+        cursor: pointer;
+    }
+
     svg {
         width: 3.4rem;
         font-size: 2.2rem;

@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     position: relative;
-    height: 46.2rem;
+    width: 30.4rem;
+    min-width: 30.4rem;
+    min-height: 46.2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,21 +15,29 @@ export const Container = styled.div`
     border: 0.1rem solid ${({ theme }) => theme.COLORS.DARK_300};
     border-radius: 0.8rem;
     padding: 2.4rem;
-    white-space: nowrap;
 
     > img {
         max-width: 17.6rem;
         width: 100%;
         height: auto;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     h3 {
         font: ${({ theme }) => theme.FONTS.POPPINS_300_BOLD};
+        
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     > p {
         color: ${({ theme }) => theme.COLORS.LIGHT_400};
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALLER_REGULAR};
+        text-align: center;
     }
 
     > span {
@@ -62,4 +72,8 @@ export const TopRightButton = styled.div`
     top: 1.6rem;
     right: 1.6rem;
     font-size: 2.4rem;
+
+    &:hover {
+        cursor: pointer;
+    }
 `;

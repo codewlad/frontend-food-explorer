@@ -12,7 +12,7 @@ import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptio
 
 export function Header() {
     const { signOut, isAdmin } = useAuth();
-    const navigation = useNavigate();
+    const navigate = useNavigate();
 
     const order = 5;
     const queryWidth = 1050;
@@ -23,7 +23,7 @@ export function Header() {
     const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
 
     function handleSignOut() {
-        navigation("/");
+        navigate("/");
         signOut();
     }
 

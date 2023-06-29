@@ -74,7 +74,7 @@ export const DishInformation = styled.div`
     }
 `;
 
-export const TagsIngredients = styled.div`
+export const Ingredients = styled.div`
     display: flex;
     gap: 1.2rem;
     flex-wrap: wrap;

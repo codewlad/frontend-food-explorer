@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import { api } from '../../services/api'
 import { Header } from '../../components/Header';
 import { Card } from '../../components/Card';
 import { Carousel } from '../../components/Carousel';
@@ -6,23 +8,29 @@ import { Container, Content, Banner, WrappedBanner, Slogan, BgBanner } from './s
 
 export function Home() {
 
-  const meals = [
-    { id: 1, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-    { id: 2, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-    { id: 3, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-    { id: 4, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-  ];
+  const [dishes, setDishes] = useState([]);
+  const [meals, setMeals] = useState([]);
+  const [desserts, setDesserts] = useState([]);
+  const [drinks, setDrinks] = useState([]);
+  const [name, setName] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
 
-  const desserts = [
-    { id: 1, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-    { id: 2, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-    { id: 3, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-    { id: 4, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-    { id: 5, image: "image.png", name: "Spaguetti Gambe", description: "Massa fresca com camarões e pesto.", price: 79.97 },
-  ];
+  useEffect(() => {
+    async function fetchDishes() {
+      const response = await api.get(`/dishes?name=${name}&ingredients=${ingredients}`);
+      const { data } = response;
 
-  const mealsContent = meals.map(meal => <Card key={meal.id} data={meal} />);
-  const dessertsContent = desserts.map(dessert => <Card key={dessert.id} data={dessert} />);
+      const mealsArray = data.filter(dish => dish.category === 'Refeições');
+      const dessertsArray = data.filter(dish => dish.category === 'Sobremesas');
+      const drinksArray = data.filter(dish => dish.category === 'Bebidas');
+
+      setMeals(mealsArray.map(meal => <Card key={meal.id} data={meal} />));
+      setDesserts(dessertsArray.map(dessert => <Card key={dessert.id} data={dessert} />));
+      setDrinks(drinksArray.map(drink => <Card key={drink.id} data={drink} />));
+    }
+
+    fetchDishes()
+  }, [])
 
   return (
     <Container>
@@ -36,8 +44,18 @@ export function Home() {
           </Slogan>
           <BgBanner className="bgBanner" />
         </Banner>
-        <Carousel title="Refeições" content={mealsContent} />
-        <Carousel title="Sobremesas" content={dessertsContent} />
+        {
+          meals.length > 0 &&
+          <Carousel title="Refeições" content={meals} />
+        }
+        {
+          desserts.length > 0 &&
+          <Carousel title="Sobremesas" content={desserts} />
+        }
+        {
+          drinks.length > 0 &&
+          <Carousel title="Bebidas" content={drinks} />
+        }
       </Content>
       <Footer />
     </Container>

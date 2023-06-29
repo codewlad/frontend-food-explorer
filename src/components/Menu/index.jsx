@@ -9,14 +9,14 @@ import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Prof
 
 export function Menu() {
     const { signOut, isAdmin } = useAuth();
-    const navigation = useNavigate();
+    const navigate = useNavigate();
 
     const [isChecked, setIsChecked] = useState(false);
     const titleMenu = !isChecked ? "titleMenu hide" : "titleMenu";
     const expandedMenuRef = useRef(null);
 
     function handleSignOut() {
-        navigation("/");
+        navigate("/");
         signOut();
     }
 
@@ -33,7 +33,9 @@ export function Menu() {
                 expandedMenuRef.current.classList.remove("animateOpenMenu");
                 expandedMenuRef.current.classList.add("animateCloseMenu");
                 setTimeout(() => {
-                    expandedMenuRef.current.classList.remove("animateCloseMenu");
+                    if (expandedMenuRef.current) {
+                        expandedMenuRef.current.classList.remove("animateCloseMenu");
+                    }
                 }, 300);
             }
         }

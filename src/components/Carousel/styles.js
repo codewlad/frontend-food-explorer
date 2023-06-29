@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
     max-width: 100%;
     overflow-x: auto;
-    white-space: nowrap;
     position: relative;
 
     > h2 {
@@ -114,8 +113,7 @@ export const GradientRight = styled.div`
 export const Content = styled.div`
     position: relative;
     display: flex;
-    gap: 2.7rem;   
-    white-space: nowrap;
+    gap: 2.7rem;
     padding: 0 15rem;
 
     overflow-x: auto;

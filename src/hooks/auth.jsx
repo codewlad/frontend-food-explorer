@@ -10,15 +10,12 @@ function AuthProvider({ children }) {
     async function signIn({ email, password }) {
         try {
             const response = await api.post("/sessions", { email, password });
-            const { user, token } = response.data;
+            const { user, token, isAdmin } = response.data;
 
             localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
             localStorage.setItem("@foodexplorer:token", token);
 
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-            const decodedToken = jwt_decode(token);
-            const isAdmin = decodedToken.isAdmin;
 
             setData({ user, token, isAdmin })
 
@@ -51,7 +48,7 @@ function AuthProvider({ children }) {
             setData({
                 token,
                 user: JSON.parse(user),
-                isAdmin,
+                isAdmin
             });
         }
 

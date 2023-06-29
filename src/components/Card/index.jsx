@@ -1,24 +1,37 @@
 import { TfiPlus, TfiMinus, TfiHeart, TfiPencil } from 'react-icons/tfi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import { Button } from '../Button';
 import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
 
 export function Card({ data }) {
     const { isAdmin } = useAuth();
+
+    const navigate = useNavigate();
+
+    function handleDish(id) {
+        navigate(`/dish/${id}`)
+    }
+
+    function handleEditDish(id) {
+        navigate(`/edit/${id}`)
+    }
+
     return (
         <Container>
-            <Link to={`/dish/${data.id}`}>
-                <img src={`../../src/assets/${data.image}`} alt={`Imagem de ${data.description.toLowerCase()}`} />
-            </Link>
-            <Link to={`/dish/${data.id}`}>
-                <h3>{data.name} &gt;</h3>
-            </Link>
+            <img
+                src={`../../src/assets/image.png`}
+                alt={`Imagem de ${data.description.toLowerCase()}`}
+                onClick={() => handleDish(data.id)}
+            />
+            <h3
+                onClick={() => handleDish(data.id)}
+            >{data.name} &gt;</h3>
             <p>{data.description}</p>
             <span>{data.price}</span>
             {isAdmin ? (
                 <TopRightButton>
-                    <Link to={`/edit/${data.id}`}><TfiPencil /></Link>
+                    <TfiPencil onClick={() => handleEditDish(data.id)} />
                 </TopRightButton>
             ) : (
                 <div>
