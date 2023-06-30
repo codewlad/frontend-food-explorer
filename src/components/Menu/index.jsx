@@ -2,14 +2,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { TfiSearch, TfiUser } from 'react-icons/tfi';
 import { useAuth } from '../../hooks/auth';
+import { api } from '../../services/api';
 import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
 import { Footer } from '../Footer';
 import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Profile } from './styles';
 
 export function Menu() {
-    const { signOut, isAdmin } = useAuth();
+    const { signOut, user, isAdmin } = useAuth();
     const navigate = useNavigate();
+
+    const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
+
+    const avatarStyle = {
+        backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
+    };
 
     const [isChecked, setIsChecked] = useState(false);
     const titleMenu = !isChecked ? "titleMenu hide" : "titleMenu";
@@ -73,9 +80,13 @@ export function Menu() {
             </IconMenu>
             <TitleMenu className={titleMenu}>
                 <span>Menu</span>
-                <Profile>
-                    <TfiUser />
-                </Profile>
+                <Link to="/profile">
+                    <Profile style={avatarStyle}>
+                        {
+                            !user.avatar && <TfiUser />
+                        }
+                    </Profile>
+                </Link>
             </TitleMenu>
 
             <ExpandedMenu ref={expandedMenuRef} className="expandedMenu">

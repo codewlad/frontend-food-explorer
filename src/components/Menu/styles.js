@@ -184,4 +184,7 @@ export const Profile = styled.div`
     min-width: 5.6rem;
     min-height: 5.6rem;
     cursor: pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 `;

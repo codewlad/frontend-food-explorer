@@ -3,6 +3,7 @@ import { TfiReceipt, TfiUser } from 'react-icons/tfi';
 import { FiLogOut } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/auth';
+import { api } from '../../services/api';
 import { Brand } from '../Brand';
 import { Input } from '../Input';
 import { Button } from '../Button';
@@ -11,9 +12,10 @@ import { ItemMenu } from '../ItemMenu';
 import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions } from './styles';
 
 export function Header() {
-    const { signOut, isAdmin } = useAuth();
+    const { signOut, user, isAdmin } = useAuth();
     const navigate = useNavigate();
 
+    const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
     const order = 5;
     const queryWidth = 1050;
     const [search, setSearch] = useState("");
@@ -21,6 +23,10 @@ export function Header() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
     const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
+
+    const avatarStyle = {
+        backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
+    };
 
     function handleSignOut() {
         navigate("/");
@@ -86,11 +92,13 @@ export function Header() {
                 )
             )}
             {windowWidth >= queryWidth && (
-                <Profile onClick={() => setIsProfileMenuVisible(!isProfileMenuVisible)}>
-                    <TfiUser />
+                <Profile style={avatarStyle} onClick={() => setIsProfileMenuVisible(!isProfileMenuVisible)}>
+                    {
+                        !user.avatar && <TfiUser />
+                    }
                     <ProfileMenu className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
                         <ProfileMenuOptions>
-                            <Link to="/add"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
+                            <Link to="/profile"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
                             <ItemMenu
                                 icon={FiLogOut}
                                 title="Sair"
