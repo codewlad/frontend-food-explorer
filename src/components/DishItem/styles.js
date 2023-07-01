@@ -4,7 +4,7 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 1.6rem;
+    padding: 0.7rem 1.6rem;
     border-radius: 0.8rem;
     padding-right: 1.6rem;
     background-color: ${({ theme, $isNew }) => $isNew ? "transparent" : theme.COLORS.LIGHT_600};

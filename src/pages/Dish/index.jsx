@@ -9,11 +9,13 @@ import { BackButton } from '../../components/BackButton';
 import { TagIngredients } from '../../components/TagIngredients';
 import { Button } from '../../components/Button';
 import { Container, Content, DishDetails, DishInformation, Ingredients, DishButon, DishControls } from './styles';
+import defaultDish from '../../../src/assets/dish.svg';
 
 export function Dish() {
   const { isAdmin } = useAuth();
 
   const [data, setData] = useState(null);
+  const [dishImage, setDishImage] = useState(null);
 
   const params = useParams();
 
@@ -21,6 +23,7 @@ export function Dish() {
     async function fetchDish() {
       const response = await api.get(`/dishes/${params.id}`);
       setData(response.data);
+      setDishImage(response.data.image ? `${api.defaults.baseURL}/files/${response.data.image}` : `${defaultDish}`)
     }
 
     fetchDish()
@@ -34,7 +37,7 @@ export function Dish() {
         {
           data &&
           <DishDetails className='dish'>
-            <img src={`../../src/assets/image.png`} alt={`Imagem de ${data.description}`} />
+            <img src={dishImage} alt={`Imagem de ${data.description}`} />
             <section>
               <DishInformation className='dishInformation'>
                 <h1>{data.name}</h1>
