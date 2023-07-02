@@ -37,7 +37,7 @@ export const DishInformations = styled.div`
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
     }
 
-    select, textarea, > div:nth-child(1) button, > div:nth-child(4) > div {
+    select, textarea, > div:nth-child(4) > div {
         width: 100%;
         height: 4.8rem;
         display: flex;
@@ -194,4 +194,4 @@ export const RemoveImage = styled.div`
         height: 1.5rem;
         color: ${({ theme }) => theme.COLORS.LIGHT_100};
     }
-`
+`;

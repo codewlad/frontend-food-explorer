@@ -37,7 +37,7 @@ export const DishInformations = styled.div`
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
     }
 
-    select, textarea, > div:nth-child(1) button, > div:nth-child(4) > div {
+    select, textarea, > div:nth-child(4) > div {
         width: 100%;
         height: 4.8rem;
         display: flex;
@@ -53,11 +53,6 @@ export const DishInformations = styled.div`
     > div:nth-child(1) {
         grid-row: 1;
         grid-column: 1 / span 3;
-        
-        svg {
-            font-size: 2.4rem;
-            margin-right: 0.8rem;
-        }
     }
 
     > div:nth-child(2) {
@@ -118,10 +113,6 @@ export const DishInformations = styled.div`
         > button:nth-child(1) {
             background-color: ${({ theme }) => theme.COLORS.DARK_900};
         }
-
-        > button:nth-child(2) {
-            background-color: ${({ theme }) => theme.COLORS.TOMATO_400};
-        }
     }
 
     @media (max-width: 1049px) {
@@ -145,5 +136,72 @@ export const DishInformations = styled.div`
                 padding: 1.2rem;
             }
         }
+    }
+`;
+
+export const ChoiceImage = styled.div`
+    position: relative;
+    width: 100%;
+    height: 4.8rem;
+    display: flex;
+    gap: 1rem;    
+
+    img {
+        width: 4.8rem;
+        height: 4.8rem;
+        border-radius: 0.8rem;
+
+        &:hover + div {
+            display: flex;
+        }
+    }
+
+    label {
+        width: 100%;
+        height: 4.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #0D1D25;
+        border-radius: 0.5rem;
+        font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
+
+        svg {
+            font-size: 2.4rem;
+            margin-right: 0.8rem;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    label input {
+        display: none;
+    }
+`;
+
+export const RemoveImage = styled.div`
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    top: 0;
+    left: 2.3rem;
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    &:hover {
+        display: flex;
+        cursor: pointer;
+    }
+
+    > svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: ${({ theme }) => theme.COLORS.LIGHT_100};
     }
 `;

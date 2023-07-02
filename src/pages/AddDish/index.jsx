@@ -85,7 +85,7 @@ export function AddDish() {
       fileUploadForm.append("price", price);
       fileUploadForm.append("description", description);
 
-      const response = await api.post("/dishes", fileUploadForm);
+      await api.post("/dishes", fileUploadForm);
 
       alert("Prato criado com sucesso!");
       navigate("/");
@@ -120,7 +120,6 @@ export function AddDish() {
                 <FiUpload /> Selecione imagem
                 <input id="dishImage" type="file" onChange={handleChoiceOfDish} />
               </label>
-
             </ChoiceImage>
           </Section>
 
