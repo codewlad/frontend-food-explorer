@@ -67,6 +67,15 @@ export function EditDish() {
     setDishImageHasChanges(true);
   };
 
+  async function handleRemove() {
+    const confirm = window.confirm("Deseja realmente remover o prato?");
+
+    if (confirm) {
+      await api.delete(`/dishes/${id}`);
+      navigate("/");
+    }
+  };
+
   async function handleUpdateDish() {
     try {
       const fileUploadForm = new FormData();
@@ -89,7 +98,7 @@ export function EditDish() {
     } catch (error) {
       console.error("Ocorreu um erro ao atualizar o prato:", error);
     }
-  }
+  };
 
   useEffect(() => {
     async function fetchDish() {
@@ -205,8 +214,9 @@ export function EditDish() {
           </Section>
 
           <div>
-            <Button>
-              Excluir prato
+            <Button
+              onClick={handleRemove}
+            >Excluir prato
             </Button>
             <Button
               type="text"
