@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { TfiReceipt, TfiUser } from 'react-icons/tfi';
 import { FiLogOut } from 'react-icons/fi';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { searchContext } from '../../pages/Home';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 import { Brand } from '../Brand';
@@ -9,7 +10,8 @@ import { Input } from '../Input';
 import { Button } from '../Button';
 import { Menu } from '../Menu';
 import { ItemMenu } from '../ItemMenu';
-import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions } from './styles';
+import defaultDish from '../../../src/assets/dish.svg';
+import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions, SearchList } from './styles';
 
 export function Header() {
     const { signOut, user, isAdmin } = useAuth();
@@ -23,14 +25,31 @@ export function Header() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
     const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
+    const [dishes, setDishes] = useState([]);
+    const [filteredSearch, setFilteredSearch] = useState([]);
 
     const avatarStyle = {
         backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
     };
 
+    const [itemSearch, setItemSearch, page] = useContext(searchContext);
+
     function handleSignOut() {
         navigate("/");
         signOut();
+    }
+
+    function handleDish(id) {
+        const pageNameAndId = window.location.pathname.split("/");
+
+        navigate(`/dish/${id}`);
+
+        if (pageNameAndId[1] === "dish" && pageNameAndId[2] !== id.toString()) {
+            window.location.reload();
+        } else {
+            document.querySelector("#searchDishes").value = "";
+            setSearch("");
+        }
     }
 
     useEffect(() => {
@@ -46,6 +65,7 @@ export function Header() {
             } else {
                 setIsProfileMenuHidden(true);
                 setIsProfileMenuVisible(false);
+                setSearch("");
             }
         }
 
@@ -55,6 +75,44 @@ export function Header() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        if (page === "home") {
+            setItemSearch(search)
+        }
+
+        function filterDishesByNameOrIngredient(searchQuery) {
+            searchQuery = searchQuery.toLowerCase();
+
+            var filteredDishes = dishes.filter(function (dish) {
+                if (dish.name.toLowerCase().includes(searchQuery)) {
+                    return true;
+                }
+
+                var foundIngredient = dish.ingredients.find(function (ingredient) {
+                    return ingredient.name.toLowerCase().includes(searchQuery);
+                });
+
+                return !!foundIngredient;
+            });
+
+            return filteredDishes;
+        }
+
+        var searchResult = filterDishesByNameOrIngredient(search);
+        setFilteredSearch(searchResult);
+
+    }, [search])
+
+    useEffect(() => {
+        async function fetchDishes() {
+            const response = await api.get(`/dishes?itemSearch=${search}`);
+
+            setDishes(response.data);
+        }
+
+        fetchDishes();
+    }, [])
 
     return (
         <Container>
@@ -67,7 +125,32 @@ export function Header() {
                     onChange={(e) => setSearch(e.target.value)}
                     aria-label="Busque por pratos ou ingredientes"
                     searchPlaceholder={hasSearchPlaceholder}
-                />
+                    value={search}
+                >
+                    {
+                        search && filteredSearch.length > 0 && page !== "home" &&
+                        <SearchList>
+                            {
+                                filteredSearch.map(dish =>
+                                    <div key={dish.id} onClick={() => handleDish(dish.id)}>
+                                        {
+                                            dish.image ? (
+                                                <img src={`${api.defaults.baseURL}/files/${dish.image}`} />
+                                            ) : (
+                                                <img src={defaultDish} />
+                                            )
+                                        }
+                                        <span>{dish.name}</span>
+                                    </div>
+                                )
+                            }
+                        </SearchList>
+                    }
+                    {
+                        search && filteredSearch.length === 0 && page !== "home" &&
+                        <SearchList><span>Nenhum resultado encontrado!</span></SearchList>
+                    }
+                </Input>
             )}
             {windowWidth >= queryWidth ? (
                 isAdmin ? (

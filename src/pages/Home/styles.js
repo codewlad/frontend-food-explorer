@@ -117,3 +117,10 @@ export const BgBanner = styled.div`
         background: ${({ theme }) => theme.COLORS.GRADIENTS_200};
     }
 `;
+
+export const NoResults = styled.div`
+    width: 100%;
+    text-align: center;
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
+    font: ${({ theme }) => theme.FONTS.POPPINS_400};
+`

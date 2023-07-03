@@ -6,7 +6,8 @@ import { api } from '../../services/api';
 import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
 import { Footer } from '../Footer';
-import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Profile } from './styles';
+import defaultDish from '../../../src/assets/dish.svg';
+import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Profile, SearchList } from './styles';
 
 export function Menu() {
     const { signOut, user, isAdmin } = useAuth();
@@ -21,6 +22,9 @@ export function Menu() {
     const [isChecked, setIsChecked] = useState(false);
     const titleMenu = !isChecked ? "titleMenu hide" : "titleMenu";
     const expandedMenuRef = useRef(null);
+    const [search, setSearch] = useState("");
+    const [dishes, setDishes] = useState([]);
+    const [filteredSearch, setFilteredSearch] = useState([]);
 
     function handleSignOut() {
         navigate("/");
@@ -44,15 +48,34 @@ export function Menu() {
                         expandedMenuRef.current.classList.remove("animateCloseMenu");
                     }
                 }, 300);
+                document.querySelector(".expandedMenu input").value = "";
+                setSearch("");
             }
         }
     };
+
+    function handleDish(id) {
+        const pageNameAndId = window.location.pathname.split("/");
+
+        navigate(`/dish/${id}`);
+
+        if (pageNameAndId[1] === "dish" && pageNameAndId[2] !== id.toString()) {
+            window.location.reload();
+        } else {
+            setIsChecked(false);
+            expandedMenuRef.current.classList.remove("animateOpenMenu");
+            document.querySelector(".expandedMenu input").value = "";
+            setSearch("");
+        }
+    }
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth > 1049) {
                 setIsChecked(false);
                 expandedMenuRef.current.classList.remove("animateOpenMenu");
+                document.querySelector(".expandedMenu input").value = "";
+                setSearch("");
             }
         };
 
@@ -62,6 +85,40 @@ export function Menu() {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        async function fetchDishes() {
+            const response = await api.get(`/dishes?itemSearch=${search}`);
+
+            setDishes(response.data);
+        }
+
+        fetchDishes();
+    }, [])
+
+    useEffect(() => {
+        function filterDishesByNameOrIngredient(searchQuery) {
+            searchQuery = searchQuery.toLowerCase();
+
+            var filteredDishes = dishes.filter(function (dish) {
+                if (dish.name.toLowerCase().includes(searchQuery)) {
+                    return true;
+                }
+
+                var foundIngredient = dish.ingredients.find(function (ingredient) {
+                    return ingredient.name.toLowerCase().includes(searchQuery);
+                });
+
+                return !!foundIngredient;
+            });
+
+            return filteredDishes;
+        }
+
+        var searchResult = filterDishesByNameOrIngredient(search);
+        setFilteredSearch(searchResult);
+
+    }, [search])
 
     return (
         <Container>
@@ -92,9 +149,35 @@ export function Menu() {
             <ExpandedMenu ref={expandedMenuRef} className="expandedMenu">
                 <ExpandedMenuOptions>
                     <Input
+                        type="text"
                         placeholder="Busque por pratos ou ingredientes"
                         icon={TfiSearch}
-                    />
+                        onChange={(e) => setSearch(e.target.value)}
+                    >
+                        {
+                            search && filteredSearch.length > 0 &&
+                            <SearchList>
+                                {
+                                    filteredSearch.map(dish =>
+                                        <div key={dish.id} onClick={() => handleDish(dish.id)}>
+                                            {
+                                                dish.image ? (
+                                                    <img src={`${api.defaults.baseURL}/files/${dish.image}`} />
+                                                ) : (
+                                                    <img src={defaultDish} />
+                                                )
+                                            }
+                                            <span>{dish.name}</span>
+                                        </div>
+                                    )
+                                }
+                            </SearchList>
+                        }
+                        {
+                            search && filteredSearch.length === 0 &&
+                            <SearchList><span>Nenhum resultado encontrado!</span></SearchList>
+                        }
+                    </Input>
                     {isAdmin ? (
                         <Link to="/add" onClick={handleIconMenuClick}>
                             <ItemMenu

@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { TfiPlus, TfiMinus, TfiReceipt } from 'react-icons/tfi';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/auth';

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FiUpload } from 'react-icons/fi';
 import { TfiClose } from 'react-icons/tfi';
@@ -55,20 +55,11 @@ export function AddDish() {
   }
 
   function checkBlankFields() {
-    dishImage ? console.log("IMAGEM --> OK") : console.log("IMAGEM --> NÃO OK")
-    name ? console.log("NAME --> OK") : console.log("NAME --> NÃO OK")
-    selectedCategory ? console.log("CATEGORY --> OK") : console.log("CATEGORY --> NÃO OK")
-    ingredients.length > 0 ? console.log("INGREDIENTS --> OK") : console.log("INGREDIENTS --> NÃO OK")
-    price ? console.log("PRICE --> OK") : console.log("PRICE --> NÃO OK")
-    description ? console.log("DESCRIPTION --> OK") : console.log("DESCRIPTION --> NÃO OK")
-
     if (name && selectedCategory && ingredients.length > 0 && price && description) {
       setIsNotBlankFields(true);
     } else {
       setIsNotBlankFields(false);
     }
-
-    console.log(`isNotBlankFields --> ${isNotBlankFields}`);
   }
 
   async function handleNewDish() {
@@ -102,7 +93,7 @@ export function AddDish() {
     <Container>
       <Header />
       <Content>
-        <Link to="/"><BackButton /></Link>
+        <BackButton />
         <h1>Adicionar prato</h1>
         <DishInformations className='dishInformations'>
           <Section title="Imagem do prato">

@@ -4,14 +4,10 @@ import { Container } from './styles';
 
 export function BackButton() {
 
-    const navigate = useNavigate();
-
-    function handleBack() {
-        navigate(-1);
-    }
+    const navigate = useNavigate()
 
     return (
-        <Container onClick={handleBack}>
+        <Container onClick={() => navigate("/")}>
             <TfiAngleLeft />voltar
         </Container>
     )

@@ -19,6 +19,10 @@ export const Container = styled.header`
         text-align: center;
     }
 
+    #searchDishes {
+        position: relative;
+    }
+
     button {
         max-width: 17rem;
         min-width: 17rem;
@@ -136,5 +140,62 @@ export const ProfileMenuOptions = styled.div`
     svg {
         font-size: 2.4rem;
         margin-right: 1rem;
+    }
+`;
+
+export const SearchList = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    top: 9.6rem;
+    right: 0;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 20px;
+    font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
+    color: ${({ theme }) => theme.COLORS.LIGHT_400};
+    background-color: ${({ theme }) => theme.COLORS.DARK_600};
+    border-radius: 0.8rem;
+    padding: 1.6rem;
+
+    img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    > div {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s;
+        border-radius: 0.8rem;
+
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            background-color: ${({ theme }) => theme.COLORS.DARK_900};
+        }
+    }
+
+    span {
+        font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
+        color: ${({ theme }) => theme.COLORS.LIGHT_400};
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 4rem;
+        padding: 0.5rem;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -1rem;
+        right: 2rem;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 10px solid ${({ theme }) => theme.COLORS.DARK_600};
     }
 `;
