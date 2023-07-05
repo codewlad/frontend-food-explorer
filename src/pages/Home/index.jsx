@@ -1,13 +1,11 @@
 import { useAuth } from '../../hooks/auth';
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from '../../services/api'
 import { Header } from '../../components/Header';
 import { Card } from '../../components/Card';
 import { Carousel } from '../../components/Carousel';
 import { Footer } from '../../components/Footer';
 import { Container, Content, Banner, WrappedBanner, Slogan, BgBanner, NoResults } from './styles';
-
-export const searchContext = createContext([]);
 
 export function Home() {
 
@@ -83,9 +81,7 @@ export function Home() {
 
   return (
     <Container>
-      <searchContext.Provider value={[itemSearch, setItemSearch, page]}>
-        <Header />
-      </searchContext.Provider>
+      <Header setItemSearch={setItemSearch} page={page} />
       <Content>
         <Banner className="banner">
           <WrappedBanner className="wrappedBanner" />

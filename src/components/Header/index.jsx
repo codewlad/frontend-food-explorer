@@ -1,8 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { TfiReceipt, TfiUser, TfiHeart } from 'react-icons/tfi';
 import { FiLogOut } from 'react-icons/fi';
-import { useState, useEffect, useContext } from 'react';
-import { searchContext } from '../../pages/Home';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 import { Brand } from '../Brand';
@@ -13,9 +12,11 @@ import { ItemMenu } from '../ItemMenu';
 import defaultDish from '../../../src/assets/dish.svg';
 import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions, SearchList } from './styles';
 
-export function Header() {
+export function Header(props) {
     const { signOut, user, isAdmin } = useAuth();
     const navigate = useNavigate();
+
+    const { setItemSearch, page } = props;
 
     const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
     const order = 5;
@@ -31,8 +32,6 @@ export function Header() {
     const avatarStyle = {
         backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
     };
-
-    const [itemSearch, setItemSearch, page] = useContext(searchContext);
 
     function handleSignOut() {
         navigate("/");
@@ -77,6 +76,7 @@ export function Header() {
     }, []);
 
     useEffect(() => {
+
         if (page === "home") {
             setItemSearch(search)
         }
