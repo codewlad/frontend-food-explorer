@@ -60,6 +60,11 @@ export const DishInformation = styled.div`
         font: ${({ theme }) => theme.FONTS.POPPINS_300_REGULAR};
     }
 
+    span {
+        color: ${({ theme }) => theme.COLORS.CAKE_200};
+        font: ${({ theme }) => theme.FONTS.ROBOTO_BIGGEST_REGULAR};
+    }
+
     @media (max-width: 1049px) {
         align-items: center;
         text-align: center;

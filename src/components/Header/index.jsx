@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { TfiReceipt, TfiUser } from 'react-icons/tfi';
+import { TfiReceipt, TfiUser, TfiHeart } from 'react-icons/tfi';
 import { FiLogOut } from 'react-icons/fi';
 import { useState, useEffect, useContext } from 'react';
 import { searchContext } from '../../pages/Home';
@@ -117,7 +117,7 @@ export function Header() {
     return (
         <Container>
             <Menu />
-            <Brand isAdmin={isAdmin} />
+            <Link to="/"><Brand isAdmin={isAdmin} /></Link>
             {windowWidth >= queryWidth && (
                 <Input
                     id="searchDishes"
@@ -181,6 +181,10 @@ export function Header() {
                     }
                     <ProfileMenu className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
                         <ProfileMenuOptions>
+                            {
+                                !isAdmin &&
+                                <Link to="/favorites"><ItemMenu icon={TfiHeart} title="Favoritos" /></Link>
+                            }
                             <Link to="/profile"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
                             <ItemMenu
                                 icon={FiLogOut}

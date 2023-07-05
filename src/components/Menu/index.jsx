@@ -63,6 +63,7 @@ export function Menu() {
             window.location.reload();
         } else {
             setIsChecked(false);
+            document.documentElement.style.overflowY = "auto";
             expandedMenuRef.current.classList.remove("animateOpenMenu");
             document.querySelector(".expandedMenu input").value = "";
             setSearch("");
@@ -180,14 +181,10 @@ export function Menu() {
                     </Input>
                     {isAdmin ? (
                         <Link to="/add" onClick={handleIconMenuClick}>
-                            <ItemMenu
-                                title="Novo prato"
-                            />
+                            <ItemMenu title="Novo prato" />
                         </Link>
                     ) : (
-                        <ItemMenu
-                            title="Favoritos"
-                        />
+                        <Link to="/favorites"><ItemMenu title="Favoritos" /></Link>
                     )}
                     <ItemMenu
                         title="Sair"

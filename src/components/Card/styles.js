@@ -63,6 +63,17 @@ export const DishControls = styled.div`
     gap: 1.4rem;
     align-items: center;
     font: ${({ theme }) => theme.FONTS.ROBOTO_BIG_BOLD};
+    user-select: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    > span {
+        cursor: default;
+        width: 3rem;
+        text-align: center;
+    }
 `;
 
 export const TopRightButton = styled.div`

@@ -11,6 +11,7 @@ export const Container = styled.button`
     padding: 1.2rem;
     border: none;
     border-radius: 0.5rem;
+    user-select: none;
 
     &:disabled {
         background-color: ${({ theme }) => theme.COLORS.TOMATO_400};

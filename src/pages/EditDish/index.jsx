@@ -78,6 +78,13 @@ export function EditDish() {
 
   async function handleUpdateDish() {
     try {
+      const priceRegex = /^\d{1,3},\d{2}$/;
+      if (!priceRegex.test(price)) {
+        return alert("Formato de preço inválido. Insira um valor no formato XXX,XX.");
+      }
+
+      const formattedPrice = price.replace(",", ".");
+
       const fileUploadForm = new FormData();
 
       if (dishImageFile) {
@@ -87,7 +94,7 @@ export function EditDish() {
       fileUploadForm.append("name", name);
       fileUploadForm.append("category", selectedCategory);
       fileUploadForm.append("ingredients", JSON.stringify(ingredients));
-      fileUploadForm.append("price", price);
+      fileUploadForm.append("price", formattedPrice);
       fileUploadForm.append("description", description);
       fileUploadForm.append("removeDishImage", dishImage);
 
@@ -98,7 +105,7 @@ export function EditDish() {
     } catch (error) {
       console.error("Ocorreu um erro ao atualizar o prato:", error);
     }
-  };
+  }
 
   useEffect(() => {
     async function fetchDish() {
@@ -198,7 +205,7 @@ export function EditDish() {
           <Section title="Preço">
             <Input
               placeholder="R$ 00,00"
-              value={price}
+              value={price.toString().replace('.', ',')}
               onChange={(e) => setPrice(e.target.value)}
             />
           </Section>

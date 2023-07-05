@@ -8,8 +8,8 @@ import { Footer } from '../../components/Footer';
 import { BackButton } from '../../components/BackButton';
 import { TagIngredients } from '../../components/TagIngredients';
 import { Button } from '../../components/Button';
-import { Container, Content, DishDetails, DishInformation, Ingredients, DishButon, DishControls } from './styles';
 import defaultDish from '../../../src/assets/dish.svg';
+import { Container, Content, DishDetails, DishInformation, Ingredients, DishButon, DishControls } from './styles';
 
 export function Dish() {
   const { isAdmin } = useAuth();
@@ -48,6 +48,7 @@ export function Dish() {
                     data.ingredients.map(ingredient => <TagIngredients title={ingredient.name} key={ingredient.id} />)
                   }
                 </Ingredients>
+                <span>R$ {data.price}</span>
               </DishInformation>
               {isAdmin ? (
                 <DishButon className="dishButon">

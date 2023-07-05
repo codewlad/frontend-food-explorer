@@ -64,6 +64,13 @@ export function AddDish() {
 
   async function handleNewDish() {
     try {
+      const priceRegex = /^\d{1,3},\d{2}$/;
+      if (!priceRegex.test(price)) {
+        return alert("Formato de preço inválido. Insira um valor no formato XXX,XX.");
+      }
+
+      const formattedPrice = price.replace(",", ".");
+
       const fileUploadForm = new FormData();
 
       if (dishImageFile) {
@@ -73,7 +80,7 @@ export function AddDish() {
       fileUploadForm.append("name", name);
       fileUploadForm.append("category", selectedCategory);
       fileUploadForm.append("ingredients", JSON.stringify(ingredients));
-      fileUploadForm.append("price", price);
+      fileUploadForm.append("price", formattedPrice);
       fileUploadForm.append("description", description);
 
       await api.post("/dishes", fileUploadForm);
@@ -84,6 +91,7 @@ export function AddDish() {
       console.error("Ocorreu um erro ao criar o prato:", error);
     }
   }
+
 
   useEffect(() => {
     checkBlankFields();
