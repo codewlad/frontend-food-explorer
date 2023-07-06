@@ -2,13 +2,13 @@ import { TfiPlus, TfiMinus, TfiPencil } from 'react-icons/tfi';
 import { VscHeartFilled, VscHeart } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 import { Button } from '../Button';
 import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
 import defaultDish from '../../../src/assets/dish.svg';
 
-export function Card({ data, setFavoritesUpdated }) {
+export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
     const { user, isAdmin } = useAuth();
 
     const navigate = useNavigate();
@@ -57,6 +57,10 @@ export function Card({ data, setFavoritesUpdated }) {
         setFavoritesUpdated(favorites);
     }
 
+    function handleAddDish(dish_id, amount) {
+        setDishToAdd({ dish_id, amount });
+    }
+
     return (
         <Container>
             <img
@@ -81,14 +85,14 @@ export function Card({ data, setFavoritesUpdated }) {
                             <span>{dishAmount}</span>
                             <TfiPlus onClick={increase} />
                         </DishControls>
-                        <Button>
+                        <Button onClick={() => handleAddDish(dish.id, dishAmount)}>
                             incluir
                         </Button>
                     </AmountOfDishes>
                     <TopRightButton onClick={() => changeFavorite()}>
                         {
                             isFavorite(favorites, dish.id) ?
-                                <VscHeartFilled /> :
+                                <VscHeartFilled style={{ color: '#750310' }} /> :
                                 <VscHeart />
                         }
                     </TopRightButton>

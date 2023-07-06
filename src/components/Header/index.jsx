@@ -16,10 +16,9 @@ export function Header(props) {
     const { signOut, user, isAdmin } = useAuth();
     const navigate = useNavigate();
 
-    const { setItemSearch, page } = props;
+    const { setItemSearch, page, dishToAdd } = props;
 
     const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
-    const order = 5;
     const queryWidth = 1050;
     const [search, setSearch] = useState("");
     const [hasSearchPlaceholder, setHasSearchPlaceholder] = useState(false);
@@ -28,6 +27,7 @@ export function Header(props) {
     const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
     const [dishes, setDishes] = useState([]);
     const [filteredSearch, setFilteredSearch] = useState([]);
+    const [orderItems, setOrderItems] = useState(0);
 
     const avatarStyle = {
         backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
@@ -74,6 +74,19 @@ export function Header(props) {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        async function getOrderItems() {
+            const response = await api.get(`/orders/${user.id}`);
+            if (response.data.id) {
+                setOrderItems(response.data.totalAmount);
+            } else {
+                setOrderItems(0);
+            };
+        };
+
+        getOrderItems();
+    }, [dishToAdd])
 
     useEffect(() => {
 
@@ -161,7 +174,7 @@ export function Header(props) {
                     </Link>
                 ) : (
                     <Button>
-                        <TfiReceipt />{`Pedidos (${order})`}
+                        <TfiReceipt />{`Pedidos (${orderItems})`}
                     </Button>
                 )
             ) : (
@@ -169,7 +182,7 @@ export function Header(props) {
                     <ReceiptOrders>
                         <TfiReceipt />
                         <Order>
-                            {order}
+                            {orderItems}
                         </Order>
                     </ReceiptOrders>
                 )
