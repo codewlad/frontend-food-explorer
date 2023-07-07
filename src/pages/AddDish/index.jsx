@@ -69,7 +69,7 @@ export function AddDish() {
         return alert("Formato de preço inválido. Insira um valor no formato XXX,XX.");
       }
 
-      const formattedPrice = price.replace(",", ".");
+      const formattedPrice = parseFloat(price.replace(",", "."));
 
       const fileUploadForm = new FormData();
 

@@ -173,18 +173,22 @@ export function Header(props) {
                         </Button>
                     </Link>
                 ) : (
-                    <Button>
-                        <TfiReceipt />{`Pedidos (${orderItems})`}
-                    </Button>
+                    <Link to="/payment">
+                        <Button>
+                            <TfiReceipt />{`Pedidos (${orderItems})`}
+                        </Button>
+                    </Link>
                 )
             ) : (
                 isAdmin ? null : (
-                    <ReceiptOrders>
-                        <TfiReceipt />
-                        <Order>
-                            {orderItems}
-                        </Order>
-                    </ReceiptOrders>
+                    <Link to="/payment">
+                        <ReceiptOrders>
+                            <TfiReceipt />
+                            <Order>
+                                {orderItems}
+                            </Order>
+                        </ReceiptOrders>
+                    </Link>
                 )
             )}
             {windowWidth >= queryWidth && (

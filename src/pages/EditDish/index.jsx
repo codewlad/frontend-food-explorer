@@ -78,12 +78,14 @@ export function EditDish() {
 
   async function handleUpdateDish() {
     try {
+      let formattedPrice = price.toString().replace(".", ",");
+
       const priceRegex = /^\d{1,3},\d{2}$/;
-      if (!priceRegex.test(price)) {
-        return alert("Formato de preço inválido. Insira um valor no formato XXX,XX.");
+      if (!priceRegex.test(formattedPrice)) {
+        return alert("Formato de preço inválido. Insira um valor no formato XX,XX.");
       }
 
-      const formattedPrice = price.replace(",", ".");
+      formattedPrice = parseFloat(formattedPrice.replace(",", "."));
 
       const fileUploadForm = new FormData();
 
