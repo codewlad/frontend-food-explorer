@@ -5,6 +5,10 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    @media (max-width: 1049px) {        
+        flex-direction: row;
+    }
 `;
 
 export const Logo = styled.div`
@@ -19,6 +23,10 @@ export const Logo = styled.div`
         font-size: 2.5rem;
         color: ${({ theme }) => theme.COLORS.CAKE_100};
     }
+
+    @media (max-width: 1049px) {        
+        min-width: max-content;
+    }
 `;
 
 export const Admin = styled.div`
@@ -30,5 +38,6 @@ export const Admin = styled.div`
 
     @media (max-width: 1049px) {        
         margin: 0.6rem 0 0 0.8rem;
+        width: max-content;
     }
 `;

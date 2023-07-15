@@ -72,7 +72,7 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
                 onClick={() => handleDish(dish.id)}
             >{dish.name} &gt;</h3>
             <p>{dish.description}</p>
-            <span>R$ {dish.price.toString().replace('.', ',')}</span>
+            <span>R$ {dish.price.toFixed(2).replace(".", ",")}</span>
             {isAdmin ? (
                 <TopRightButton>
                     <TfiPencil onClick={() => handleEditDish(dish.id)} />

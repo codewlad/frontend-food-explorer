@@ -45,6 +45,10 @@ export const Container = styled.header`
                 width: max-content;
             }
         }
+
+        > a:nth-child(2) {
+            width: 100%;
+        }
     }
 `;
 

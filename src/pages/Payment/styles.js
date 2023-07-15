@@ -38,12 +38,24 @@ export const Order = styled.div`
         font: ${({ theme }) => theme.FONTS.POPPINS_400};
         margin-bottom: 3.2rem;
     }
+
+    > p {
+        color: ${({ theme }) => theme.COLORS.LIGHT_300};
+        font: ${({ theme }) => theme.FONTS.POPPINS_200};
+        padding: 1.6rem 0;
+    }
 `;
+
+export const Total = styled.div`
+    padding: 1.6rem 0;
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
+    font: ${({ theme }) => theme.FONTS.POPPINS_200};
+`
 
 export const ItemOrder = styled.div`
     display: flex;
     align-items: center;
-    padding: 1.6rem;
+    padding: 1.6rem 0;
 
     > img {
         width: 6.8rem;
@@ -85,6 +97,7 @@ export const ItemInformation = styled.div`
     > div:nth-child(2) {
         color: ${({ theme }) => theme.COLORS.TOMATO_400};
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALLEST_REGULAR};
+        cursor: pointer;
     }
 `;
 

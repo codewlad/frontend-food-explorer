@@ -11,13 +11,31 @@ function AuthProvider({ children }) {
         try {
             const response = await api.post("/sessions", { email, password });
             const { user, token, isAdmin } = response.data;
+            let order = {};
 
             localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
             localStorage.setItem("@foodexplorer:token", token);
 
+            if (!isAdmin) {
+                const storageOrder = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+
+                if (storageOrder && storageOrder.user_id === user.id) {
+                    order = storageOrder;
+                    console.log("pedido mantido");
+                } else {
+                    order = {
+                        user_id: user.id,
+                        status: "aberto",
+                        dishes: []
+                    };
+
+                    localStorage.setItem("@foodexplorer:order", JSON.stringify(order));
+                };
+            };
+
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-            setData({ user, token, isAdmin })
+            setData({ user, token, isAdmin, order });
 
         } catch (error) {
             if (error.response) {
@@ -27,6 +45,7 @@ function AuthProvider({ children }) {
             }
         }
     }
+
 
     function signOut() {
         localStorage.removeItem("@foodexplorer:token");
@@ -64,6 +83,7 @@ function AuthProvider({ children }) {
     useEffect(() => {
         const token = localStorage.getItem("@foodexplorer:token");
         const user = localStorage.getItem("@foodexplorer:user");
+        const order = localStorage.getItem("@foodexplorer:order");
 
         if (token && user) {
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -74,7 +94,8 @@ function AuthProvider({ children }) {
             setData({
                 token,
                 user: JSON.parse(user),
-                isAdmin
+                isAdmin,
+                order: JSON.parse(order)
             });
         }
 
@@ -86,7 +107,8 @@ function AuthProvider({ children }) {
             signOut,
             updateProfile,
             user: data.user,
-            isAdmin: data.isAdmin
+            isAdmin: data.isAdmin,
+            order: data.order
         }}
         >
             {children}

@@ -4,13 +4,8 @@ import { BackButton } from '../../components/BackButton';
 import { Container, Content } from './styles';
 
 export function BlankPage() {
+
   return (
-    <Container>
-      <Header />
-      <Content>
-        <BackButton />
-      </Content>
-      <Footer />
-    </Container>
+    <div className='loading'>Carregando...</div>
   )
 }

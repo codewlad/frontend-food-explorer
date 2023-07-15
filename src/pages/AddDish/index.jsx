@@ -16,6 +16,7 @@ export function AddDish() {
 
   const navigate = useNavigate();
 
+  const [dishes, setDishes] = useState([]);
   const [dishImage, setDishImage] = useState("");
   const [dishImageFile, setDishImageFile] = useState("");
   const [name, setName] = useState("");
@@ -92,14 +93,24 @@ export function AddDish() {
     }
   }
 
-
   useEffect(() => {
     checkBlankFields();
   }, [dishImage, name, selectedCategory, ingredients, price, description])
 
+  useEffect(() => {
+    async function fetchDishes() {
+      const response = await api.get(`/dishes`);
+      setDishes(response.data);
+    }
+
+    fetchDishes();
+  }, []);
+
   return (
     <Container>
-      <Header />
+      <Header
+        dishes={dishes}
+      />
       <Content>
         <BackButton />
         <h1>Adicionar prato</h1>

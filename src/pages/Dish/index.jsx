@@ -14,19 +14,17 @@ import { Container, Content, DishDetails, DishInformation, Ingredients, DishButo
 export function Dish() {
   const { isAdmin } = useAuth();
 
-  const [data, setData] = useState(null);
-  const [dishImage, setDishImage] = useState(null);
-
   const params = useParams();
 
+  const [dish, setDish] = useState(null);
+
   useEffect(() => {
-    async function fetchDish() {
+    async function fetchDishes() {
       const response = await api.get(`/dishes/${params.id}`);
-      setData(response.data);
-      setDishImage(response.data.image ? `${api.defaults.baseURL}/files/${response.data.image}` : `${defaultDish}`)
+      setDish(response.data);
     }
 
-    fetchDish()
+    fetchDishes();
   }, []);
 
   return (
@@ -35,24 +33,26 @@ export function Dish() {
       <Content>
         <BackButton />
         {
-          data &&
+          dish &&
           <DishDetails className='dish'>
-            <img src={dishImage} alt={`Imagem de ${data.description}`} />
+            <img
+              src={dish.image ? `${api.defaults.baseURL}/files/${dish.image}` : `${defaultDish}`}
+              alt={`Imagem de ${dish.description}`} />
             <section>
               <DishInformation className='dishInformation'>
-                <h1>{data.name}</h1>
-                <p>{data.description}</p>
+                <h1>{dish.name}</h1>
+                <p>{dish.description}</p>
                 <Ingredients>
                   {
-                    data.ingredients.length > 0 &&
-                    data.ingredients.map(ingredient => <TagIngredients title={ingredient.name} key={ingredient.id} />)
+                    dish.ingredients.length > 0 &&
+                    dish.ingredients.map(ingredient => <TagIngredients title={ingredient.name} key={ingredient.id} />)
                   }
                 </Ingredients>
-                <span>R$ {data.price}</span>
+                <span>R$ {dish.price}</span>
               </DishInformation>
               {isAdmin ? (
                 <DishButon className="dishButon">
-                  <Link to={`/edit/${data.id}`}>
+                  <Link to={`/edit/${dish.id}`}>
                     <Button>
                       Editar prato
                     </Button>
@@ -66,7 +66,7 @@ export function Dish() {
                     <TfiPlus />
                   </DishControls>
                   <Button>
-                    <TfiReceipt />incluir ∙ R$ {data.price}
+                    <TfiReceipt />incluir ∙ R$ {dish.price}
                   </Button>
                 </DishButon>
               )}

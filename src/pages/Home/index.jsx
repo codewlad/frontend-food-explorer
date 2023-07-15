@@ -9,23 +9,24 @@ import { Container, Content, Banner, WrappedBanner, Slogan, BgBanner, NoResults 
 
 export function Home() {
 
-  const { user } = useAuth();
-  const [orderId, setOrderId] = useState("");
+  const { user, order: userOrder } = useAuth();
 
   const [meals, setMeals] = useState([]);
   const [desserts, setDesserts] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const [itemSearch, setItemSearch] = useState("");
+
   const [dishes, setDishes] = useState([]);
+
+  const [itemSearch, setItemSearch] = useState("");
   const [filteredSearch, setFilteredSearch] = useState([]);
   const [search, setSearch] = useState("");
-  const [favoritesUpdated, setFavoritesUpdated] = useState([]);
-  const [dishToAdd, setDishToAdd] = useState();
-  const [orderItems, setOrderItems] = useState(0);
-  const [order, setOrder] = useState({ status: "aberto", dishes: [] });
   const page = "home";
 
   const [favorites, setFavorites] = useState([]);
+  const [favoritesUpdated, setFavoritesUpdated] = useState([]);
+
+  const [dishToAdd, setDishToAdd] = useState();
+  const [orderItems, setOrderItems] = useState(0);
 
   useEffect(() => {
     async function fetchDishes() {
@@ -68,6 +69,7 @@ export function Home() {
           setDishToAdd={setDishToAdd}
         />
       ));
+
     };
 
     fetchDishes();
@@ -130,74 +132,35 @@ export function Home() {
   }, [itemSearch]);
 
   useEffect(() => {
-    async function getOrderItems() {
-      const response = await api.get(`/orders/${user.id}`);
-
-      if (response.data.id) {
-        const { status, dishes } = response.data;
-
-        setOrder({
-          status: status,
-          dishes: dishes
-        });
-
-        setOrderItems(response.data.totalAmount);
-        setOrderId(response.data.id);
-
-      } else {
-        setOrderItems(0);
-        setOrderId(0);
-      };
-    };
-
-    getOrderItems();
-
     if (dishToAdd) {
-      const existingDishIndex = order.dishes.findIndex(dish => dish.dish_id === dishToAdd.dish_id);
+      const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+      const existingDishIndex = oldItems.dishes.findIndex(dish => dish.dish_id === dishToAdd.dish_id);
+
+      const updatedOrder = { ...oldItems };
 
       if (existingDishIndex !== -1) {
-        const updatedOrder = { ...order };
         updatedOrder.dishes[existingDishIndex].amount += dishToAdd.amount;
-        setOrder(updatedOrder);
       } else {
-        const updatedOrder = { ...order };
         updatedOrder.dishes.push(dishToAdd);
-        setOrder(updatedOrder);
-      }
-
-      if (orderItems === 0) {
-
-        async function handleNewOrder() {
-          await api.post("/orders", order);
-
-          alert("Item adicionado ao pedido!");
-          setDishToAdd("");
-        }
-
-        handleNewOrder();
-
-      } else {
-        async function handleUpdateOrder() {
-
-          await api.put(`/orders/${orderId}`, order);
-
-          alert("Item adicionado ao pedido!");
-          setDishToAdd("");
-        }
-
-        handleUpdateOrder();
-
       };
+
+      localStorage.setItem("@foodexplorer:order", JSON.stringify(updatedOrder));
+
+      setOrderItems(orderItems + dishToAdd.amount);
     };
 
   }, [dishToAdd]);
+
+  useEffect(() => {
+  }, [orderItems]);
 
   return (
     <Container>
       <Header
         setItemSearch={setItemSearch}
         page={page}
-        dishToAdd={dishToAdd}
+        dishes={dishes}
+        orderItems={orderItems}
       />
       <Content>
         <Banner className="banner">
@@ -221,11 +184,11 @@ export function Home() {
           <Carousel title="Bebidas" content={drinks} />
         }
         {
-          meals.length <= 0 && desserts.length <= 0 && drinks.length <= 0 &&
+          itemSearch && meals.length <= 0 && desserts.length <= 0 && drinks.length <= 0 &&
           <NoResults>Nenhum resultado encontrado!</NoResults>
         }
       </Content>
       <Footer />
-    </Container>
+    </Container >
   )
 }

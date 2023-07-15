@@ -58,6 +58,11 @@ export const Form = styled.div`
         text-align: center;
     }
 
+    .error {
+        border: 1px solid ${({ theme }) => theme.COLORS.TOMATO_100};
+        border-radius: 0.8rem;
+    }
+
     @media (max-width: 1049px) {
         background-color: transparent;
         padding: 4.6rem;

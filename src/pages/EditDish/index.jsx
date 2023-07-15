@@ -10,15 +10,15 @@ import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { DishItem } from '../../components/DishItem';
-import { Container, Content, DishInformations, ChoiceImage, RemoveImage } from './styles';
 import defaultDish from '../../../src/assets/dish.svg';
+import { Container, Content, DishInformations, ChoiceImage, RemoveImage } from './styles';
 
 export function EditDish() {
-  const params = useParams();
   const navigate = useNavigate();
 
-  const id = params.id
-  const [response, setResponse] = useState({});
+  const params = useParams();
+
+  const [dish, setDish] = useState(null);
   const [dishImage, setDishImage] = useState("");
   const [dishImageFile, setDishImageFile] = useState("");
   const [name, setName] = useState("")
@@ -51,6 +51,7 @@ export function EditDish() {
   };
 
   function handleChoiceOfDish(event) {
+
     const file = event.target.files[0];
 
     if (file && file.type.startsWith("image/")) {
@@ -58,20 +59,27 @@ export function EditDish() {
 
       const imagePreview = URL.createObjectURL(file);
       setDishImage(imagePreview);
+
       setDishImageHasChanges(true);
-    }
+    };
   };
 
   function removeImage() {
+    document.querySelector("#dishImage").value = "";
+    if (dish.image) {
+      setDishImageHasChanges(true);
+    } else {
+      setDishImageHasChanges(false);
+    }
     setDishImage("");
-    setDishImageHasChanges(true);
+    setDishImageFile("");
   };
 
   async function handleRemove() {
     const confirm = window.confirm("Deseja realmente remover o prato?");
 
     if (confirm) {
-      await api.delete(`/dishes/${id}`);
+      await api.delete(`/dishes/${params.id}`);
       navigate("/");
     }
   };
@@ -100,7 +108,7 @@ export function EditDish() {
       fileUploadForm.append("description", description);
       fileUploadForm.append("removeDishImage", dishImage);
 
-      await api.put(`/dishes/${id}`, fileUploadForm);
+      await api.put(`/dishes/${params.id}`, fileUploadForm);
 
       alert("Prato atualizado com sucesso!");
       navigate("/");
@@ -111,31 +119,41 @@ export function EditDish() {
 
   useEffect(() => {
     async function fetchDish() {
-      const response = await api.get(`/dishes/${id}`);
-      setResponse(response.data);
-      setDishImage(response.data.image ? `${api.defaults.baseURL}/files/${response.data.image}` : `${defaultDish}`)
-      setName(response.data.name);
-      setSelectedCategory(response.data.category);
-      setIngredients(response.data.ingredients.map(ingredient => ingredient.name));
-      setPrice(response.data.price);
-      setDescription(response.data.description);
+      const response = await api.get(`/dishes/${params.id}`);
+      setDish(response.data);
+
+      const foundDish = response.data;
+      if (foundDish) {
+        setDish(foundDish);
+        setDishImage(foundDish.image ? `${api.defaults.baseURL}/files/${foundDish.image}` : `${defaultDish}`)
+        setName(foundDish.name);
+        setSelectedCategory(foundDish.category);
+        setIngredients(foundDish.ingredients.map(ingredient => ingredient.name));
+        setPrice(foundDish.price);
+        setDescription(foundDish.description);
+      }
     }
 
-    fetchDish()
+    fetchDish();
   }, []);
 
   useEffect(() => {
-    if (
-      dishImageHasChanges ||
-      name != response.name ||
-      selectedCategory != response.category ||
-      ingredientsHasChanges ||
-      price != response.price ||
-      description != response.description
-    ) {
-      setIfHasChanges(true);
-    } else {
-      setIfHasChanges(false);
+    if (dish) {
+
+      const replacedPrice = parseFloat(price.toString().replace(',', '.'));
+
+      if (
+        dishImageHasChanges ||
+        name != dish.name ||
+        selectedCategory != dish.category ||
+        ingredientsHasChanges ||
+        replacedPrice != dish.price ||
+        description != dish.description
+      ) {
+        setIfHasChanges(true);
+      } else {
+        setIfHasChanges(false);
+      }
     }
 
   }, [dishImageHasChanges, name, selectedCategory, ingredients, price, description]);
@@ -146,95 +164,98 @@ export function EditDish() {
       <Content>
         <BackButton />
         <h1>Editar prato</h1>
-        <DishInformations className='dishInformations'>
+        {
+          dish &&
+          <DishInformations className='dishInformations'>
 
-          <Section title="Imagem do prato">
-            <ChoiceImage>
-              {
-                dishImage &&
-                <div>
-                  <img src={dishImage} alt="Visualização da imagem" />
-                  <RemoveImage onClick={removeImage}>
-                    <TfiClose />
-                  </RemoveImage>
-                </div>
-              }
-              <label htmlFor="dishImage">
-                <FiUpload /> Selecione imagem
-                <input id="dishImage" type="file" onChange={handleChoiceOfDish} />
-              </label>
-            </ChoiceImage>
-          </Section>
+            <Section title="Imagem do prato">
+              <ChoiceImage>
+                {
+                  dishImage &&
+                  <div>
+                    <img src={dishImage} alt="Visualização da imagem" />
+                    <RemoveImage onClick={removeImage}>
+                      <TfiClose />
+                    </RemoveImage>
+                  </div>
+                }
+                <label htmlFor="dishImage">
+                  <FiUpload /> Escolher imagem
+                  <input id="dishImage" type="file" onChange={handleChoiceOfDish} />
+                </label>
+              </ChoiceImage>
+            </Section>
 
-          <Section title="Nome">
-            <Input
-              placeholder="Ex: Salada Ceasar"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Section>
-
-          <Section title="Categoria">
-            <select value={selectedCategory} onChange={handleCategory}>
-              <option value="Refeições">Refeições</option>
-              <option value="Sobremesas">Sobremesas</option>
-              <option value="Bebidas">Bebidas</option>
-            </select>
-          </Section>
-
-          <Section title="Ingredientes">
-            <div>
-              {
-                ingredients.map((ingredient, index) => (
-                  <DishItem
-                    key={index}
-                    value={ingredient}
-                    onClick={() => handleRemoveIngredient(ingredient)}
-                  />
-                ))
-              }
-
-              <DishItem
-                $isNew
-                placeholder="Adicionar"
-                onChange={e => setNewIngredient(e.target.value)}
-                value={newIngredient}
-                onClick={handleAddIngredient}
+            <Section title="Nome">
+              <Input
+                placeholder="Ex: Salada Ceasar"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
+            </Section>
+
+            <Section title="Categoria">
+              <select value={selectedCategory} onChange={handleCategory}>
+                <option value="Refeições">Refeições</option>
+                <option value="Sobremesas">Sobremesas</option>
+                <option value="Bebidas">Bebidas</option>
+              </select>
+            </Section>
+
+            <Section title="Ingredientes">
+              <div>
+                {
+                  ingredients.map((ingredient, index) => (
+                    <DishItem
+                      key={index}
+                      value={ingredient}
+                      onClick={() => handleRemoveIngredient(ingredient)}
+                    />
+                  ))
+                }
+
+                <DishItem
+                  $isNew
+                  placeholder="Adicionar"
+                  onChange={e => setNewIngredient(e.target.value)}
+                  value={newIngredient}
+                  onClick={handleAddIngredient}
+                />
+              </div>
+            </Section>
+
+            <Section title="Preço">
+              <Input
+                placeholder="R$ 00,00"
+                value={price.toString().replace('.', ',')}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </Section>
+
+            <Section title="Descrição">
+              <textarea
+                name="dishDescription"
+                id="dishDescription"
+                placeholder="A Salada César é uma opção refrescante para o verão."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+            </Section>
+
+            <div>
+              <Button
+                onClick={handleRemove}
+              >Excluir prato
+              </Button>
+              <Button
+                type="text"
+                disabled={!ifHasChanges}
+                onClick={handleUpdateDish}
+              > Salvar alterações
+              </Button>
             </div>
-          </Section>
-
-          <Section title="Preço">
-            <Input
-              placeholder="R$ 00,00"
-              value={price.toString().replace('.', ',')}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </Section>
-
-          <Section title="Descrição">
-            <textarea
-              name="dishDescription"
-              id="dishDescription"
-              placeholder="A Salada César é uma opção refrescante para o verão."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-          </Section>
-
-          <div>
-            <Button
-              onClick={handleRemove}
-            >Excluir prato
-            </Button>
-            <Button
-              type="text"
-              disabled={!ifHasChanges}
-              onClick={handleUpdateDish}
-            > Salvar alterações
-            </Button>
-          </div>
-        </DishInformations>
+          </DishInformations>
+        }
       </Content>
       <Footer />
     </Container>

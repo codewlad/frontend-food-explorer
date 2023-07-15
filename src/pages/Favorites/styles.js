@@ -20,6 +20,11 @@ export const Content = styled.div`
         font: ${({ theme }) => theme.FONTS.POPPINS_400};
     }
 
+    > p {
+        color: ${({ theme }) => theme.COLORS.LIGHT_300};
+        font: ${({ theme }) => theme.FONTS.POPPINS_200};
+    }
+
     @media (max-width: 1049px) {
         margin: 3.2rem;
     }

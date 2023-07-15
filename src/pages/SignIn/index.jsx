@@ -8,9 +8,10 @@ import { Button } from '../../components/Button';
 import { Container, Main, Form } from './styles';
 
 export function SignIn() {
+    const { signIn } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { signIn } = useAuth();
 
     const mainRef = useRef(null);
     const containerRef = useRef(null);
@@ -41,6 +42,7 @@ export function SignIn() {
     }
 
     return (
+
         <Container ref={containerRef}>
             <Main ref={mainRef}>
                 <Brand />
@@ -50,7 +52,7 @@ export function SignIn() {
                     <Section title="Email">
                         <Input
                             type="text"
-                            placeholder="Exemplo: exemplo@email.com.br"
+                            placeholder="Email"
                             onChange={e => setEmail(e.target.value)}
                         />
                     </Section>
@@ -58,7 +60,7 @@ export function SignIn() {
                     <Section title="Senha">
                         <Input
                             type="password"
-                            placeholder="No mínimo 6 caracteres"
+                            placeholder="Senha"
                             onChange={e => setPassword(e.target.value)}
                         />
                     </Section>

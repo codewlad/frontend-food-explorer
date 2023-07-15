@@ -13,25 +13,28 @@ import defaultDish from '../../../src/assets/dish.svg';
 import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions, SearchList } from './styles';
 
 export function Header(props) {
-    const { signOut, user, isAdmin } = useAuth();
+    const { signOut, user, isAdmin, order } = useAuth();
+
     const navigate = useNavigate();
 
-    const { setItemSearch, page, dishToAdd } = props;
+    const { setItemSearch, page, orderItems, totalOrder, setTotalOrder } = props;
+
+    const [dishes, setDishes] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
 
     const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
-    const queryWidth = 1050;
-    const [search, setSearch] = useState("");
-    const [hasSearchPlaceholder, setHasSearchPlaceholder] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
-    const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
-    const [dishes, setDishes] = useState([]);
-    const [filteredSearch, setFilteredSearch] = useState([]);
-    const [orderItems, setOrderItems] = useState(0);
-
     const avatarStyle = {
         backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
     };
+
+    const queryWidth = 1050;
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
+    const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
+
+    const [search, setSearch] = useState("");
+    const [hasSearchPlaceholder, setHasSearchPlaceholder] = useState(false);
+    const [filteredSearch, setFilteredSearch] = useState([]);
 
     function handleSignOut() {
         navigate("/");
@@ -56,40 +59,6 @@ export function Header(props) {
     }, [search]);
 
     useEffect(() => {
-        function handleResize() {
-            setWindowWidth(window.innerWidth);
-
-            if (window.innerWidth >= queryWidth) {
-                setIsProfileMenuHidden(false);
-            } else {
-                setIsProfileMenuHidden(true);
-                setIsProfileMenuVisible(false);
-                setSearch("");
-            }
-        }
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    useEffect(() => {
-        async function getOrderItems() {
-            const response = await api.get(`/orders/${user.id}`);
-            if (response.data.id) {
-                setOrderItems(response.data.totalAmount);
-            } else {
-                setOrderItems(0);
-            };
-        };
-
-        getOrderItems();
-    }, [dishToAdd])
-
-    useEffect(() => {
-
         if (page === "home") {
             setItemSearch(search)
         }
@@ -114,18 +83,52 @@ export function Header(props) {
 
         var searchResult = filterDishesByNameOrIngredient(search);
         setFilteredSearch(searchResult);
-
-    }, [search])
+    }, [search]);
 
     useEffect(() => {
         async function fetchDishes() {
-            const response = await api.get(`/dishes?itemSearch=${search}`);
-
+            const response = await api.get(`/dishes`);
             setDishes(response.data);
         }
 
         fetchDishes();
-    }, [])
+
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+
+            if (window.innerWidth >= queryWidth) {
+                setIsProfileMenuHidden(false);
+            } else {
+                setIsProfileMenuHidden(true);
+                setIsProfileMenuVisible(false);
+                setSearch("");
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+
+        if (oldItems && oldItems.dishes) {
+            let total = 0;
+
+            for (const dish of oldItems.dishes) {
+                if (dish.amount) {
+                    total += dish.amount;
+                };
+            };
+            setTotalAmount(total);
+        } else {
+            setTotalAmount(orderItems);
+        };
+
+    }, [orderItems, totalOrder]);
 
     return (
         <Container>
@@ -175,7 +178,7 @@ export function Header(props) {
                 ) : (
                     <Link to="/payment">
                         <Button>
-                            <TfiReceipt />{`Pedidos (${orderItems})`}
+                            <TfiReceipt />{`Pedidos (${totalAmount})`}
                         </Button>
                     </Link>
                 )
@@ -185,7 +188,7 @@ export function Header(props) {
                         <ReceiptOrders>
                             <TfiReceipt />
                             <Order>
-                                {orderItems}
+                                {totalAmount}
                             </Order>
                         </ReceiptOrders>
                     </Link>
