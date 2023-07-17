@@ -17,7 +17,6 @@ export const Content = styled.div`
 
     @media (max-width: 1049px) {
         margin: 3.2rem 5.6rem;
-        gap: 1.6rem;
     }
 `;
 
@@ -129,7 +128,23 @@ export const PaymentMethods = styled.div`
     }
 `;
 
-export const WrappedPaymentMethods = styled.div`
+export const WrappedPaymentMethods = styled.div`    
+    > div:last-child {
+        margin-top: 3.1rem;
+        text-align: right;
+        display: flex;
+        justify-content: right;
+
+        > button {
+        max-width: 21.6rem;
+        display: none;
+
+        @media (max-width: 1049px) {
+            display: block;
+        }
+    }
+    }
+
     .creditcard {
         display: grid;
         row-gap: 3.7rem;
@@ -161,7 +176,7 @@ export const WrappedPaymentMethods = styled.div`
                 display: flex;
                 align-items: center;
                 gap: 0.8rem;
-                padding: 1.2rem 3.2rem;
+                padding: 1.2rem 0.6rem;
             }
 
             svg {

@@ -17,6 +17,24 @@ export function Dish() {
   const params = useParams();
 
   const [dish, setDish] = useState(null);
+  const [dishAmount, setDishAmount] = useState(1);
+
+  const [dishToAdd, setDishToAdd] = useState();
+  const [orderItems, setOrderItems] = useState(0);
+
+  function decrease() {
+    if (dishAmount > 1) {
+      setDishAmount(prevState => prevState - 1);
+    }
+  }
+
+  function increase() {
+    setDishAmount(prevState => prevState + 1);
+  }
+
+  function handleAddDish(dish_id, amount) {
+    setDishToAdd({ dish_id, amount });
+  }
 
   useEffect(() => {
     async function fetchDishes() {
@@ -27,9 +45,28 @@ export function Dish() {
     fetchDishes();
   }, []);
 
+  useEffect(() => {
+    if (dishToAdd) {
+      const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+      const existingDishIndex = oldItems.dishes.findIndex(dish => dish.dish_id === dishToAdd.dish_id);
+
+      const updatedOrder = { ...oldItems };
+
+      if (existingDishIndex !== -1) {
+        updatedOrder.dishes[existingDishIndex].amount += dishToAdd.amount;
+      } else {
+        updatedOrder.dishes.push(dishToAdd);
+      };
+
+      localStorage.setItem("@foodexplorer:order", JSON.stringify(updatedOrder));
+
+      setOrderItems(orderItems + dishToAdd.amount);
+    };
+  }, [dishToAdd]);
+
   return (
     <Container>
-      <Header />
+      <Header orderItems={orderItems} />
       <Content>
         <BackButton />
         {
@@ -48,7 +85,7 @@ export function Dish() {
                     dish.ingredients.map(ingredient => <TagIngredients title={ingredient.name} key={ingredient.id} />)
                   }
                 </Ingredients>
-                <span>R$ {dish.price}</span>
+                <span>R$ {dish.price.toFixed(2).replace(".", ",")}</span>
               </DishInformation>
               {isAdmin ? (
                 <DishButon className="dishButon">
@@ -61,12 +98,12 @@ export function Dish() {
               ) : (
                 <DishButon className="dishButon">
                   <DishControls>
-                    <TfiMinus />
-                    <span>01</span>
-                    <TfiPlus />
+                    <TfiMinus onClick={decrease} />
+                    <span>{dishAmount}</span>
+                    <TfiPlus onClick={increase} />
                   </DishControls>
-                  <Button>
-                    <TfiReceipt />incluir ∙ R$ {dish.price}
+                  <Button onClick={() => handleAddDish(dish.id, dishAmount)}>
+                    <TfiReceipt />incluir ∙ R$ {dish.price.toFixed(2).replace(".", ",")}
                   </Button>
                 </DishButon>
               )}

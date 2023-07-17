@@ -151,14 +151,21 @@ export function Payment() {
     };
   }, []);
 
+  /* Começa aqui */
+
   const queryWidth = 1050;
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [viewOrder, setViewOrder] = useState(true);
-  const [viewPayment, setViewPayment] = useState(true);
+  const [viewPayment, setViewPayment] = useState(false);
 
   function handleOpenPayment() {
     setViewOrder(false);
     setViewPayment(true);
+  };
+
+  function handleOpenOrder() {
+    setViewOrder(true);
+    setViewPayment(false);
   };
 
   function handleResize() {
@@ -218,11 +225,7 @@ export function Payment() {
                 items.length > 0 ? (
                   <Total>
                     <div>Total: R$ {totalOrder.toFixed(2).replace(".", ",")}</div>
-                    <Button
-                      onClick={handleOpenPayment}
-                    >
-                      Avançar
-                    </Button>
+                    <Button onClick={handleOpenPayment}>Avançar</Button>
                   </Total>
                 ) : null
               )}
@@ -299,6 +302,9 @@ export function Payment() {
                     </div>
                   </PaymentType>
                 )}
+                <div>
+                  <Button onClick={handleOpenOrder}>Voltar</Button>
+                </div>
               </WrappedPaymentMethods>
             </PaymentMethods>
           )}

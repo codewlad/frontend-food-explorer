@@ -76,6 +76,26 @@ export const Slogan = styled.div`
         align-items: center;
         min-width: 23.5rem;
         width: 100%;
+        padding: 5rem 0 0 0;
+        text-align: right;
+        color: ${({ theme }) => theme.COLORS.LIGHT_300};
+        text-align: left;
+
+        > h1 {
+            font: ${({ theme }) => theme.FONTS.POPPINS_450};
+        }
+
+        > span {
+            font: ${({ theme }) => theme.FONTS.ROBOTO_SMALLER_REGULAR};
+        }
+    }
+
+    @media (max-width: 660px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 23.5rem;
+        width: 100%;
         padding: 6rem 0 0 0;
         text-align: right;
         color: ${({ theme }) => theme.COLORS.LIGHT_300};

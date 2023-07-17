@@ -44,6 +44,7 @@ export default {
         POPPINS_300_REGULAR: "normal 2.4rem/140% Poppins, sans-serif",
         POPPINS_350: "normal 2.7rem/140% Poppins, sans-serif",
         POPPINS_400: "normal 3.2rem/140% Poppins, sans-serif",
+        POPPINS_450: "normal 3.6rem/140% Poppins, sans-serif",
         POPPINS_500: "normal 4rem/140% Poppins, sans-serif",
 
         ROBOTO_SMALLEST_REGULAR: "normal 1.2rem/160% Roboto, sans-serif",
