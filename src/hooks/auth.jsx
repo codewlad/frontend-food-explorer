@@ -21,7 +21,6 @@ function AuthProvider({ children }) {
 
                 if (storageOrder && storageOrder.user_id === user.id) {
                     order = storageOrder;
-                    console.log("pedido mantido");
                 } else {
                     order = {
                         user_id: user.id,
