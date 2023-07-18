@@ -6,12 +6,13 @@ import { SectionCreditcard } from '../../components/SectionCreditcard';
 import { Button } from '../../components/Button';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
-import { MdPix } from "react-icons/md";
+import { MdPix } from 'react-icons/md';
+import { PiCheckCircleLight } from "react-icons/pi";
 import { FaRegCreditCard } from 'react-icons/fa';
 import { TfiReceipt } from 'react-icons/tfi';
 import defaultDish from '../../../src/assets/dish.svg';
 import qrcode from '../../../src/assets/qrcode.jpg';
-import { Container, Content, WrappedPayment, Order, Total, ItemOrder, ItemInformation, PaymentMethods, WrappedPaymentMethods, PaymentTitle, PaymentType } from './styles';
+import { Container, Content, WrappedPayment, Order, Total, ItemOrder, ItemInformation, PaymentMethods, WrappedPaymentMethods, PaymentTitle, PaymentType, ProcessingPayment, Clock, PaymentAccept } from './styles';
 
 export function Payment() {
   const { user, order } = useAuth();
@@ -25,6 +26,8 @@ export function Payment() {
   const [expirationDate, setExpirationDate] = useState("");
   const [verifyingDigit, setVerifyingDigit] = useState("");
   const [paymentData, setPaymentData] = useState(false);
+  const [processingPayment, setProcessingPayment] = useState(false);
+  const [paymentAccept, setPaymentAccept] = useState(false);
 
   const formatCardNumber = (cardNumber) => {
     const cleanNumber = cardNumber.replace(/\D/g, '');
@@ -105,15 +108,19 @@ export function Payment() {
   };
 
   function deleteItem(dish_id) {
-    const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
-    const newItems = oldItems.dishes.filter(item => item.dish_id !== dish_id);
-    const order = {
-      user_id: user.id,
-      status: "aberto",
-      dishes: newItems
-    };
-    localStorage.setItem("@foodexplorer:order", JSON.stringify(order));
-    viewTotalOrder(dishes);
+    const confirm = window.confirm("Deseja realmente remover este item do pedido?");
+
+    if (confirm) {
+      const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+      const newItems = oldItems.dishes.filter(item => item.dish_id !== dish_id);
+      const order = {
+        user_id: user.id,
+        status: "aberto",
+        dishes: newItems
+      };
+      localStorage.setItem("@foodexplorer:order", JSON.stringify(order));
+      viewTotalOrder(dishes);
+    }
   };
 
   useEffect(() => {
@@ -151,6 +158,28 @@ export function Payment() {
     };
   }, []);
 
+  function handleCreateOrder() {
+    const confirmar = window.confirm("Deseja realmente fechar o pedido e realizar o pagamento?");
+    const order = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+    order.status = "Pendente";
+
+    if (confirmar) {
+      setProcessingPayment(true);
+
+      setTimeout(() => {
+        api.post("/orders", { order })
+          .then(() => {
+            setProcessingPayment(false);
+            setPaymentAccept(true);
+          })
+          .catch((error) => {
+            setProcessingPayment(false);
+            console.error("Ocorreu um erro ao criar o pedido:", error);
+          });
+      }, 4000);
+    }
+  };
+
   /* Começa aqui */
 
   const queryWidth = 1050;
@@ -170,7 +199,7 @@ export function Payment() {
 
   function handleResize() {
     setWindowWidth(window.innerWidth);
-  }
+  };
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -200,7 +229,9 @@ export function Payment() {
       <Header totalOrder={totalOrder} />
       <Content>
         <BackButton />
-        <WrappedPayment>
+        <WrappedPayment
+          style={items.length === 0 ? { justifyContent: 'left' } : { justifyContent: 'center' }}
+        >
           {viewOrder && (
             <Order>
               <h2>Meu pedido</h2>
@@ -234,7 +265,7 @@ export function Payment() {
               )}
             </Order>
           )}
-          {viewPayment && (
+          {!isLoading && viewPayment && items.length > 0 && (
             <PaymentMethods>
               <h2>Pagamento</h2>
               <WrappedPaymentMethods>
@@ -257,7 +288,7 @@ export function Payment() {
                     <img src={qrcode} alt="QrCode" />
                   </PaymentType>
                 )}
-                {selectedPayment === 'creditcard' && (
+                {selectedPayment === 'creditcard' && !processingPayment && !paymentAccept && (
                   <PaymentType className="creditcard">
                     <div>
                       <SectionCreditcard title="Número do Cartão">
@@ -298,10 +329,28 @@ export function Payment() {
                     <div>
                       <Button
                         disabled={!paymentData}
+                        onClick={handleCreateOrder}
                       ><TfiReceipt />Finalizar pagamento</Button>
                     </div>
                   </PaymentType>
                 )}
+                {
+                  selectedPayment === 'creditcard' && processingPayment &&
+                  <ProcessingPayment>
+                    <Clock>
+                      <div className="hour-hand"></div>
+                      <div className="minute-hand"></div>
+                    </Clock>
+                    <span>Processando o pagamento...</span>
+                  </ProcessingPayment>
+                }
+                {
+                  selectedPayment === 'creditcard' && paymentAccept &&
+                  <PaymentAccept>
+                    <PiCheckCircleLight size={96} />
+                    <span>Pagamento aprovado!</span>
+                  </PaymentAccept>
+                }
                 <div>
                   <Button onClick={handleOpenOrder}>Voltar</Button>
                 </div>

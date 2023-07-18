@@ -16,7 +16,7 @@ export const Content = styled.div`
     gap: 4.2rem;
 
     @media (max-width: 1049px) {
-        margin: 3.2rem 5.6rem;
+        margin: 3.2rem 2.8rem;
     }
 `;
 
@@ -236,5 +236,86 @@ export const PaymentType = styled.div`
         max-width: 25rem;
         width: 100%;
         height: auto;
+    }
+
+    @media (max-width: 1049px) {
+        padding: 2.4rem;
+    }
+`;
+
+export const ProcessingPayment = styled.div`
+    height: 37.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4rem;
+    padding: 5rem;
+    border: 0.1rem solid ${({ theme }) => theme.COLORS.LIGHT_600};
+    border-top: 0;
+    border-radius: 0 0 0.8rem 0.8rem;
+    color: ${({ theme }) => theme.COLORS.LIGHT_700};
+    font: ${({ theme }) => theme.FONTS.ROBOTO_BIG_BOLD};
+
+    @media (max-width: 1049px) {
+        padding: 2.4rem;
+    }
+`;
+
+export const Clock = styled.div`
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    border: 4px solid ${({ theme }) => theme.COLORS.LIGHT_700};
+    position: relative;
+    margin: 0 auto;    
+
+    .hour-hand {
+        width: 4px;
+        height: 21px;
+        border-radius: 0.2rem;
+        background-color: ${({ theme }) => theme.COLORS.LIGHT_700};
+        position: absolute;
+        left: 50%;
+        top: 52%;
+        transform: translateX(-50%) translateY(-100%) rotate(0deg);
+        transform-origin: bottom center;
+    }
+
+    .minute-hand {
+        width: 4px;
+        height: 29px;
+        background-color: ${({ theme }) => theme.COLORS.LIGHT_700};
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-100%) rotate(0deg);
+        transform-origin: bottom center;
+        animation: minute-spin 2s linear infinite;
+        border-radius: 0.2rem;
+    }
+
+    @keyframes minute-spin {
+        0% { transform: translateX(-50%) translateY(-100%) rotate(0deg); }
+        100% { transform: translateX(-50%) translateY(-100%) rotate(360deg); }
+    }
+`;
+
+export const PaymentAccept = styled.div`
+    height: 37.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4rem;
+    padding: 5rem;
+    border: 0.1rem solid ${({ theme }) => theme.COLORS.LIGHT_600};
+    border-top: 0;
+    border-radius: 0 0 0.8rem 0.8rem;
+    color: ${({ theme }) => theme.COLORS.LIGHT_700};
+    font: ${({ theme }) => theme.FONTS.ROBOTO_BIG_BOLD};
+
+    @media (max-width: 1049px) {
+        padding: 2.4rem;
     }
 `;

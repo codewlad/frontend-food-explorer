@@ -184,7 +184,7 @@ export function Menu() {
                             <ItemMenu title="Novo prato" />
                         </Link>
                     ) : (
-                        <Link to="/favorites"><ItemMenu title="Favoritos" /></Link>
+                        <Link to="/favorites" onClick={handleIconMenuClick}><ItemMenu title="Favoritos" /></Link>
                     )}
                     <ItemMenu
                         title="Sair"

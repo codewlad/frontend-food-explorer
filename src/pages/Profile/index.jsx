@@ -8,7 +8,7 @@ import { Button } from '../../components/Button';
 import { Container, Form, Avatar, ChangeAvatar } from "./styles";
 
 export function Profile() {
-    const { user, updateProfile, isAdmin } = useAuth();
+    const { user, updateProfile, isAdmin, order } = useAuth();
 
     const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
 
@@ -29,7 +29,7 @@ export function Profile() {
 
         const userUpdated = Object.assign(user, updated);
 
-        await updateProfile({ user: userUpdated, avatarFile, isAdmin });
+        await updateProfile({ user: userUpdated, avatarFile, isAdmin, order });
     }
 
     function handleChangeAvatar(event) {

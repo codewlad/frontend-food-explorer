@@ -147,6 +147,8 @@ export function Home() {
       localStorage.setItem("@foodexplorer:order", JSON.stringify(updatedOrder));
 
       setOrderItems(orderItems + dishToAdd.amount);
+
+      alert("Item adicionado ao pedido.")
     };
 
   }, [dishToAdd]);

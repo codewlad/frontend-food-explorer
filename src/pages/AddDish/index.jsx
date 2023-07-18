@@ -67,7 +67,7 @@ export function AddDish() {
     try {
       const priceRegex = /^\d{1,3},\d{2}$/;
       if (!priceRegex.test(price)) {
-        return alert("Formato de preço inválido. Insira um valor no formato XXX,XX.");
+        return alert("Formato de preço inválido. Insira um valor no formato XX,XX.");
       }
 
       const formattedPrice = parseFloat(price.replace(",", "."));

@@ -45,7 +45,6 @@ function AuthProvider({ children }) {
         }
     }
 
-
     function signOut() {
         localStorage.removeItem("@foodexplorer:token");
         localStorage.removeItem("@foodexplorer:user");
@@ -53,7 +52,7 @@ function AuthProvider({ children }) {
         setData({});
     }
 
-    async function updateProfile({ user, avatarFile, isAdmin }) {
+    async function updateProfile({ user, avatarFile, isAdmin, order }) {
         try {
 
             if (avatarFile) {
@@ -67,7 +66,7 @@ function AuthProvider({ children }) {
             await api.put("/users", user);
             localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
 
-            setData({ user, token: data.token, isAdmin });
+            setData({ user, token: data.token, isAdmin, order });
             alert("Perfil atualizado!");
 
         } catch (error) {
