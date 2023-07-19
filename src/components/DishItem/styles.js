@@ -3,7 +3,10 @@ import styled from 'styled-components';
 export const Container = styled.div`
     display: flex;
     align-items: center;
+    min-width: 130px;
+    width: ${({ size }) => `${size + 6}ch`};
     justify-content: center;
+    text-align-last: center;
     padding: 0.7rem 1.6rem;
     border-radius: 0.8rem;
     padding-right: 1.6rem;
@@ -12,11 +15,13 @@ export const Container = styled.div`
     border: ${({ theme, $isNew }) => $isNew ? `1px dashed ${theme.COLORS.LIGHT_500}` : "none"};
 
     > button {
+        display: flex;
+        align-items: center;
         border: none;
         background: none;
 
         svg {
-            color: ${({ theme, $isNew }) => $isNew ? theme.COLORS.LIGHT_500 : theme.COLORS.LIGHT_100};
+            color: ${({ theme, $isNew }) => $isNew ? theme.COLORS.MINT_100 : theme.COLORS.TOMATO_300};
         }
     }
 

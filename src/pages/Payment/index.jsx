@@ -171,6 +171,21 @@ export function Payment() {
           .then(() => {
             setProcessingPayment(false);
             setPaymentAccept(true);
+
+            const order = {
+              user_id: user.id,
+              status: "aberto",
+              dishes: []
+            };
+
+            localStorage.setItem("@foodexplorer:order", JSON.stringify(order));
+
+            setTotalOrder(0);
+            setViewOrder(false);
+
+            setTimeout(() => {
+              console.log("redirecionar...")
+            }, 3000);
           })
           .catch((error) => {
             setProcessingPayment(false);
@@ -179,6 +194,10 @@ export function Payment() {
       }, 4000);
     }
   };
+
+  useEffect(() => {
+    console.log(items)
+  }, [items]);
 
   /* Começa aqui */
 
@@ -207,8 +226,13 @@ export function Payment() {
 
   useEffect(() => {
     if (windowWidth >= queryWidth) {
-      setViewOrder(true);
-      setViewPayment(true);
+      if (paymentAccept) {
+        setViewOrder(false);
+        setViewPayment(true);
+      } else {
+        setViewOrder(true);
+        setViewPayment(true);
+      }
     } else {
       if (viewOrder && viewPayment) {
         setViewOrder(true);
@@ -349,11 +373,15 @@ export function Payment() {
                   <PaymentAccept>
                     <PiCheckCircleLight size={96} />
                     <span>Pagamento aprovado!</span>
+                    <p>Você pode acompanhar seus pedidos clicando aqui, ou aguarde para ser redirecionado.</p>
                   </PaymentAccept>
                 }
-                <div>
-                  <Button onClick={handleOpenOrder}>Voltar</Button>
-                </div>
+                {
+                  !processingPayment && !paymentAccept &&
+                  <div className='openOrderButton'>
+                    <Button onClick={handleOpenOrder}>Voltar</Button>
+                  </div>
+                }
               </WrappedPaymentMethods>
             </PaymentMethods>
           )}

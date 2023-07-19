@@ -129,8 +129,7 @@ export const PaymentMethods = styled.div`
 `;
 
 export const WrappedPaymentMethods = styled.div`    
-    > div:last-child {
-        margin-top: 3.1rem;
+    .openOrderButton {
         text-align: right;
         display: flex;
         justify-content: right;
@@ -138,11 +137,12 @@ export const WrappedPaymentMethods = styled.div`
         > button {
         max-width: 21.6rem;
         display: none;
+        margin-top: 3.1rem;
+        }
 
         @media (max-width: 1049px) {
             display: block;
         }
-    }
     }
 
     .creditcard {
@@ -314,6 +314,11 @@ export const PaymentAccept = styled.div`
     border-radius: 0 0 0.8rem 0.8rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_700};
     font: ${({ theme }) => theme.FONTS.ROBOTO_BIG_BOLD};
+
+    > p {
+        font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_SPACED};
+        text-align: center;
+    }
 
     @media (max-width: 1049px) {
         padding: 2.4rem;
