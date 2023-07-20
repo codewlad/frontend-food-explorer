@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { BackButton } from '../../components/BackButton';
@@ -16,6 +17,7 @@ import { Container, Content, WrappedPayment, Order, Total, ItemOrder, ItemInform
 
 export function Payment() {
   const { user, order } = useAuth();
+  const navigate = useNavigate()
 
   const [selectedPayment, setSelectedPayment] = useState("pix");
   const [items, setItems] = useState([]);
@@ -184,7 +186,7 @@ export function Payment() {
             setViewOrder(false);
 
             setTimeout(() => {
-              console.log("redirecionar...")
+              navigate("/orders");
             }, 3000);
           })
           .catch((error) => {
@@ -194,10 +196,6 @@ export function Payment() {
       }, 4000);
     }
   };
-
-  useEffect(() => {
-    console.log(items)
-  }, [items]);
 
   /* Começa aqui */
 
@@ -373,7 +371,7 @@ export function Payment() {
                   <PaymentAccept>
                     <PiCheckCircleLight size={96} />
                     <span>Pagamento aprovado!</span>
-                    <p>Você pode acompanhar seus pedidos clicando aqui, ou aguarde para ser redirecionado.</p>
+                    <p>Você pode acompanhar seus pedidos clicando <Link to="/orders">aqui</Link>, ou aguarde para ser redirecionado.</p>
                   </PaymentAccept>
                 }
                 {

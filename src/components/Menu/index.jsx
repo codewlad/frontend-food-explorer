@@ -179,6 +179,11 @@ export function Menu() {
                             <SearchList><span>Nenhum resultado encontrado!</span></SearchList>
                         }
                     </Input>
+                    <Link to="/orders" onClick={handleIconMenuClick}>
+                        {
+                            isAdmin ? <ItemMenu title="Pedidos" /> : <ItemMenu title="Meus pedidos" />
+                        }
+                    </Link>
                     {isAdmin ? (
                         <Link to="/add" onClick={handleIconMenuClick}>
                             <ItemMenu title="Novo prato" />

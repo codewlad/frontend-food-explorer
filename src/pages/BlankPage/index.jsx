@@ -6,6 +6,13 @@ import { Container, Content } from './styles';
 export function BlankPage() {
 
   return (
-    <div className='loading'>Carregando...</div>
+    <Container>
+      <Header />
+      <Content>
+        <BackButton />
+        <div className='loading'>Carregando...</div>
+      </Content>
+      <Footer />
+    </Container>
   )
 }

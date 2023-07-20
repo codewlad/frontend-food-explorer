@@ -5,6 +5,7 @@ import { Dish } from '../pages/Dish';
 import { AddDish } from '../pages/AddDish';
 import { EditDish } from '../pages/EditDish';
 import { Profile } from '../pages/Profile';
+import { Orders } from '../pages/Orders';
 
 export function AdminRoutes() {
     return (
@@ -14,6 +15,7 @@ export function AdminRoutes() {
             <Route path="/dish/:id" element={<Dish />} />
             <Route path="/add" element={<AddDish />} />
             <Route path="/edit/:id" element={<EditDish />} />
+            <Route path="/orders" element={<Orders />} />
         </Routes>
     )
 }

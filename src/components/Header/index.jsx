@@ -178,7 +178,7 @@ export function Header(props) {
                 ) : (
                     <Link to="/payment">
                         <Button>
-                            <TfiReceipt />{`Pedidos (${totalAmount})`}
+                            <TfiReceipt />{`Pedido (${totalAmount})`}
                         </Button>
                     </Link>
                 )
@@ -201,6 +201,11 @@ export function Header(props) {
                     }
                     <ProfileMenu className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
                         <ProfileMenuOptions>
+                            <Link to="/orders">
+                                {
+                                    isAdmin ? <ItemMenu icon={TfiReceipt} title="Pedidos" /> : <ItemMenu icon={TfiReceipt} title="Meus pedidos" />
+                                }
+                            </Link>
                             {
                                 !isAdmin &&
                                 <Link to="/favorites"><ItemMenu icon={TfiHeart} title="Favoritos" /></Link>

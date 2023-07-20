@@ -4,7 +4,7 @@ import { Container } from './styles';
 
 export function BackButton() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <Container onClick={() => navigate("/")}>
