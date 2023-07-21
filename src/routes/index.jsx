@@ -1,22 +1,37 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
+import { api } from '../services/api';
 
 import { AuthRoutes } from './auth.routes';
 import { AdminRoutes } from './admin.routes';
 import { UserRoutes } from './user.routes';
+import { RegisterRoutes } from './register.routes';
 
 export function Routes() {
-    const { user, isAdmin, isLoading } = useAuth();
-    const [authLoaded, setAuthLoaded] = useState(false);
+    const { user, isAdmin } = useAuth();
+    const [loaded, setLoaded] = useState(false);
+    const [adminExists, setAdminExists] = useState(false);
 
     useEffect(() => {
-        if (!isLoading) {
-            setAuthLoaded(true);
-        };
-    }, [isLoading]);
+        async function checkIfAdminExists() {
+            const response = await api.get("/admin")
 
-    if (!authLoaded) {
+            if (response.data) {
+                console.log("tem")
+                setAdminExists(true)
+            } else {
+                console.log("nao tem")
+                setAdminExists(false)
+            }
+
+            setLoaded(true)
+        };
+
+        checkIfAdminExists()
+    }, []);
+
+    if (!loaded) {
         return (
             <div></div>
             /*
@@ -36,12 +51,18 @@ export function Routes() {
                 <span>Carregando...</span>
             </div>
             */
-        )
-    };
+        );
+    }
 
     return (
         <BrowserRouter>
-            {user ? (isAdmin ? <AdminRoutes /> : <UserRoutes />) : <AuthRoutes />}
+            {
+                adminExists ? (
+                    user ? (isAdmin ? <AdminRoutes /> : <UserRoutes />) : <AuthRoutes />
+                ) : (
+                    <RegisterRoutes />
+                )
+            }
         </BrowserRouter>
     );
 }

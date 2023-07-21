@@ -20,7 +20,11 @@ export function SignUp() {
     function handleSignUp() {
         if (!name || !email || !password) {
             return alert("Preencha todos os campos.");
-        }
+        };
+
+        if (password.length < 6) {
+            return alert("A senha deve ter no mínimo 6 caracteres.");
+        };
 
         api.post("/users", { name, email, password })
             .then(() => {
@@ -32,9 +36,9 @@ export function SignUp() {
                     alert(error.response.data.message);
                 } else {
                     alert("Não foi possível cadastrar.");
-                }
+                };
             });
-    }
+    };
 
     useEffect(() => {
         function handleResize() {
@@ -45,8 +49,8 @@ export function SignUp() {
                 containerRef.current.style.height = 'auto';
             } else {
                 containerRef.current.style.height = '100%';
-            }
-        }
+            };
+        };
 
         handleResize();
 
@@ -80,6 +84,7 @@ export function SignUp() {
 
                     <Section title="Senha">
                         <Input
+                            type="password"
                             placeholder="No mínimo 6 caracteres"
                             onChange={e => setPassword(e.target.value)}
                         />

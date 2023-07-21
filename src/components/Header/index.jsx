@@ -37,6 +37,7 @@ export function Header(props) {
     const [filteredSearch, setFilteredSearch] = useState([]);
 
     function handleSignOut() {
+        document.documentElement.style.overflowY = "auto";
         navigate("/");
         signOut();
     }

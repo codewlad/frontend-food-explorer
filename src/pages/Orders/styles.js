@@ -15,14 +15,22 @@ export const Content = styled.div`
     flex-direction: column;
     gap: 4.2rem;
 
-    h1 {
-        color: ${({ theme }) => theme.COLORS.LIGHT_300};
-        font: ${({ theme }) => theme.FONTS.POPPINS_400};
+    > div {
+        h1 {
+            color: ${({ theme }) => theme.COLORS.LIGHT_300};
+            font: ${({ theme }) => theme.FONTS.POPPINS_400};
+            margin-bottom: 3.2rem;
+        }
+    
+        > p {
+            color: ${({ theme }) => theme.COLORS.LIGHT_300};
+            font: ${({ theme }) => theme.FONTS.POPPINS_200};
+        }
     }
 
     @media (max-width: 1049px) {
-        margin: 3.2rem 2.8rem;
         gap: 1.6rem;
+        margin: 3.2rem 2.8rem;
     }
 `;
 

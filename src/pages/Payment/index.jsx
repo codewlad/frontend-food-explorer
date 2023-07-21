@@ -30,6 +30,10 @@ export function Payment() {
   const [paymentData, setPaymentData] = useState(false);
   const [processingPayment, setProcessingPayment] = useState(false);
   const [paymentAccept, setPaymentAccept] = useState(false);
+  const queryWidth = 1050;
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [viewOrder, setViewOrder] = useState(true);
+  const [viewPayment, setViewPayment] = useState(false);
 
   const formatCardNumber = (cardNumber) => {
     const cleanNumber = cardNumber.replace(/\D/g, '');
@@ -125,40 +129,19 @@ export function Payment() {
     }
   };
 
-  useEffect(() => {
-    const formattedCardNumber = cardNumber.replace(/\D/g, "").length;
-    const formattedExpirationDate = expirationDate.replace(/\D/g, "").length;
-    const formattedVerifyingDigit = verifyingDigit.length;
+  function handleOpenPayment() {
+    setViewOrder(false);
+    setViewPayment(true);
+  };
 
-    if (formattedCardNumber === 16 && formattedExpirationDate === 4 && formattedVerifyingDigit === 3) {
-      setPaymentData(true);
-    } else {
-      setPaymentData(false);
-    }
+  function handleOpenOrder() {
+    setViewOrder(true);
+    setViewPayment(false);
+  };
 
-  }, [cardNumber, expirationDate, verifyingDigit]);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (order) {
-      const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
-      const dishIds = oldItems.dishes.map(dish => dish.dish_id);
-
-      async function fetchDishes() {
-        const response = await api.get(`/payment?dishIds=${dishIds}`);
-        setDishes(response.data);
-        viewTotalOrder(response.data);
-        setIsLoading(false);
-      }
-
-      if (dishIds.length === 0) {
-        return setIsLoading(false);
-      }
-
-      fetchDishes();
-    };
-  }, []);
+  function handleResize() {
+    setWindowWidth(window.innerWidth);
+  };
 
   function handleCreateOrder() {
     const confirmar = window.confirm("Deseja realmente fechar o pedido e realizar o pagamento?");
@@ -197,30 +180,18 @@ export function Payment() {
     }
   };
 
-  /* Começa aqui */
-
-  const queryWidth = 1050;
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [viewOrder, setViewOrder] = useState(true);
-  const [viewPayment, setViewPayment] = useState(false);
-
-  function handleOpenPayment() {
-    setViewOrder(false);
-    setViewPayment(true);
-  };
-
-  function handleOpenOrder() {
-    setViewOrder(true);
-    setViewPayment(false);
-  };
-
-  function handleResize() {
-    setWindowWidth(window.innerWidth);
-  };
-
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
-  }, []);
+    const formattedCardNumber = cardNumber.replace(/\D/g, "").length;
+    const formattedExpirationDate = expirationDate.replace(/\D/g, "").length;
+    const formattedVerifyingDigit = verifyingDigit.length;
+
+    if (formattedCardNumber === 16 && formattedExpirationDate === 4 && formattedVerifyingDigit === 3) {
+      setPaymentData(true);
+    } else {
+      setPaymentData(false);
+    }
+
+  }, [cardNumber, expirationDate, verifyingDigit]);
 
   useEffect(() => {
     if (windowWidth >= queryWidth) {
@@ -245,6 +216,30 @@ export function Payment() {
     };
 
   }, [windowWidth]);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    if (order) {
+      const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+      const dishIds = oldItems.dishes.map(dish => dish.dish_id);
+
+      async function fetchDishes() {
+        const response = await api.get(`/payment?dishIds=${dishIds}`);
+        setDishes(response.data);
+        viewTotalOrder(response.data);
+        setIsLoading(false);
+      }
+
+      if (dishIds.length === 0) {
+        return setIsLoading(false);
+      }
+
+      fetchDishes();
+
+      window.addEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <Container>

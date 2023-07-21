@@ -16,7 +16,7 @@ export const Content = styled.div`
     gap: 4.2rem;
 
     @media (max-width: 1049px) {
-        margin: 3.2rem 5.6rem;
+        margin: 3.2rem 2.8rem;
         gap: 1.6rem;
     }
 `;

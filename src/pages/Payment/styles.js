@@ -16,6 +16,7 @@ export const Content = styled.div`
     gap: 4.2rem;
 
     @media (max-width: 1049px) {
+        gap: 1.6rem;
         margin: 3.2rem 2.8rem;
     }
 `;
@@ -41,7 +42,6 @@ export const Order = styled.div`
     > p {
         color: ${({ theme }) => theme.COLORS.LIGHT_300};
         font: ${({ theme }) => theme.FONTS.POPPINS_200};
-        padding: 1.6rem 0;
     }
 `;
 
@@ -135,13 +135,19 @@ export const WrappedPaymentMethods = styled.div`
         justify-content: right;
 
         > button {
-        max-width: 21.6rem;
-        display: none;
-        margin-top: 3.1rem;
+            max-width: 21.6rem;
+            display: none;
+            margin-top: 3.1rem;
         }
 
         @media (max-width: 1049px) {
-            display: block;
+            display: flex;
+
+            > button {
+                max-width: 21.6rem;
+                display: block;
+                margin-top: 3.1rem;
+            }
         }
     }
 

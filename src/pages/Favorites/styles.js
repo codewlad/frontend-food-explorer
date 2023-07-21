@@ -13,7 +13,7 @@ export const Content = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 3.4rem;
+    gap: 4.2rem;
 
     > h1 {
         color: ${({ theme }) => theme.COLORS.LIGHT_300};
@@ -27,6 +27,7 @@ export const Content = styled.div`
 
     @media (max-width: 1049px) {
         margin: 3.2rem;
+        gap: 1.6rem;
     }
 `;
 

@@ -13,7 +13,7 @@ export const Content = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 3.2rem;
+    gap: 4.2rem;
     flex-wrap: wrap;
     
     h1 {

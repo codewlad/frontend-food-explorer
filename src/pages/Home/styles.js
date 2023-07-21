@@ -14,7 +14,7 @@ export const Content = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4.8rem;
+    gap: 4.2rem;
 
     @media (max-width: 1049px) {
         margin: 2.8rem;
