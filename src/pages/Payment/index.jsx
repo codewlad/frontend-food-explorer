@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import { ConfirmationToast } from '../../components/ConfirmationToast';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
@@ -113,10 +116,26 @@ export function Payment() {
     setItems(updatedOrder);
   };
 
-  function deleteItem(dish_id) {
-    const confirm = window.confirm("Deseja realmente remover este item do pedido?");
+  async function deleteItem(dish_id) {
+    const confirmed = await new Promise((resolve) => {
 
-    if (confirm) {
+      const customId = "deleteItem";
+
+      toast(
+        <ConfirmationToast
+          message={"Deseja realmente remover este item do pedido?"}
+          confirm={"Remover"}
+          cancel={"Cancelar"}
+          onConfirm={() => resolve(true)}
+          onCancel={() => resolve(false)}
+        />, {
+        toastId: customId,
+        containerId: 'await'
+      }
+      );
+    });
+
+    if (confirmed) {
       const oldItems = JSON.parse(localStorage.getItem("@foodexplorer:order"));
       const newItems = oldItems.dishes.filter(item => item.dish_id !== dish_id);
       const order = {
@@ -125,6 +144,7 @@ export function Payment() {
         dishes: newItems
       };
       localStorage.setItem("@foodexplorer:order", JSON.stringify(order));
+      toast('Item removido.', { containerId: 'autoClose' });
       viewTotalOrder(dishes);
     }
   };
@@ -143,41 +163,56 @@ export function Payment() {
     setWindowWidth(window.innerWidth);
   };
 
-  function handleCreateOrder() {
-    const confirmar = window.confirm("Deseja realmente fechar o pedido e realizar o pagamento?");
-    const order = JSON.parse(localStorage.getItem("@foodexplorer:order"));
-    order.status = "Pendente";
+  async function handleCreateOrder() {
+    const confirmed = await new Promise((resolve) => {
 
-    if (confirmar) {
+      const customId = "createOrder";
+
+      toast(
+        <ConfirmationToast
+          message={"Deseja realmente fechar o pedido e realizar o pagamento?"}
+          confirm={"Sim"}
+          cancel={"Cancelar"}
+          onConfirm={() => resolve(true)}
+          onCancel={() => resolve(false)}
+        />, {
+        toastId: customId,
+        containerId: 'await'
+      }
+      );
+    });
+
+    if (confirmed) {
+      const order = JSON.parse(localStorage.getItem("@foodexplorer:order"));
+      order.status = "Pendente";
+
       setProcessingPayment(true);
 
-      setTimeout(() => {
-        api.post("/orders", { order })
-          .then(() => {
-            setProcessingPayment(false);
-            setPaymentAccept(true);
+      api.post("/orders", { order })
+        .then(() => {
+          setProcessingPayment(false);
+          setPaymentAccept(true);
 
-            const order = {
-              user_id: user.id,
-              status: "aberto",
-              dishes: []
-            };
+          const order = {
+            user_id: user.id,
+            status: "aberto",
+            dishes: []
+          };
 
-            localStorage.setItem("@foodexplorer:order", JSON.stringify(order));
+          localStorage.setItem("@foodexplorer:order", JSON.stringify(order));
 
-            setTotalOrder(0);
-            setViewOrder(false);
+          setTotalOrder(0);
+          setViewOrder(false);
 
-            setTimeout(() => {
-              navigate("/orders");
-            }, 3000);
-          })
-          .catch((error) => {
-            setProcessingPayment(false);
-            console.error("Ocorreu um erro ao criar o pedido:", error);
-          });
-      }, 4000);
-    }
+          setTimeout(() => {
+            navigate("/orders");
+          }, 3000);
+        })
+        .catch((error) => {
+          setProcessingPayment(false);
+          console.error("Ocorreu um erro ao criar o pedido:", error);
+        });
+    };
   };
 
   useEffect(() => {
@@ -381,6 +416,8 @@ export function Payment() {
         </WrappedPayment>
       </Content>
       <Footer />
+      <ToastContainer enableMultiContainer containerId={'await'} autoClose={false} />
+      <ToastContainer enableMultiContainer containerId={'autoClose'} autoClose={1500} />
     </Container>
   );
 }

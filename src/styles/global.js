@@ -3,6 +3,14 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
     :root {
         font-size: 62.5%;
+		--toastify-color-light: ${({ theme }) => theme.COLORS.DARK_900};
+		--toastify-text-color-light: ${({ theme }) => theme.COLORS.LIGHT_100};
+		--toastify-toast-min-height: 4.8rem;
+		--toastify-color-progress-light: linear-gradient(
+			to right,
+			${({ theme }) => theme.COLORS.DARK_1000},
+			${({ theme }) => theme.COLORS.LIGHT_700}
+		);
     }
     
     * {
@@ -13,6 +21,7 @@ export default createGlobalStyle`
 
     html, body {
         height: 100%;
+		font-size: 1.6rem;
     }
 
     body {
@@ -32,6 +41,10 @@ export default createGlobalStyle`
         color: ${({ theme }) => theme.COLORS.LIGHT_100};
         font: ${({ theme }) => theme.FONTS.POPPINS_300_REGULAR};
     }
+
+	.Toastify__close-button {
+		color: ${({ theme }) => theme.COLORS.LIGHT_100};
+	}
 
     a {
         text-decoration: none;

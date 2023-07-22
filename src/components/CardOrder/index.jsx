@@ -1,6 +1,9 @@
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 import React, { useEffect, useState, useContext } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import { ConfirmationToast } from '../../components/ConfirmationToast';
+import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment/moment';
 import { ThemeContext } from 'styled-components';
 import { FaCircle } from 'react-icons/fa';
@@ -26,23 +29,39 @@ export function CardOrder({ data }) {
   }
 
   async function handleUpdateOrderStatus(status) {
-    const confirm = window.confirm("Deseja realmente atualizar o status do pedido?");
+    const confirmed = await new Promise((resolve) => {
 
-    if (confirm) {
+      const customId = "handleUpdateOrder";
+
+      toast(
+        <ConfirmationToast
+          message={"Deseja realmente atualizar o status do pedido?"}
+          confirm={"Atualizar"}
+          cancel={"Cancelar"}
+          onConfirm={() => resolve(true)}
+          onCancel={() => resolve(false)}
+        />, {
+        toastId: customId,
+        containerId: 'await'
+      }
+      );
+    });
+
+    if (confirmed) {
       try {
         const response = await api.put(`/orders/${data.id}`, { status });
 
         if (response.status === 200) {
           setSelectedStatus(status);
-          alert('Status atualizado com sucesso!');
+          toast('Status atualizado com sucesso!', { containerId: 'autoClose' });
         } else {
-          alert('Erro ao atualizar o status. Por favor, tente novamente.');
-        }
+          toast('Erro ao atualizar o status. Por favor, tente novamente.', { containerId: 'autoClose' });
+        };
       } catch (error) {
-        alert('Ocorreu um erro ao processar a atualização: ' + error.message);
-      }
-    }
-  }
+        toast('Ocorreu um erro ao processar a atualização: ' + error.message, { containerId: 'autoClose' });
+      };
+    };
+  };
 
   const handleStatus = (event) => {
     handleUpdateOrderStatus(event.target.value)
@@ -137,6 +156,8 @@ export function CardOrder({ data }) {
           </Order>
         )
       }
+      <ToastContainer enableMultiContainer containerId={'await'} autoClose={false} />
+      <ToastContainer enableMultiContainer containerId={'autoClose'} autoClose={1500} />
     </Container>
   )
 }

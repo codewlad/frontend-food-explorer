@@ -1,5 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import { ConfirmationToast } from '../../components/ConfirmationToast';
+import 'react-toastify/dist/ReactToastify.css';
 import { FiUpload } from 'react-icons/fi';
 import { TfiClose } from 'react-icons/tfi';
 import { api } from '../../services/api';
@@ -38,7 +41,7 @@ export function EditDish() {
   function handleAddIngredient() {
     if (newIngredient.trim() === "") {
       setNewIngredient("");
-      return alert("Digite um ingrediente antes de adicionar.");
+      return toast("Digite um ingrediente antes de adicionar.");
     }
     setIngredients(prevState => [...prevState, newIngredient]);
     setIngredientsHasChanges(true)
@@ -76,9 +79,26 @@ export function EditDish() {
   };
 
   async function handleRemove() {
-    const confirm = window.confirm("Deseja realmente remover o prato?");
+    const confirmed = await new Promise((resolve) => {
 
-    if (confirm) {
+      const customId = "handleRemove";
+
+      toast(
+        <ConfirmationToast
+          message={"Deseja realmente remover o prato?"}
+          confirm={"Remover"}
+          cancel={"Cancelar"}
+          onConfirm={() => resolve(true)}
+          onCancel={() => resolve(false)}
+        />, {
+        toastId: customId,
+        containerId: 'await'
+      }
+      );
+    });
+
+    if (confirmed) {
+      toast('Prato removido.', { containerId: 'autoClose' });
       await api.delete(`/dishes/${params.id}`);
       navigate("/");
     }
@@ -90,7 +110,7 @@ export function EditDish() {
 
       const priceRegex = /^\d{1,3},\d{2}$/;
       if (!priceRegex.test(formattedPrice)) {
-        return alert("Formato de preço inválido. Insira um valor no formato XX,XX.");
+        return toast("Formato de preço inválido. Insira um valor no formato XX,XX.");
       }
 
       formattedPrice = parseFloat(formattedPrice.replace(",", "."));
@@ -110,7 +130,7 @@ export function EditDish() {
 
       await api.put(`/dishes/${params.id}`, fileUploadForm);
 
-      alert("Prato atualizado com sucesso!");
+      toast("Prato atualizado com sucesso!");
       navigate("/");
     } catch (error) {
       console.error("Ocorreu um erro ao atualizar o prato:", error);
@@ -258,6 +278,8 @@ export function EditDish() {
         }
       </Content>
       <Footer />
+      <ToastContainer enableMultiContainer containerId={'await'} autoClose={false} />
+      <ToastContainer enableMultiContainer containerId={'autoClose'} autoClose={1500} />
     </Container>
   )
 }

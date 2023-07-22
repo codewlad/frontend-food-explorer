@@ -2,7 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import { ConfirmationToast } from '../../components/ConfirmationToast';
+import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../services/api';
 import { BackButton } from '../../components/BackButton';
 import defaultDish from '../../../src/assets/dish.svg';
@@ -13,7 +16,7 @@ export function Favorites() {
   const { user } = useAuth();
 
   const [userFavorites, setUserFavorites] = useState([]);
-  const [favoritesUpdated, setFavoritesUpdates] = useState(false);
+  const [favoritesUpdated, setFavoritesUpdated] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -23,11 +26,29 @@ export function Favorites() {
   }
 
   async function handleRemove(id) {
-    const confirm = window.confirm("Deseja realmente remover dos favoritos?");
+    setFavoritesUpdated(false);
+    const confirmed = await new Promise((resolve) => {
 
-    if (confirm) {
+      const customId = "handleRemove";
+
+      toast(
+        <ConfirmationToast
+          message={"Deseja realmente remover dos favoritos?"}
+          confirm={"Remover"}
+          cancel={"Cancelar"}
+          onConfirm={() => resolve(true)}
+          onCancel={() => resolve(false)}
+        />, {
+        toastId: customId,
+        containerId: 'await'
+      }
+      );
+    });
+
+    if (confirmed) {
       await api.delete(`/favorites/${id}`);
-      setFavoritesUpdates(true);
+      setFavoritesUpdated(true);
+      toast('Favorito removido.', { containerId: 'autoClose' });
     }
   };
 
@@ -36,11 +57,13 @@ export function Favorites() {
       const response = await api.get(`/favorites/${user.id}`);
       setUserFavorites(response.data);
       setIsLoading(false);
-    }
+    };
 
-    fetchFavorites();
+    if (favoritesUpdated) {
+      fetchFavorites();
+    };
 
-  }, [favoritesUpdated])
+  }, [favoritesUpdated]);
 
   return (
     <Container>
@@ -79,6 +102,8 @@ export function Favorites() {
         )}
       </Content>
       <Footer />
+      <ToastContainer enableMultiContainer containerId={'await'} autoClose={false} />
+      <ToastContainer enableMultiContainer containerId={'autoClose'} autoClose={1500} />
     </Container>
   )
 }

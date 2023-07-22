@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FiUpload } from 'react-icons/fi';
 import { TfiClose } from 'react-icons/tfi';
 import { api } from '../../services/api';
@@ -30,7 +32,7 @@ export function AddDish() {
   function handleAddIngredient() {
     if (newIngredient.trim() === "") {
       setNewIngredient("");
-      return alert("Digite um ingrediente antes de adicionar.");
+      return toast("Digite um ingrediente antes de adicionar.");
     }
     setIngredients(prevState => [...prevState, newIngredient]);
     setNewIngredient("");
@@ -67,7 +69,7 @@ export function AddDish() {
     try {
       const priceRegex = /^\d{1,3},\d{2}$/;
       if (!priceRegex.test(price)) {
-        return alert("Formato de preço inválido. Insira um valor no formato XX,XX.");
+        return toast("Formato de preço inválido. Insira um valor no formato XX,XX.");
       }
 
       const formattedPrice = parseFloat(price.replace(",", "."));
@@ -86,7 +88,7 @@ export function AddDish() {
 
       await api.post("/dishes", fileUploadForm);
 
-      alert("Prato criado com sucesso!");
+      toast("Prato criado com sucesso!");
       navigate("/");
     } catch (error) {
       console.error("Ocorreu um erro ao criar o prato:", error);
@@ -198,6 +200,7 @@ export function AddDish() {
         </DishInformations>
       </Content>
       <Footer />
+      <ToastContainer autoClose={1500} />
     </Container>
   )
 }

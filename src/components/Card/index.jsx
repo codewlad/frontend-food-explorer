@@ -1,8 +1,10 @@
+import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { TfiPlus, TfiMinus, TfiPencil } from 'react-icons/tfi';
 import { VscHeartFilled, VscHeart } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
-import { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 import { Button } from '../Button';
 import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
@@ -53,9 +55,14 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
             dish_id: dish.id
         };
 
-        await api.post("/favorites", data);
+        const response = await api.post("/favorites", data);
         setFavoritesUpdated(favorites);
-    }
+        if (response.data.favorite) {
+            toast("Adicionado aos favoritos.");
+        } else {
+            toast("Removido dos favoritos.");
+        };
+    };
 
     function handleAddDish(dish_id, amount) {
         setDishToAdd({ dish_id, amount });
@@ -98,6 +105,7 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
                     </TopRightButton>
                 </div>
             )}
+            <ToastContainer autoClose={1500} />
         </Container>
     )
 }

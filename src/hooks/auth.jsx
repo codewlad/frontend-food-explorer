@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../services/api';
 import jwt_decode from 'jwt-decode';
 
@@ -38,9 +40,9 @@ function AuthProvider({ children }) {
 
         } catch (error) {
             if (error.response) {
-                alert(error.response.data.message);
+                toast(error.response.data.message);
             } else {
-                alert("Não foi possível entrar.");
+                toast("Não foi possível entrar.");
             }
         }
     }
@@ -67,13 +69,13 @@ function AuthProvider({ children }) {
             localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
 
             setData({ user, token: data.token, isAdmin, order });
-            alert("Perfil atualizado!");
+            toast("Perfil atualizado!");
 
         } catch (error) {
             if (error.response) {
-                alert(error.response.data.message);
+                toast(error.response.data.message);
             } else {
-                alert("Não foi possível atualizar o perfil.");
+                toast("Não foi possível atualizar o perfil.");
             }
         }
     }

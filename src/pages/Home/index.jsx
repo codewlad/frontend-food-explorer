@@ -1,5 +1,7 @@
 import { useAuth } from '../../hooks/auth';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../services/api'
 import { Header } from '../../components/Header';
 import { Card } from '../../components/Card';
@@ -148,7 +150,7 @@ export function Home() {
 
       setOrderItems(orderItems + dishToAdd.amount);
 
-      alert("Item adicionado ao pedido.")
+      toast("Item adicionado ao pedido.")
     };
 
   }, [dishToAdd]);
@@ -191,6 +193,7 @@ export function Home() {
         }
       </Content>
       <Footer />
+      <ToastContainer autoClose={1500} />
     </Container >
   )
 }

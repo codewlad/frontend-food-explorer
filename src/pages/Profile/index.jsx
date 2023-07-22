@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { TfiUser, TfiEmail, TfiLock } from 'react-icons/tfi';
 import { useAuth } from '../../hooks/auth'
 import { api } from '../../services/api';
@@ -84,6 +85,7 @@ export function Profile() {
                 />
                 <Button onClick={handleUpdate}>Salvar</Button>
             </Form>
+            <ToastContainer autoClose={1500} />
         </Container>
     );
 }

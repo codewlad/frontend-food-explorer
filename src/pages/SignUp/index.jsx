@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import { Brand } from '../../components/Brand';
@@ -19,23 +21,23 @@ export function SignUp() {
 
     function handleSignUp() {
         if (!name || !email || !password) {
-            return alert("Preencha todos os campos.");
+            return toast("Preencha todos os campos.");
         };
 
         if (password.length < 6) {
-            return alert("A senha deve ter no mínimo 6 caracteres.");
+            return toast("A senha deve ter no mínimo 6 caracteres.");
         };
 
         api.post("/users", { name, email, password })
             .then(() => {
-                alert("Usuário cadastrado com sucesso!");
+                toast("Usuário cadastrado com sucesso!");
                 navigate("/");
             })
             .catch(error => {
                 if (error.response) {
-                    alert(error.response.data.message);
+                    toast(error.response.data.message);
                 } else {
-                    alert("Não foi possível cadastrar.");
+                    toast("Não foi possível cadastrar.");
                 };
             });
     };
@@ -97,6 +99,7 @@ export function SignUp() {
                     <Link to="/">Já tenho uma conta</Link>
                 </Form>
             </Main>
+            <ToastContainer autoClose={1500} />
         </Container>
     );
 }

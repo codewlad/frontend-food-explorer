@@ -15,17 +15,15 @@ export function Routes() {
 
     useEffect(() => {
         async function checkIfAdminExists() {
-            const response = await api.get("/admin")
+            const response = await api.get("/admin");
 
             if (response.data) {
-                console.log("tem")
-                setAdminExists(true)
+                setAdminExists(true);
             } else {
-                console.log("nao tem")
-                setAdminExists(false)
-            }
+                setAdminExists(false);
+            };
 
-            setLoaded(true)
+            setLoaded(true);
         };
 
         checkIfAdminExists()

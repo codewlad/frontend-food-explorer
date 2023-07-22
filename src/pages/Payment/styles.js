@@ -263,6 +263,11 @@ export const ProcessingPayment = styled.div`
     color: ${({ theme }) => theme.COLORS.LIGHT_700};
     font: ${({ theme }) => theme.FONTS.ROBOTO_BIG_BOLD};
 
+    > span {
+        width: 100%;
+        text-align: center;
+    }
+
     @media (max-width: 1049px) {
         padding: 2.4rem;
     }

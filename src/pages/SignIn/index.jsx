@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import { Brand } from '../../components/Brand';
@@ -74,6 +75,7 @@ export function SignIn() {
                     <Link to="/register">Criar uma conta</Link>
                 </Form>
             </Main>
+            <ToastContainer autoClose={1500} />
         </Container>
     );
 }

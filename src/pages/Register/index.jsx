@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BsHexagonFill } from 'react-icons/bs'
 import { api } from '../../services/api';
-import { Brand } from '../../components/Brand';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
@@ -22,23 +23,23 @@ export function AdminRegister() {
 
     function handleSignUp() {
         if (!name || !email || !password) {
-            return alert("Preencha todos os campos.");
+            return toast("Preencha todos os campos.");
         };
 
         if (password.length < 6) {
-            return alert("A senha deve ter no mínimo 6 caracteres.");
+            return toast("A senha deve ter no mínimo 6 caracteres.");
         };
 
         api.post("/admin", { name, email, password })
             .then(() => {
-                alert("Administrador cadastrado com sucesso!");
+                toast("Administrador cadastrado com sucesso!");
                 window.location.reload();
             })
             .catch(error => {
                 if (error.response) {
-                    alert(error.response.data.message);
+                    toast(error.response.data.message);
                 } else {
-                    alert("Não foi possível cadastrar.");
+                    toast("Não foi possível cadastrar.");
                 }
             });
     };
@@ -119,6 +120,7 @@ export function AdminRegister() {
                     </Form>
                 }
             </Main>
+            <ToastContainer autoClose={1500} />
         </Container>
     );
 }
