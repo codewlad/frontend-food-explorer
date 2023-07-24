@@ -1,4 +1,5 @@
-import { BsHexagonFill } from 'react-icons/bs'
+import { BsHexagonFill } from 'react-icons/bs';
+
 import { Container, Logo } from './styles';
 
 export function Footer() {
@@ -11,5 +12,5 @@ export function Footer() {
                 © 2023 - Todos os direitos reservados.
             </span>
         </Container>
-    )
+    );
 }

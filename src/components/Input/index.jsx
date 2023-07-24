@@ -1,4 +1,5 @@
 import { Placeholder } from '../Placeholder';
+
 import { Container } from './styles';
 
 export function Input({ icon: Icon, searchPlaceholder, children, ...rest }) {
@@ -9,5 +10,5 @@ export function Input({ icon: Icon, searchPlaceholder, children, ...rest }) {
             <input autoComplete="off" {...rest} />
             {children}
         </Container>
-    )
+    );
 }

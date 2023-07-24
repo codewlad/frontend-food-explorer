@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { TfiPlus, TfiMinus, TfiPencil } from 'react-icons/tfi';
-import { VscHeartFilled, VscHeart } from 'react-icons/vsc';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
+
+import { ThemeContext } from 'styled-components';
+import { TfiPlus, TfiMinus, TfiPencil } from 'react-icons/tfi';
+import { VscHeartFilled, VscHeart } from 'react-icons/vsc';
+
 import { Button } from '../Button';
-import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
 import defaultDish from '../../../src/assets/dish.svg';
+
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
 
 export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
     const { user, isAdmin } = useAuth();
 
     const navigate = useNavigate();
+
+    const theme = useContext(ThemeContext);
 
     const dish = data[0];
     const favorites = data[1];
@@ -24,30 +33,30 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
 
     function handleDish(id) {
         navigate(`/dish/${id}`)
-    }
+    };
 
     function handleEditDish(id) {
         navigate(`/edit/${id}`)
-    }
+    };
 
     function decrease() {
         if (dishAmount > 1) {
             setDishAmount(prevState => prevState - 1);
-        }
-    }
+        };
+    };
 
     function increase() {
         setDishAmount(prevState => prevState + 1);
-    }
+    };
 
     function isFavorite(userFavorites, dish_id) {
         for (let i = 0; i < userFavorites.length; i++) {
             if (userFavorites[i] === dish_id) {
                 return true;
-            }
-        }
+            };
+        };
         return false;
-    }
+    };
 
     async function changeFavorite() {
         const data = {
@@ -55,18 +64,25 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
             dish_id: dish.id
         };
 
-        const response = await api.post("/favorites", data);
-        setFavoritesUpdated(favorites);
-        if (response.data.favorite) {
-            toast("Adicionado aos favoritos.");
-        } else {
-            toast("Removido dos favoritos.");
+        try {
+            const response = await api.post("/favorites", data);
+
+            setFavoritesUpdated(favorites);
+
+            if (response.data.favorite) {
+                toast("Adicionado aos favoritos.");
+            } else {
+                toast("Removido dos favoritos.");
+            };
+        } catch (error) {
+            console.error("Erro ao processar a requisição:", error);
+            toast("Erro ao processar a requisição. Por favor, tente novamente.");
         };
     };
 
     function handleAddDish(dish_id, amount) {
         setDishToAdd({ dish_id, amount });
-    }
+    };
 
     return (
         <Container>
@@ -99,7 +115,7 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
                     <TopRightButton onClick={() => changeFavorite()}>
                         {
                             isFavorite(favorites, dish.id) ?
-                                <VscHeartFilled style={{ color: '#750310' }} /> :
+                                <VscHeartFilled style={{ color: theme.COLORS.TOMATO_100 }} /> :
                                 <VscHeart />
                         }
                     </TopRightButton>
@@ -107,5 +123,5 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
             )}
             <ToastContainer autoClose={1500} />
         </Container>
-    )
+    );
 }

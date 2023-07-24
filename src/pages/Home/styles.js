@@ -143,4 +143,4 @@ export const NoResults = styled.div`
     text-align: center;
     color: ${({ theme }) => theme.COLORS.LIGHT_300};
     font: ${({ theme }) => theme.FONTS.POPPINS_400};
-`
+`;

@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+
 import { TfiAngleLeft } from 'react-icons/tfi';
+
 import { Container } from './styles';
 
 export function BackButton() {
@@ -10,5 +12,5 @@ export function BackButton() {
         <Container onClick={() => navigate("/")}>
             <TfiAngleLeft />voltar
         </Container>
-    )
+    );
 }

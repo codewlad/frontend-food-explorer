@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { TfiAngleLeft, TfiAngleRight } from 'react-icons/tfi';
+
 import { Container, Content, ControlLeft, ControlRight, GradientLeft, GradientRight } from './styles';
 
 export function Carousel({ content, title }) {

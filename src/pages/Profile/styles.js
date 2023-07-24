@@ -100,7 +100,7 @@ export const Avatar = styled.div`
     &:hover > div {
         transform: translateY(-5rem);
     }
-`
+`;
 
 export const ChangeAvatar = styled.div`
     position: absolute;
@@ -116,4 +116,4 @@ export const ChangeAvatar = styled.div`
     border-radius: 50% 50% 0 0;
     transition: all 0.3s ease;
     pointer-events: none;
-`
+`;

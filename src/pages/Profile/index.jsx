@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { TfiUser, TfiEmail, TfiLock } from 'react-icons/tfi';
-import { useAuth } from '../../hooks/auth'
+
+import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
+
+import { TfiUser, TfiEmail, TfiLock } from 'react-icons/tfi';
+
 import { BackButton } from '../../components/BackButton';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-import { Container, Form, Avatar, ChangeAvatar } from "./styles";
+
+import { ToastContainer } from 'react-toastify';
+
+import { Container, Form, Avatar, ChangeAvatar } from './styles';
 
 export function Profile() {
     const { user, updateProfile, isAdmin, order } = useAuth();
@@ -31,7 +36,7 @@ export function Profile() {
         const userUpdated = Object.assign(user, updated);
 
         await updateProfile({ user: userUpdated, avatarFile, isAdmin, order });
-    }
+    };
 
     function handleChangeAvatar(event) {
         const file = event.target.files[0];
@@ -41,11 +46,11 @@ export function Profile() {
 
             const imagePreview = URL.createObjectURL(file);
             setAvatar(imagePreview);
-        }
-    }
+        };
+    };
 
     const avatarStyle = {
-        backgroundImage: avatar ? avatarFile ? `url(${avatar})` : `url(${avatarUrl})` : 'none'
+        backgroundImage: avatar ? avatarFile ? `url(${avatar})` : `url(${avatarUrl})` : "none"
     };
 
     return (

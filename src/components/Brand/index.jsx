@@ -1,4 +1,5 @@
-import { BsHexagonFill } from 'react-icons/bs'
+import { BsHexagonFill } from 'react-icons/bs';
+
 import { Container, Logo, Admin } from './styles';
 
 export function Brand({ isAdmin }) {
@@ -14,5 +15,5 @@ export function Brand({ isAdmin }) {
                 </Admin>
             ) : null}
         </Container>
-    )
+    );
 }

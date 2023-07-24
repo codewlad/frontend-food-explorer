@@ -35,7 +35,7 @@ export const WrappedFavorites = styled.div`
     display: flex;
     gap: 3.2rem;
     flex-wrap: wrap;
-`
+`;
 
 export const FavoriteDish = styled.div`
     min-width: 32rem;
@@ -77,4 +77,4 @@ export const DishInfo = styled.div`
             cursor: pointer;
         }
     }
-`
+`;

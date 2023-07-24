@@ -15,18 +15,23 @@ export function Routes() {
 
     useEffect(() => {
         async function checkIfAdminExists() {
-            const response = await api.get("/admin");
+            try {
+                const response = await api.get("/admin");
 
-            if (response.data) {
-                setAdminExists(true);
-            } else {
-                setAdminExists(false);
+                if (response.data) {
+                    setAdminExists(true);
+                } else {
+                    setAdminExists(false);
+                };
+
+                setLoaded(true);
+            } catch (error) {
+                console.error("Ocorreu um erro ao verificar se existe um administrador:", error);
+                toast("Ocorreu um erro ao verificar se existe um administrador. Por favor, tente novamente.");
             };
-
-            setLoaded(true);
         };
 
-        checkIfAdminExists()
+        checkIfAdminExists();
     }, []);
 
     if (!loaded) {
@@ -50,7 +55,7 @@ export function Routes() {
             </div>
             */
         );
-    }
+    };
 
     return (
         <BrowserRouter>

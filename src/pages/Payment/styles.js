@@ -66,7 +66,7 @@ export const Total = styled.div`
             display: block;
         }
     }
-`
+`;
 
 export const ItemOrder = styled.div`
     display: flex;

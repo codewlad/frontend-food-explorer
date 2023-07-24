@@ -17,5 +17,5 @@ export function UserRoutes() {
             <Route path="/payment" element={<Payment />} />
             <Route path="/orders" element={<Orders />} />
         </Routes>
-    )
+    );
 }

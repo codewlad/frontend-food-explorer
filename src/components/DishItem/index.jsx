@@ -1,4 +1,5 @@
-import { FaPlus, FaTimes } from "react-icons/fa";
+import { FaPlus, FaTimes } from 'react-icons/fa';
+
 import { Container } from './styles';
 
 export function DishItem({ $isNew, value, onClick, ...rest }) {
@@ -18,5 +19,5 @@ export function DishItem({ $isNew, value, onClick, ...rest }) {
                 {$isNew ? <FaPlus /> : <FaTimes />}
             </button>
         </Container>
-    )
+    );
 }

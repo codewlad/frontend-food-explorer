@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { Container, ActionButtons } from './styles';
 
 export const ConfirmationToast = ({ confirm, cancel, message, onConfirm, onCancel }) => {
@@ -23,4 +25,4 @@ export const ConfirmationToast = ({ confirm, cancel, message, onConfirm, onCance
             </ActionButtons>
         </Container>
     );
-};
+}

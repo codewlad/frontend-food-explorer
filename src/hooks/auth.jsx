@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+
+import jwt_decode from 'jwt-decode';
+import { api } from '../services/api';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { api } from '../services/api';
-import jwt_decode from 'jwt-decode';
 
 const AuthContext = createContext({});
 
@@ -34,25 +36,22 @@ function AuthProvider({ children }) {
                 };
             };
 
-            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
             setData({ user, token, isAdmin, order });
 
         } catch (error) {
-            if (error.response) {
-                toast(error.response.data.message);
-            } else {
-                toast("Não foi possível entrar.");
-            }
-        }
-    }
+            console.error("Erro ao tentar entrar: ", error);
+            toast("Não foi possível entrar. Por favor, tente novamente.");
+        };
+    };
 
     function signOut() {
         localStorage.removeItem("@foodexplorer:token");
         localStorage.removeItem("@foodexplorer:user");
 
         setData({});
-    }
+    };
 
     async function updateProfile({ user, avatarFile, isAdmin, order }) {
         try {
@@ -63,7 +62,7 @@ function AuthProvider({ children }) {
 
                 const response = await api.patch("/users/avatar", fileUploadForm);
                 user.avatar = response.data.avatar;
-            }
+            };
 
             await api.put("/users", user);
             localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
@@ -72,13 +71,10 @@ function AuthProvider({ children }) {
             toast("Perfil atualizado!");
 
         } catch (error) {
-            if (error.response) {
-                toast(error.response.data.message);
-            } else {
-                toast("Não foi possível atualizar o perfil.");
-            }
-        }
-    }
+            console.error("Erro ao atualizar o perfil: ", error);
+            toast("Não foi possível atualizar o perfil. Por favor, tente novamente.");
+        };
+    };
 
     useEffect(() => {
         const token = localStorage.getItem("@foodexplorer:token");
@@ -97,7 +93,7 @@ function AuthProvider({ children }) {
                 isAdmin,
                 order: JSON.parse(order)
             });
-        }
+        };
 
     }, []);
 
@@ -114,12 +110,12 @@ function AuthProvider({ children }) {
             {children}
         </AuthContext.Provider>
     )
-}
+};
 
 function useAuth() {
     const context = useContext(AuthContext);
 
     return context;
-}
+};
 
 export { AuthProvider, useAuth };

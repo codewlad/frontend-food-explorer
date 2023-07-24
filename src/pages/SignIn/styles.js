@@ -30,8 +30,6 @@ export const Main = styled.div`
         min-width: 39.8rem;
         max-width: 47.6rem;
     }
-    
-    
 `;
 
 export const Form = styled.div`

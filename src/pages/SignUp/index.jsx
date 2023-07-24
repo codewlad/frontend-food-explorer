@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { api } from '../../services/api';
+
 import { Brand } from '../../components/Brand';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Container, Main, Form } from './styles';
 
 export function SignUp() {
@@ -48,18 +52,18 @@ export function SignUp() {
             const windowHeight = window.innerHeight;
 
             if (containerHeight > windowHeight) {
-                containerRef.current.style.height = 'auto';
+                containerRef.current.style.height = "auto";
             } else {
-                containerRef.current.style.height = '100%';
+                containerRef.current.style.height = "100%";
             };
         };
 
         handleResize();
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
     }, []);
 

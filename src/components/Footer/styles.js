@@ -33,8 +33,8 @@ export const Container = styled.div`
         }
 
         > span {
-        font: ${({ theme }) => theme.FONTS.ROBOTO_SMALLEST_REGULAR};
-    }
+            font: ${({ theme }) => theme.FONTS.ROBOTO_SMALLEST_REGULAR};
+        }
     }
 `;
 

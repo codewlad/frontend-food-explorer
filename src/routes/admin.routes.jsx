@@ -17,5 +17,5 @@ export function AdminRoutes() {
             <Route path="/edit/:id" element={<EditDish />} />
             <Route path="/orders" element={<Orders />} />
         </Routes>
-    )
+    );
 }

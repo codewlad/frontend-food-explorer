@@ -7,5 +7,5 @@ export function RegisterRoutes() {
         <Routes>
             <Route path="/" element={<AdminRegister />} />
         </Routes>
-    )
+    );
 }

@@ -1,12 +1,16 @@
+import React, { useEffect, useState, useContext } from 'react';
+
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
-import React, { useEffect, useState, useContext } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import { ConfirmationToast } from '../../components/ConfirmationToast';
-import 'react-toastify/dist/ReactToastify.css';
+
 import moment from 'moment/moment';
 import { ThemeContext } from 'styled-components';
 import { FaCircle } from 'react-icons/fa';
+
+import { ToastContainer, toast } from 'react-toastify';
+import { ConfirmationToast } from '../../components/ConfirmationToast';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Container, Order, Status, OrderId, Items, Date, OrderAdmin, StatusAdmin } from './styles';
 
 export function CardOrder({ data }) {
@@ -58,7 +62,8 @@ export function CardOrder({ data }) {
           toast('Erro ao atualizar o status. Por favor, tente novamente.', { containerId: 'autoClose' });
         };
       } catch (error) {
-        toast('Ocorreu um erro ao processar a atualização: ' + error.message, { containerId: 'autoClose' });
+        console.error("Erro ao processar a atualização:", error);
+        toast("Erro ao processar a requisição. Por favor, tente novamente.", { containerId: 'autoClose' });
       };
     };
   };

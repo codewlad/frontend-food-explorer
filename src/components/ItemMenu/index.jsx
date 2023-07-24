@@ -6,5 +6,5 @@ export function ItemMenu({ icon: Icon, title, ...rest }) {
             {Icon && <Icon />}
             {title}
         </Container>
-    )
+    );
 }

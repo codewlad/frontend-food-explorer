@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
+
 import { useAuth } from '../../hooks/auth';
+
 import { Brand } from '../../components/Brand';
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+
+import { ToastContainer } from 'react-toastify';
+
 import { Container, Main, Form } from './styles';
 
 export function SignIn() {
@@ -17,33 +21,32 @@ export function SignIn() {
     const mainRef = useRef(null);
     const containerRef = useRef(null);
 
+    function handleSignIn() {
+        signIn({ email, password });
+    };
+
     useEffect(() => {
         function handleResize() {
             const containerHeight = mainRef.current.offsetHeight;
             const windowHeight = window.innerHeight;
 
             if (containerHeight > windowHeight) {
-                containerRef.current.style.height = 'auto';
+                containerRef.current.style.height = "auto";
             } else {
-                containerRef.current.style.height = '100%';
-            }
-        }
+                containerRef.current.style.height = "100%";
+            };
+        };
 
         handleResize();
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
     }, []);
 
-    function handleSignIn() {
-        signIn({ email, password })
-    }
-
     return (
-
         <Container ref={containerRef}>
             <Main ref={mainRef}>
                 <Brand />

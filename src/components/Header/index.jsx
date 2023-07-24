@@ -1,31 +1,33 @@
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { TfiReceipt, TfiUser, TfiHeart } from 'react-icons/tfi';
-import { FiLogOut } from 'react-icons/fi';
-import { useState, useEffect } from 'react';
+
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
+
+import { TfiReceipt, TfiUser, TfiHeart } from 'react-icons/tfi';
+import { FiLogOut } from 'react-icons/fi';
+
 import { Brand } from '../Brand';
 import { Input } from '../Input';
 import { Button } from '../Button';
 import { Menu } from '../Menu';
 import { ItemMenu } from '../ItemMenu';
 import defaultDish from '../../../src/assets/dish.svg';
+
 import { Container, ReceiptOrders, Order, Profile, ProfileMenu, ProfileMenuOptions, SearchList } from './styles';
 
 export function Header(props) {
-    const { signOut, user, isAdmin, order } = useAuth();
+    const { signOut, user, isAdmin } = useAuth();
 
     const navigate = useNavigate();
 
-    const { setItemSearch, page, orderItems, totalOrder, setTotalOrder } = props;
+    const { setItemSearch, page, orderItems, totalOrder } = props;
 
     const [dishes, setDishes] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
 
     const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
-    const avatarStyle = {
-        backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
-    };
+    const avatarStyle = { backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none' };
 
     const queryWidth = 1050;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -40,7 +42,7 @@ export function Header(props) {
         document.documentElement.style.overflowY = "auto";
         navigate("/");
         signOut();
-    }
+    };
 
     function handleDish(id) {
         const pageNameAndId = window.location.pathname.split("/");
@@ -52,8 +54,8 @@ export function Header(props) {
         } else {
             document.querySelector("#searchDishes").value = "";
             setSearch("");
-        }
-    }
+        };
+    };
 
     useEffect(() => {
         setHasSearchPlaceholder(!search);
@@ -61,8 +63,8 @@ export function Header(props) {
 
     useEffect(() => {
         if (page === "home") {
-            setItemSearch(search)
-        }
+            setItemSearch(search);
+        };
 
         function filterDishesByNameOrIngredient(searchQuery) {
             searchQuery = searchQuery.toLowerCase();
@@ -70,7 +72,7 @@ export function Header(props) {
             var filteredDishes = dishes.filter(function (dish) {
                 if (dish.name.toLowerCase().includes(searchQuery)) {
                     return true;
-                }
+                };
 
                 var foundIngredient = dish.ingredients.find(function (ingredient) {
                     return ingredient.name.toLowerCase().includes(searchQuery);
@@ -80,7 +82,7 @@ export function Header(props) {
             });
 
             return filteredDishes;
-        }
+        };
 
         var searchResult = filterDishesByNameOrIngredient(search);
         setFilteredSearch(searchResult);
@@ -88,9 +90,14 @@ export function Header(props) {
 
     useEffect(() => {
         async function fetchDishes() {
-            const response = await api.get(`/dishes`);
-            setDishes(response.data);
-        }
+            try {
+                const response = await api.get("/dishes");
+                setDishes(response.data);
+            } catch (error) {
+                console.error("Erro ao buscar pratos: ", error);
+                toast("Erro ao buscar os pratos. Por favor, tente novamente.");
+            };
+        };
 
         fetchDishes();
 
@@ -100,11 +107,12 @@ export function Header(props) {
             if (window.innerWidth >= queryWidth) {
                 setIsProfileMenuHidden(false);
             } else {
+                document.documentElement.style.overflowY = "auto";
                 setIsProfileMenuHidden(true);
                 setIsProfileMenuVisible(false);
                 setSearch("");
-            }
-        }
+            };
+        };
 
         window.addEventListener('resize', handleResize);
 

@@ -1,4 +1,5 @@
-import { TfiSearch } from 'react-icons/tfi'
+import { TfiSearch } from 'react-icons/tfi';
+
 import { Container } from './styles';
 
 export function Placeholder() {
@@ -7,5 +8,5 @@ export function Placeholder() {
             <TfiSearch />
             <span>Busque por pratos ou ingredientes</span>
         </Container>
-    )
+    );
 }

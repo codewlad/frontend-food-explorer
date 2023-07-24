@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { BsHexagonFill } from 'react-icons/bs'
+
 import { api } from '../../services/api';
+
+import { BsHexagonFill } from 'react-icons/bs'
+
 import { Section } from '../../components/Section';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Container, Welcome, WelcomeMessage, Triangle, Main, Logo, Form } from './styles';
 
 export function AdminRegister() {
@@ -50,18 +55,18 @@ export function AdminRegister() {
             const windowHeight = window.innerHeight;
 
             if (containerHeight > windowHeight) {
-                containerRef.current.style.height = 'auto';
+                containerRef.current.style.height = "auto";
             } else {
-                containerRef.current.style.height = '100%';
-            }
+                containerRef.current.style.height = "100%";
+            };
         };
 
         handleResize();
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
     }, []);
 

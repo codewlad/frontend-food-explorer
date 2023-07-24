@@ -1,4 +1,4 @@
-import { Container } from "./styles";
+import { Container } from './styles';
 
 export function SectionCreditcard({ title, children }) {
     return (
@@ -6,5 +6,5 @@ export function SectionCreditcard({ title, children }) {
             <span>{title}</span>
             {children}
         </Container>
-    )
+    );
 }

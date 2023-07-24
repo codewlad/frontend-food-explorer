@@ -7,5 +7,5 @@ export function Button({ ...rest }) {
             {...rest}
         >
         </Container>
-    )
+    );
 }

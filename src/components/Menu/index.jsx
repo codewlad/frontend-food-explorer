@@ -1,12 +1,16 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
-import { TfiSearch, TfiUser } from 'react-icons/tfi';
+
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
+
+import { TfiSearch, TfiUser } from 'react-icons/tfi';
+
 import { Input } from '../Input';
 import { ItemMenu } from '../ItemMenu';
 import { Footer } from '../Footer';
 import defaultDish from '../../../src/assets/dish.svg';
+
 import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Profile, SearchList } from './styles';
 
 export function Menu() {
@@ -15,9 +19,7 @@ export function Menu() {
 
     const avatarUrl = `${api.defaults.baseURL}/files/${user.avatar}`;
 
-    const avatarStyle = {
-        backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none'
-    };
+    const avatarStyle = { backgroundImage: user.avatar ? `url(${avatarUrl})` : 'none' };
 
     const [isChecked, setIsChecked] = useState(false);
     const titleMenu = !isChecked ? "titleMenu hide" : "titleMenu";
@@ -30,7 +32,7 @@ export function Menu() {
         document.documentElement.style.overflowY = "auto";
         navigate("/");
         signOut();
-    }
+    };
 
     const handleIconMenuClick = () => {
         setIsChecked(!isChecked);
@@ -51,8 +53,8 @@ export function Menu() {
                 }, 300);
                 document.querySelector(".expandedMenu input").value = "";
                 setSearch("");
-            }
-        }
+            };
+        };
     };
 
     function handleDish(id) {
@@ -68,8 +70,8 @@ export function Menu() {
             expandedMenuRef.current.classList.remove("animateOpenMenu");
             document.querySelector(".expandedMenu input").value = "";
             setSearch("");
-        }
-    }
+        };
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -78,7 +80,7 @@ export function Menu() {
                 expandedMenuRef.current.classList.remove("animateOpenMenu");
                 document.querySelector(".expandedMenu input").value = "";
                 setSearch("");
-            }
+            };
         };
 
         window.addEventListener("resize", handleResize);
@@ -93,7 +95,7 @@ export function Menu() {
             const response = await api.get(`/dishes?itemSearch=${search}`);
 
             setDishes(response.data);
-        }
+        };
 
         fetchDishes();
     }, [])
@@ -105,7 +107,7 @@ export function Menu() {
             var filteredDishes = dishes.filter(function (dish) {
                 if (dish.name.toLowerCase().includes(searchQuery)) {
                     return true;
-                }
+                };
 
                 var foundIngredient = dish.ingredients.find(function (ingredient) {
                     return ingredient.name.toLowerCase().includes(searchQuery);
@@ -120,11 +122,10 @@ export function Menu() {
         var searchResult = filterDishesByNameOrIngredient(search);
         setFilteredSearch(searchResult);
 
-    }, [search])
+    }, [search]);
 
     return (
         <Container>
-
             <input
                 className="checkMenu"
                 type="checkbox"
@@ -147,7 +148,6 @@ export function Menu() {
                     </Profile>
                 </Link>
             </TitleMenu>
-
             <ExpandedMenu ref={expandedMenuRef} className="expandedMenu">
                 <ExpandedMenuOptions>
                     <Input
