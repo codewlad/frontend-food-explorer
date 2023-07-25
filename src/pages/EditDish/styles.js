@@ -37,6 +37,10 @@ export const DishInformations = styled.div`
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
     }
 
+    select {
+        outline: none;
+    }
+
     select, textarea, > div:nth-child(4) > div {
         width: 100%;
         height: 4.8rem;

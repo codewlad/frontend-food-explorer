@@ -42,8 +42,16 @@ export default createGlobalStyle`
         font: ${({ theme }) => theme.FONTS.POPPINS_300_REGULAR};
     }
 
+	.Toastify__toast-container {
+		top: 11rem;
+	}
+
 	.Toastify__close-button {
 		color: ${({ theme }) => theme.COLORS.LIGHT_100};
+	}
+
+	.Toastify__toast-body {
+		text-align: center;
 	}
 
     a {

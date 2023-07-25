@@ -75,7 +75,7 @@ export function AddDish() {
 			const priceRegex = /^\d{1,3},\d{2}$/;
 
 			if (!priceRegex.test(price)) {
-				return toast("Formato de preço inválido. Insira um valor no formato XX,XX.");
+				return toast("Digite o preço num formato válido. Ex: 12,99");
 			};
 
 			const formattedPrice = parseFloat(price.replace(",", "."));
@@ -95,7 +95,10 @@ export function AddDish() {
 			await api.post("/dishes", fileUploadForm);
 
 			toast("Prato criado com sucesso!");
-			navigate("/");
+
+			setTimeout(() => {
+				navigate("/");
+			}, 2000);
 		} catch (error) {
 			console.error("Ocorreu um erro ao criar o prato:", error);
 			toast("Não foi possível criar o prato. Por favor, tente novamente.");
@@ -212,7 +215,7 @@ export function AddDish() {
 				</DishInformations>
 			</Content>
 			<Footer />
-			<ToastContainer autoClose={1500} />
+			<ToastContainer autoClose={1500} draggable={false} />
 		</Container>
 	);
 }

@@ -121,7 +121,7 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
                     </TopRightButton>
                 </div>
             )}
-            <ToastContainer autoClose={1500} />
+            <ToastContainer autoClose={1500} draggable={false} />
         </Container>
     );
 }

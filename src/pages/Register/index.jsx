@@ -31,6 +31,16 @@ export function AdminRegister() {
             return toast("Preencha todos os campos.");
         };
 
+        if (name.length < 3) {
+            return toast("O nome deve ter no mínimo 3 caracteres.");
+        };
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            return toast("Por favor, insira um email válido.");
+        };
+
         if (password.length < 6) {
             return toast("A senha deve ter no mínimo 6 caracteres.");
         };
@@ -38,7 +48,10 @@ export function AdminRegister() {
         api.post("/admin", { name, email, password })
             .then(() => {
                 toast("Administrador cadastrado com sucesso!");
-                window.location.reload();
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             })
             .catch(error => {
                 if (error.response) {
@@ -125,7 +138,7 @@ export function AdminRegister() {
                     </Form>
                 }
             </Main>
-            <ToastContainer autoClose={1500} />
+            <ToastContainer autoClose={1500} draggable={false} />
         </Container>
     );
 }

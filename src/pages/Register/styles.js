@@ -73,8 +73,8 @@ export const Main = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4.6rem;
-    gap: 2.4rem;
+    padding: 2.8rem 4.6rem;
+    gap: 2.8rem;
 
     @media (max-width: 1049px) {        
         min-width: 39.8rem;
@@ -121,7 +121,7 @@ export const Form = styled.div`
 
     @media (max-width: 1049px) {
         background-color: transparent;
-        padding: 0rem;
+        padding: 0;
         max-width: 47.6rem;
         width: 100%;
     }

@@ -78,7 +78,7 @@ export function SignIn() {
                     <Link to="/register">Criar uma conta</Link>
                 </Form>
             </Main>
-            <ToastContainer autoClose={1500} />
+            <ToastContainer autoClose={1500} draggable={false} />
         </Container>
     );
 }

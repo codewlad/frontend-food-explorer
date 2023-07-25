@@ -9,7 +9,8 @@ import { BackButton } from '../../components/BackButton';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Container, Form, Avatar, ChangeAvatar } from './styles';
 
@@ -26,6 +27,28 @@ export function Profile() {
     const [avatarFile, setAvatarFile] = useState(null);
 
     async function handleUpdate() {
+        if (name.length < 3) {
+            return toast("O nome deve ter no mínimo 3 caracteres.");
+        };
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            return toast("Por favor, insira um email válido.");
+        }
+
+        if (passwordNew && !passwordOld) {
+            return toast("Para alterar a senha, você precisa fornecer a senha atual.");
+        }
+
+        if (passwordNew && passwordNew.length < 6) {
+            return toast("A senha deve ter no mínimo 6 caracteres.");
+        };
+
+        if (!passwordOld && (name !== user.name || email !== user.email)) {
+            return toast("A senha atual precisa ser informada para alterar o nome ou email.");
+        };
+
         const updated = {
             name,
             email,
@@ -90,7 +113,7 @@ export function Profile() {
                 />
                 <Button onClick={handleUpdate}>Salvar</Button>
             </Form>
-            <ToastContainer autoClose={1500} />
+            <ToastContainer autoClose={1500} draggable={false} />
         </Container>
     );
 }

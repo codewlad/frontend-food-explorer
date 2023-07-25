@@ -198,7 +198,7 @@ export function Home() {
                 }
             </Content>
             <Footer />
-            <ToastContainer autoClose={1500} />
+            <ToastContainer autoClose={1500} draggable={false} />
         </Container >
     );
 }

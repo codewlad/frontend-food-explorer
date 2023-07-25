@@ -8,8 +8,13 @@ export function BackButton() {
 
     const navigate = useNavigate();
 
+    function handleBack() {
+        document.documentElement.style.overflowY = "auto";
+        navigate("/");
+    }
+
     return (
-        <Container onClick={() => navigate("/")}>
+        <Container onClick={handleBack}>
             <TfiAngleLeft />voltar
         </Container>
     );

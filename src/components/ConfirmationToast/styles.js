@@ -6,6 +6,8 @@ export const Container = styled.div`
 
 export const ActionButtons = styled.div`
     display: flex;
+    justify-content: center;
+    text-align: center;
     gap: 1.2rem;
     margin-top: 0.8rem;
 

@@ -426,8 +426,8 @@ export function Payment() {
                 </WrappedPayment>
             </Content>
             <Footer />
-            <ToastContainer enableMultiContainer containerId={"await"} autoClose={false} />
-            <ToastContainer enableMultiContainer containerId={"autoClose"} autoClose={1500} />
+            <ToastContainer enableMultiContainer containerId={"await"} autoClose={false} draggable={false} />
+            <ToastContainer enableMultiContainer containerId={"autoClose"} autoClose={1500} draggable={false} />
         </Container>
     );
 }

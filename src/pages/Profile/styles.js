@@ -37,7 +37,7 @@ export const Form = styled.div`
     align-items: center;
     gap: 1.6rem;
     width: 47.6rem;
-    padding: 0 6.4rem 6.4rem;
+    padding: 0 4.6rem 4.6rem;
     border-radius: 1.6rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
 

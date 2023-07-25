@@ -41,8 +41,13 @@ function AuthProvider({ children }) {
             setData({ user, token, isAdmin, order });
 
         } catch (error) {
-            console.error("Erro ao tentar entrar: ", error);
-            toast("Não foi possível entrar. Por favor, tente novamente.");
+            if (error.response) {
+                console.error("Erro ao tentar entrar: ", error.response.data.message);
+                toast(error.response.data.message);
+            } else {
+                console.error("Erro ao tentar entrar: ", error);
+                toast("Não foi possível entrar. Por favor, tente novamente.");
+            };
         };
     };
 
@@ -55,7 +60,6 @@ function AuthProvider({ children }) {
 
     async function updateProfile({ user, avatarFile, isAdmin, order }) {
         try {
-
             if (avatarFile) {
                 const fileUploadForm = new FormData();
                 fileUploadForm.append("avatar", avatarFile);
@@ -71,8 +75,13 @@ function AuthProvider({ children }) {
             toast("Perfil atualizado!");
 
         } catch (error) {
-            console.error("Erro ao atualizar o perfil: ", error);
-            toast("Não foi possível atualizar o perfil. Por favor, tente novamente.");
+            if (error.response) {
+                console.error("Erro ao atualizar o perfil: ", error.response.data.message);
+                toast(error.response.data.message);
+            } else {
+                console.error("Erro ao atualizar o perfil: ", error);
+                toast("Não foi possível atualizar o perfil. Por favor, tente novamente.");
+            }
         };
     };
 

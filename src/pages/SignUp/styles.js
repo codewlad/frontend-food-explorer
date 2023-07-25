@@ -58,7 +58,7 @@ export const Form = styled.div`
 
     @media (max-width: 1049px) {
         background-color: transparent;
-        padding: 4.6rem;
+        padding: 0 4.6rem;
         max-width: 47.6rem;
         width: 100%;
     }

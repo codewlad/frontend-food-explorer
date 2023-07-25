@@ -46,7 +46,8 @@ export function EditDish() {
     function handleAddIngredient() {
         if (newIngredient.trim() === "") {
             setNewIngredient("");
-            return toast("Digite um ingrediente antes de adicionar.");
+            toast("Digite um ingrediente antes de adicionar.", { containerId: "autoClose" });
+            return
         };
         setIngredients(prevState => [...prevState, newIngredient]);
         setIngredientsHasChanges(true);
@@ -104,7 +105,10 @@ export function EditDish() {
         if (confirmed) {
             toast("Prato removido.", { containerId: "autoClose" });
             await api.delete(`/dishes/${params.id}`);
-            navigate("/");
+
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
         };
     };
 
@@ -114,7 +118,7 @@ export function EditDish() {
 
             const priceRegex = /^\d{1,3},\d{2}$/;
             if (!priceRegex.test(formattedPrice)) {
-                return toast("Formato de preço inválido. Insira um valor no formato XX,XX.");
+                return toast("Digite o preço num formato válido. Ex: 12,99", { containerId: "autoClose" });
             };
 
             formattedPrice = parseFloat(formattedPrice.replace(",", "."));
@@ -134,11 +138,14 @@ export function EditDish() {
 
             await api.put(`/dishes/${params.id}`, fileUploadForm);
 
-            toast("Prato atualizado com sucesso!");
-            navigate("/");
+            toast("Prato atualizado com sucesso!", { containerId: "autoClose" });
+
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
         } catch (error) {
             console.error("Ocorreu um erro ao atualizar o prato:", error);
-            toast("Não foi possível atualizar o prato. Por favor, tente novamente.");
+            toast("Não foi possível atualizar o prato. Por favor, tente novamente.", { containerId: "autoClose" });
         };
     };
 
@@ -180,7 +187,7 @@ export function EditDish() {
                 };
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar o prato:", error);
-                toast("Não foi possível buscar o prato. Por favor, tente novamente.");
+                toast("Não foi possível buscar o prato. Por favor, tente novamente.", { containerId: "autoClose" });
             };
         };
 
@@ -287,8 +294,8 @@ export function EditDish() {
                 }
             </Content>
             <Footer />
-            <ToastContainer enableMultiContainer containerId={"await"} autoClose={false} />
-            <ToastContainer enableMultiContainer containerId={"autoClose"} autoClose={1500} />
+            <ToastContainer enableMultiContainer containerId={"await"} autoClose={false} draggable={false} />
+            <ToastContainer enableMultiContainer containerId={"autoClose"} autoClose={1500} draggable={false} />
         </Container>
     );
 }
