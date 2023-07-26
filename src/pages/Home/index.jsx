@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 
 import { Header } from '../../components/Header';
@@ -15,8 +14,6 @@ import { Container, Content, Banner, WrappedBanner, Slogan, BgBanner, NoResults 
 
 export function Home() {
 
-    const { user } = useAuth();
-
     const [meals, setMeals] = useState([]);
     const [desserts, setDesserts] = useState([]);
     const [drinks, setDrinks] = useState([]);
@@ -28,9 +25,6 @@ export function Home() {
     const [search, setSearch] = useState("");
     const page = "home";
 
-    const [favorites, setFavorites] = useState([]);
-    const [favoritesUpdated, setFavoritesUpdated] = useState([]);
-
     const [dishToAdd, setDishToAdd] = useState();
     const [orderItems, setOrderItems] = useState(0);
 
@@ -41,11 +35,6 @@ export function Home() {
 
                 setDishes(response.data);
 
-                const getFavorites = await api.get(`/favorites/${user.id}`);
-                const favorites = getFavorites.data.map(dish => dish.dish_id);
-
-                setFavorites(favorites);
-
                 const mealsArray = response.data.filter(dish => dish.category === "Refeições");
                 const dessertsArray = response.data.filter(dish => dish.category === "Sobremesas");
                 const drinksArray = response.data.filter(dish => dish.category === "Bebidas");
@@ -53,8 +42,7 @@ export function Home() {
                 setMeals(mealsArray.map(meal =>
                     <Card
                         key={meal.id}
-                        data={[meal, favorites]}
-                        setFavoritesUpdated={setFavoritesUpdated}
+                        dish={meal}
                         setDishToAdd={setDishToAdd}
                     />
                 ));
@@ -62,8 +50,7 @@ export function Home() {
                 setDesserts(dessertsArray.map(dessert =>
                     <Card
                         key={dessert.id}
-                        data={[dessert, favorites]}
-                        setFavoritesUpdated={setFavoritesUpdated}
+                        dish={dessert}
                         setDishToAdd={setDishToAdd}
                     />
                 ));
@@ -71,8 +58,7 @@ export function Home() {
                 setDrinks(drinksArray.map(drink =>
                     <Card
                         key={drink.id}
-                        data={[drink, favorites]}
-                        setFavoritesUpdated={setFavoritesUpdated}
+                        dish={drink}
                         setDishToAdd={setDishToAdd}
                     />
                 ));
@@ -84,7 +70,7 @@ export function Home() {
 
         fetchDishes();
 
-    }, [favoritesUpdated]);
+    }, []);
 
     useEffect(() => {
         function filterDishesByNameOrIngredient(searchQuery) {
@@ -115,8 +101,7 @@ export function Home() {
         setMeals(mealsArray.map(meal =>
             <Card
                 key={meal.id}
-                data={[meal, favorites]}
-                setFavoritesUpdated={setFavoritesUpdated}
+                dish={meal}
                 setDishToAdd={setDishToAdd}
             />
         ));
@@ -124,8 +109,7 @@ export function Home() {
         setDesserts(dessertsArray.map(dessert =>
             <Card
                 key={dessert.id}
-                data={[dessert, favorites]}
-                setFavoritesUpdated={setFavoritesUpdated}
+                dish={dessert}
                 setDishToAdd={setDishToAdd}
             />
         ));
@@ -133,8 +117,7 @@ export function Home() {
         setDrinks(drinksArray.map(drink =>
             <Card
                 key={drink.id}
-                data={[drink, favorites]}
-                setFavoritesUpdated={setFavoritesUpdated}
+                dish={drink}
                 setDishToAdd={setDishToAdd}
             />
         ));

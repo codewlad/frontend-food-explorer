@@ -19,18 +19,16 @@ export function Favorites() {
 
     const { user } = useAuth();
 
-    const [userFavorites, setUserFavorites] = useState([]);
-    const [favoritesUpdated, setFavoritesUpdated] = useState(true);
-    const [isLoading, setIsLoading] = useState(true);
-
     const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [favorites, setFavorites] = useState([]);
 
     function handleDish(id) {
         navigate(`/dish/${id}`)
     };
 
     async function handleRemove(id) {
-        setFavoritesUpdated(false);
         const confirmed = await new Promise((resolve) => {
 
             const customId = "handleRemove";
@@ -49,24 +47,26 @@ export function Favorites() {
         });
 
         if (confirmed) {
-            await api.delete(`/favorites/${id}`);
-            setFavoritesUpdated(true);
-            toast("Favorito removido.", { containerId: "autoClose" });
+            try {
+                await api.delete(`/favorites/${id}`);
+                toast("Favorito removido.", { containerId: "autoClose" });
+                fetchFavorites();
+            } catch (error) {
+                console.error("Erro ao remover o favorito: ", error);
+                toast("Erro ao remover o favorito. Por favor, tente novamente.");
+            };
         };
     };
 
+    async function fetchFavorites() {
+        const response = await api.get(`/favorites/${user.id}`);
+        setFavorites(response.data);
+        setIsLoading(false);
+    };
+
     useEffect(() => {
-        async function fetchFavorites() {
-            const response = await api.get(`/favorites/${user.id}`);
-            setUserFavorites(response.data);
-            setIsLoading(false);
-        };
-
-        if (favoritesUpdated) {
-            fetchFavorites();
-        };
-
-    }, [favoritesUpdated]);
+        fetchFavorites();
+    }, []);
 
     return (
         <Container>
@@ -74,10 +74,10 @@ export function Favorites() {
             <Content>
                 <BackButton />
                 <h1>Meus favoritos</h1>
-                {userFavorites.length > 0 ? (
+                {favorites.length > 0 ? (
                     <WrappedFavorites>
                         {
-                            userFavorites.map(favorite => (
+                            favorites.map(favorite => (
                                 <FavoriteDish key={favorite.id}>
                                     {
                                         favorite.image ?
@@ -101,7 +101,7 @@ export function Favorites() {
                     </WrappedFavorites>
                 ) : null}
                 {!isLoading && (
-                    userFavorites.length === 0 ? <p>Nenhum favorito adicionado.</p> : null
+                    favorites.length === 0 ? <p>Nenhum favorito adicionado.</p> : null
                 )}
             </Content>
             <Footer />

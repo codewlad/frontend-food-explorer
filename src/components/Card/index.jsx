@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
@@ -11,25 +11,22 @@ import { VscHeartFilled, VscHeart } from 'react-icons/vsc';
 import { Button } from '../Button';
 import defaultDish from '../../../src/assets/dish.svg';
 
-
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Container, AmountOfDishes, DishControls, TopRightButton } from './styles';
 
-export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
+export function Card({ dish, setDishToAdd }) {
     const { user, isAdmin } = useAuth();
 
     const navigate = useNavigate();
 
     const theme = useContext(ThemeContext);
 
-    const dish = data[0];
-    const favorites = data[1];
-
     const dishImage = dish.image ? `${api.defaults.baseURL}/files/${dish.image}` : `${defaultDish}`;
 
     const [dishAmount, setDishAmount] = useState(1);
+    const [favorites, setFavorites] = useState([]);
 
     function handleDish(id) {
         navigate(`/dish/${id}`)
@@ -49,40 +46,56 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
         setDishAmount(prevState => prevState + 1);
     };
 
-    function isFavorite(userFavorites, dish_id) {
-        for (let i = 0; i < userFavorites.length; i++) {
-            if (userFavorites[i] === dish_id) {
-                return true;
-            };
-        };
-        return false;
-    };
-
     async function changeFavorite() {
-        const data = {
-            user_id: user.id,
-            dish_id: dish.id
-        };
+        const isFavorite = checkIfIsFavorite(favorites, dish.id);
 
-        try {
-            const response = await api.post("/favorites", data);
-
-            setFavoritesUpdated(favorites);
-
-            if (response.data.favorite) {
-                toast("Adicionado aos favoritos.");
-            } else {
+        if (isFavorite) {
+            try {
+                await api.delete(`/favorites/${isFavorite}`);
                 toast("Removido dos favoritos.");
+            } catch (error) {
+                console.error("Erro ao remover o favorito: ", error);
+                toast("Erro ao remover o favorito. Por favor, tente novamente.");
             };
-        } catch (error) {
-            console.error("Erro ao processar a requisição:", error);
-            toast("Erro ao processar a requisição. Por favor, tente novamente.");
+        } else {
+            const userAndDish = {
+                userId: user.id,
+                dishId: dish.id
+            };
+
+            try {
+                await api.post("/favorites", userAndDish);
+                toast("Adicionado aos favoritos.");
+            } catch (error) {
+                console.error("Erro ao adicionar o favorito: ", error);
+                toast("Erro ao adicionar o favorito. Por favor, tente novamente.");
+            };
         };
+
+        fetchFavorites();
     };
 
     function handleAddDish(dish_id, amount) {
         setDishToAdd({ dish_id, amount });
     };
+
+    async function fetchFavorites() {
+        const response = await api.get(`/favorites/${user.id}`);
+        setFavorites(response.data);
+    };
+
+    function checkIfIsFavorite(favorites, dishId) {
+        for (let i = 0; i < favorites.length; i++) {
+            if (favorites[i].dish_id === dishId) {
+                return favorites[i].id;
+            };
+        };
+        return false;
+    };
+
+    useEffect(() => {
+        fetchFavorites();
+    }, []);
 
     return (
         <Container>
@@ -114,14 +127,13 @@ export function Card({ data, setFavoritesUpdated, setDishToAdd }) {
                     </AmountOfDishes>
                     <TopRightButton onClick={() => changeFavorite()}>
                         {
-                            isFavorite(favorites, dish.id) ?
+                            checkIfIsFavorite(favorites, dish.id) ?
                                 <VscHeartFilled style={{ color: theme.COLORS.TOMATO_100 }} /> :
                                 <VscHeart />
                         }
                     </TopRightButton>
                 </div>
             )}
-            <ToastContainer autoClose={1500} draggable={false} />
         </Container>
     );
 }

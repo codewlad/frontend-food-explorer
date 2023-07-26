@@ -42,10 +42,10 @@ function AuthProvider({ children }) {
 
         } catch (error) {
             if (error.response) {
-                console.error("Erro ao tentar entrar: ", error.response.data.message);
+                console.error("Erro ao fazer login: ", error.response.data.message);
                 toast(error.response.data.message);
             } else {
-                console.error("Erro ao tentar entrar: ", error);
+                console.error("Erro ao fazer login: ", error);
                 toast("Não foi possível entrar. Por favor, tente novamente.");
             };
         };

@@ -38,6 +38,7 @@ export function EditDish() {
     const [ifHasChanges, setIfHasChanges] = useState(false);
     const [dishImageHasChanges, setDishImageHasChanges] = useState(false);
     const [ingredientsHasChanges, setIngredientsHasChanges] = useState(false);
+    const [dishImageFilename, setDishImageFilename] = useState("");
 
     const handleCategory = (event) => {
         setSelectedCategory(event.target.value);
@@ -103,12 +104,23 @@ export function EditDish() {
         });
 
         if (confirmed) {
-            toast("Prato removido.", { containerId: "autoClose" });
-            await api.delete(`/dishes/${params.id}`);
+            try {
 
-            setTimeout(() => {
-                navigate("/");
-            }, 2000);
+                await api.delete(`/dishes/${params.id}`);
+
+                await api.delete(`dishes/files/${dishImageFilename}`);
+
+                toast("Prato removido.", { containerId: "autoClose" });
+
+                setTimeout(() => {
+                    navigate("/");
+                }, 2000);
+
+            } catch (error) {
+                console.error("Ocorreu um erro ao remover o prato:", error);
+                toast("Não foi possível remover o prato. Por favor, tente novamente.", { containerId: "autoClose" });
+            };
+
         };
     };
 
@@ -185,6 +197,11 @@ export function EditDish() {
                     setPrice(foundDish.price);
                     setDescription(foundDish.description);
                 };
+
+                if (foundDish.image) {
+                    setDishImageFilename(foundDish.image);
+                };
+
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar o prato:", error);
                 toast("Não foi possível buscar o prato. Por favor, tente novamente.", { containerId: "autoClose" });
