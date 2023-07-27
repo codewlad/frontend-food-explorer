@@ -8,6 +8,9 @@ import { Footer } from '../../components/Footer';
 import { BackButton } from '../../components/BackButton';
 import { CardOrder } from '../../components/CardOrder';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Container, Content, OrderAdmin, Order, Status, OrderId, Items, Date, WrappedOrder } from './styles';
 
 export function Orders() {

@@ -166,7 +166,7 @@ export const ChoiceImage = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #0D1D25;
+        background-color: ${({ theme }) => theme.COLORS.DARK_900};
         border-radius: 0.5rem;
         font: ${({ theme }) => theme.FONTS.ROBOTO_SMALL_REGULAR};
 
