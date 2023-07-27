@@ -27,6 +27,7 @@ export function Card({ dish, setDishToAdd }) {
 
     const [dishAmount, setDishAmount] = useState(1);
     const [favorites, setFavorites] = useState([]);
+    const [loadingFavorites, setLoadingFavorites] = useState(false);
 
     function handleDish(id) {
         navigate(`/dish/${id}`)
@@ -47,15 +48,22 @@ export function Card({ dish, setDishToAdd }) {
     };
 
     async function changeFavorite() {
+        if (loadingFavorites) {
+            return;
+        };
+
         const isFavorite = checkIfIsFavorite(favorites, dish.id);
 
         if (isFavorite) {
             try {
+                setLoadingFavorites(true);
                 await api.delete(`/favorites/${isFavorite}`);
                 toast("Removido dos favoritos.");
             } catch (error) {
                 console.error("Erro ao remover o favorito: ", error);
                 toast("Erro ao remover o favorito. Por favor, tente novamente.");
+            } finally {
+                setLoadingFavorites(false);
             };
         } else {
             const userAndDish = {
@@ -64,11 +72,14 @@ export function Card({ dish, setDishToAdd }) {
             };
 
             try {
+                setLoadingFavorites(true);
                 await api.post("/favorites", userAndDish);
                 toast("Adicionado aos favoritos.");
             } catch (error) {
                 console.error("Erro ao adicionar o favorito: ", error);
                 toast("Erro ao adicionar o favorito. Por favor, tente novamente.");
+            } finally {
+                setLoadingFavorites(false);
             };
         };
 
@@ -80,8 +91,13 @@ export function Card({ dish, setDishToAdd }) {
     };
 
     async function fetchFavorites() {
-        const response = await api.get(`/favorites/${user.id}`);
-        setFavorites(response.data);
+        try {
+            const response = await api.get(`/favorites/${user.id}`);
+            setFavorites(response.data);
+        } catch (error) {
+            console.error("Não foi possível buscar os favoritos: ", error);
+            toast("Não foi possível buscar os favoritos. Por favor, tente novamente.");
+        };
     };
 
     function checkIfIsFavorite(favorites, dishId) {
@@ -125,7 +141,10 @@ export function Card({ dish, setDishToAdd }) {
                             incluir
                         </Button>
                     </AmountOfDishes>
-                    <TopRightButton onClick={() => changeFavorite()}>
+                    <TopRightButton
+                        onClick={() => changeFavorite()}
+                        className={loadingFavorites ? "disabled" : ""}
+                    >
                         {
                             checkIfIsFavorite(favorites, dish.id) ?
                                 <VscHeartFilled style={{ color: theme.COLORS.TOMATO_100 }} /> :

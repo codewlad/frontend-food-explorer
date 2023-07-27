@@ -27,10 +27,12 @@ export function Home() {
 
     const [dishToAdd, setDishToAdd] = useState();
     const [orderItems, setOrderItems] = useState(0);
+    const [loadingDishes, setLoadingDishes] = useState(true);
 
     useEffect(() => {
         async function fetchDishes() {
             try {
+                setLoadingDishes(true);
                 const response = await api.get(`/dishes?itemSearch=${search}`);
 
                 setDishes(response.data);
@@ -65,6 +67,8 @@ export function Home() {
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar os pratos:", error);
                 toast("Não foi possível buscar os pratos. Por favor, tente novamente.");
+            } finally {
+                setLoadingDishes(false);
             };
         };
 
@@ -178,6 +182,10 @@ export function Home() {
                 {
                     itemSearch && meals.length <= 0 && desserts.length <= 0 && drinks.length <= 0 &&
                     <NoResults>Nenhum resultado encontrado!</NoResults>
+                }
+                {
+                    !loadingDishes && dishes.length <= 0 &&
+                    <NoResults>Nenhum prato cadastrado!</NoResults>
                 }
             </Content>
             <Footer />

@@ -21,6 +21,7 @@ export function AdminRegister() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [welcome, setWelcome] = useState(true);
+    const [loadingSignUp, setLoadingSignUp] = useState(false);
 
     function showSignUp() {
         setWelcome(false);
@@ -45,8 +46,10 @@ export function AdminRegister() {
             return toast("A senha deve ter no mínimo 6 caracteres.");
         };
 
+        setLoadingSignUp(true);
         api.post("/admin", { name, email, password })
             .then(() => {
+                setLoadingSignUp(false);
                 toast("Administrador cadastrado com sucesso!");
 
                 setTimeout(() => {
@@ -54,12 +57,19 @@ export function AdminRegister() {
                 }, 2000);
             })
             .catch(error => {
+                setLoadingSignUp(false);
                 if (error.response) {
                     toast(error.response.data.message);
                 } else {
                     toast("Não foi possível cadastrar.");
                 }
             });
+    };
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            handleSignUp();
+        };
     };
 
     useEffect(() => {
@@ -129,12 +139,15 @@ export function AdminRegister() {
                                 type="password"
                                 placeholder="No mínimo 6 caracteres"
                                 onChange={e => setPassword(e.target.value)}
+                                onKeyPress={handleKeyPress}
                             />
                         </Section>
 
                         <Button
                             onClick={handleSignUp}
-                        >Criar conta de adminstrador</Button>
+                            loading={loadingSignUp}
+                            title="Criar conta de administrador"
+                        />
                     </Form>
                 }
             </Main>

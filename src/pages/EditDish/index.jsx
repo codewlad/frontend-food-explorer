@@ -39,6 +39,8 @@ export function EditDish() {
     const [dishImageHasChanges, setDishImageHasChanges] = useState(false);
     const [ingredientsHasChanges, setIngredientsHasChanges] = useState(false);
     const [dishImageFilename, setDishImageFilename] = useState("");
+    const [loadingDelete, setLoadingDelete] = useState(false);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     const handleCategory = (event) => {
         setSelectedCategory(event.target.value);
@@ -105,7 +107,8 @@ export function EditDish() {
 
         if (confirmed) {
             try {
-
+                setLoadingDelete(true);
+                setLoadingUpdate(true);
                 await api.delete(`/dishes/${params.id}`);
 
                 await api.delete(`dishes/files/${dishImageFilename}`);
@@ -119,6 +122,9 @@ export function EditDish() {
             } catch (error) {
                 console.error("Ocorreu um erro ao remover o prato:", error);
                 toast("Não foi possível remover o prato. Por favor, tente novamente.", { containerId: "autoClose" });
+            } finally {
+                setLoadingDelete(false);
+                setLoadingUpdate(false);
             };
 
         };
@@ -148,6 +154,8 @@ export function EditDish() {
             fileUploadForm.append("description", description);
             fileUploadForm.append("removeDishImage", dishImage);
 
+            setLoadingDelete(true);
+            setLoadingUpdate(true);
             await api.put(`/dishes/${params.id}`, fileUploadForm);
 
             toast("Prato atualizado com sucesso!", { containerId: "autoClose" });
@@ -158,6 +166,9 @@ export function EditDish() {
         } catch (error) {
             console.error("Ocorreu um erro ao atualizar o prato:", error);
             toast("Não foi possível atualizar o prato. Por favor, tente novamente.", { containerId: "autoClose" });
+        } finally {
+            setLoadingDelete(false);
+            setLoadingUpdate(false);
         };
     };
 
@@ -298,14 +309,16 @@ export function EditDish() {
                         <div>
                             <Button
                                 onClick={handleRemove}
-                            >Excluir prato
-                            </Button>
+                                loading={loadingDelete}
+                                title="Excluir prato"
+                            />
                             <Button
                                 type="text"
                                 disabled={!ifHasChanges}
                                 onClick={handleUpdateDish}
-                            > Salvar alterações
-                            </Button>
+                                loading={loadingUpdate}
+                                title="Salvar alterações"
+                            />
                         </div>
                     </DishInformations>
                 }

@@ -33,6 +33,7 @@ export function AddDish() {
 	const [price, setPrice] = useState("");
 	const [description, setDescription] = useState("");
 	const [isNotBlankFields, setIsNotBlankFields] = useState(false);
+	const [loadingCreate, setLoadingCreate] = useState(false);
 
 	function handleAddIngredient() {
 		if (newIngredient.trim() === "") {
@@ -92,6 +93,7 @@ export function AddDish() {
 			fileUploadForm.append("price", formattedPrice);
 			fileUploadForm.append("description", description);
 
+			setLoadingCreate(true);
 			await api.post("/dishes", fileUploadForm);
 
 			toast("Prato criado com sucesso!");
@@ -102,6 +104,8 @@ export function AddDish() {
 		} catch (error) {
 			console.error("Ocorreu um erro ao criar o prato:", error);
 			toast("Não foi possível criar o prato. Por favor, tente novamente.");
+		} finally {
+			setLoadingCreate(false);
 		};
 	};
 
@@ -209,8 +213,9 @@ export function AddDish() {
 							type="text"
 							disabled={!isNotBlankFields}
 							onClick={handleNewDish}
-						> Adicionar
-						</Button>
+							loading={loadingCreate}
+							title="Adicionar"
+						/>
 					</div>
 				</DishInformations>
 			</Content>

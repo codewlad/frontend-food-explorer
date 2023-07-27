@@ -23,6 +23,7 @@ export function CardOrder({ data }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth >= queryWidth);
 
   const [selectedStatus, setSelectedStatus] = useState(data.status);
+  const [loadingStatus, setLoadingStatus] = useState(false);
 
   function formatDate(dateString) {
     const dateTime = moment(dateString, "DD/MM/YYYY, HH:mm:ss");
@@ -53,6 +54,7 @@ export function CardOrder({ data }) {
 
     if (confirmed) {
       try {
+        setLoadingStatus(true);
         const response = await api.put(`/orders/${data.id}`, { status });
 
         if (response.status === 200) {
@@ -64,6 +66,8 @@ export function CardOrder({ data }) {
       } catch (error) {
         console.error("Erro ao processar a atualização:", error);
         toast("Erro ao processar a requisição. Por favor, tente novamente.", { containerId: 'autoClose' });
+      } finally {
+        setLoadingStatus(false);
       };
     };
   };
@@ -99,7 +103,11 @@ export function CardOrder({ data }) {
                   selectedStatus === "Entregue" &&
                   <FaCircle size={10} style={{ color: theme.COLORS.MINT_100 }} />
                 }
-                <select value={selectedStatus} onChange={handleStatus}>
+                <select
+                  value={selectedStatus}
+                  onChange={handleStatus}
+                  disabled={loadingStatus}
+                >
                   <option value="Pendente">Pendente</option>
                   <option value="Preparando">Preparando</option>
                   <option value="Entregue">Entregue</option>

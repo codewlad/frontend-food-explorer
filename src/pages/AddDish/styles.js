@@ -105,7 +105,7 @@ export const DishInformations = styled.div`
     > div:nth-child(7) {
         grid-row: 4;
         grid-column: 1 / span 10;
-        direction: rtl;
+        margin-left: auto;
 
         button {
             width: fit-content;

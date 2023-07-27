@@ -11,6 +11,9 @@ import { ItemMenu } from '../ItemMenu';
 import { Footer } from '../Footer';
 import defaultDish from '../../../src/assets/dish.svg';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Container, IconMenu, TitleMenu, ExpandedMenu, ExpandedMenuOptions, Profile, SearchList } from './styles';
 
 export function Menu() {
@@ -92,9 +95,14 @@ export function Menu() {
 
     useEffect(() => {
         async function fetchDishes() {
-            const response = await api.get(`/dishes?itemSearch=${search}`);
+            try {
+                const response = await api.get(`/dishes?itemSearch=${search}`);
 
-            setDishes(response.data);
+                setDishes(response.data);
+            } catch (error) {
+                console.error("Não foi possível buscar os pratos: ", error);
+                toast("Não foi possível buscar os pratos. Por favor, tente novamente.");
+            };
         };
 
         fetchDishes();

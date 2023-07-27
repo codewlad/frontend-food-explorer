@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+
 import { useAuth } from '../hooks/auth';
 import { api } from '../services/api';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { AuthRoutes } from './auth.routes';
 import { AdminRoutes } from './admin.routes';

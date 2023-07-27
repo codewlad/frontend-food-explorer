@@ -56,6 +56,12 @@ export const FavoriteDish = styled.div`
 export const DishInfo = styled.div`
     width: 100%;
 
+    .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
     > h2 {
         color: ${({ theme }) => theme.COLORS.LIGHT_300};
         font: ${({ theme }) => theme.FONTS.POPPINS_200};

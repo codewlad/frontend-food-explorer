@@ -20,6 +20,7 @@ export function SignUp() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loadingSignUp, setLoadingSignUp] = useState(false);
 
     const navigate = useNavigate();
 
@@ -42,20 +43,29 @@ export function SignUp() {
             return toast("A senha deve ter no mínimo 6 caracteres.");
         };
 
+        setLoadingSignUp(true);
         api.post("/users", { name, email, password })
             .then(() => {
+                setLoadingSignUp(false);
                 toast("Usuário cadastrado com sucesso!");
                 setTimeout(() => {
                     navigate("/");
                 }, 2000);
             })
             .catch(error => {
+                setLoadingSignUp(false);
                 if (error.response) {
                     toast(error.response.data.message);
                 } else {
                     toast("Não foi possível cadastrar.");
                 };
             });
+    };
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            handleSignUp();
+        };
     };
 
     useEffect(() => {
@@ -105,12 +115,15 @@ export function SignUp() {
                             type="password"
                             placeholder="No mínimo 6 caracteres"
                             onChange={e => setPassword(e.target.value)}
+                            onKeyPress={handleKeyPress}
                         />
                     </Section>
 
                     <Button
                         onClick={handleSignUp}
-                    >Criar conta</Button>
+                        loading={loadingSignUp}
+                        title="Criar conta"
+                    />
 
                     <Link to="/">Já tenho uma conta</Link>
                 </Form>

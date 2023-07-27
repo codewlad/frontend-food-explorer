@@ -23,6 +23,7 @@ export function Favorites() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [favorites, setFavorites] = useState([]);
+    const [loadingFavorites, setLoadingFavorites] = useState(false);
 
     function handleDish(id) {
         navigate(`/dish/${id}`)
@@ -48,20 +49,28 @@ export function Favorites() {
 
         if (confirmed) {
             try {
+                setLoadingFavorites(true);
                 await api.delete(`/favorites/${id}`);
                 toast("Favorito removido.", { containerId: "autoClose" });
                 fetchFavorites();
             } catch (error) {
                 console.error("Erro ao remover o favorito: ", error);
                 toast("Erro ao remover o favorito. Por favor, tente novamente.");
+            } finally {
+                setLoadingFavorites(false);
             };
         };
     };
 
     async function fetchFavorites() {
-        const response = await api.get(`/favorites/${user.id}`);
-        setFavorites(response.data);
-        setIsLoading(false);
+        try {
+            const response = await api.get(`/favorites/${user.id}`);
+            setFavorites(response.data);
+            setIsLoading(false);
+        } catch (error) {
+            console.error("Não foi possível buscar os favoritos: ", error);
+            toast("Não foi possível buscar os favoritos. Por favor, tente novamente.");
+        };
     };
 
     useEffect(() => {
@@ -93,7 +102,10 @@ export function Favorites() {
                                     }
                                     <DishInfo>
                                         <h2 onClick={() => handleDish(favorite.dish_id)} >{favorite.name}</h2>
-                                        <span onClick={() => handleRemove(favorite.id)} >Remover dos favoritos</span>
+                                        <span
+                                            onClick={() => handleRemove(favorite.id)}
+                                            className={loadingFavorites ? "disabled" : ""}
+                                        >Remover dos favoritos</span>
                                     </DishInfo>
                                 </FavoriteDish>
                             ))

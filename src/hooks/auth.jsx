@@ -17,7 +17,14 @@ function AuthProvider({ children }) {
             const { user, token, isAdmin } = response.data;
             let order = {};
 
-            localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
+            const userLocalStorage = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar
+            };
+
+            localStorage.setItem("@foodexplorer:user", JSON.stringify(userLocalStorage));
             localStorage.setItem("@foodexplorer:token", token);
 
             if (!isAdmin) {
@@ -69,7 +76,15 @@ function AuthProvider({ children }) {
             };
 
             await api.put("/users", user);
-            localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
+
+            const userLocalStorage = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar
+            };
+
+            localStorage.setItem("@foodexplorer:user", JSON.stringify(userLocalStorage));
 
             setData({ user, token: data.token, isAdmin, order });
             toast("Perfil atualizado!");

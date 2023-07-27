@@ -14,7 +14,7 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.COLORS.DARK_200};
     border: 0.1rem solid ${({ theme }) => theme.COLORS.DARK_300};
     border-radius: 0.8rem;
-    padding: 2.4rem;
+    padding: 2.3rem;
 
     > img {
         max-width: 17.6rem;
@@ -43,6 +43,12 @@ export const Container = styled.div`
     > span {
         color: ${({ theme }) => theme.COLORS.CAKE_200};
         font: ${({ theme }) => theme.FONTS.ROBOTO_BIGGEST_REGULAR};
+    }
+
+    .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
     }
 `;
 

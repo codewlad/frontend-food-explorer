@@ -17,12 +17,25 @@ export function SignIn() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loadingSignIn, setLoadingSignIn] = useState(false);
 
     const mainRef = useRef(null);
     const containerRef = useRef(null);
 
     function handleSignIn() {
-        signIn({ email, password });
+        signIn({ email, password })
+            .then(() => {
+                setLoadingSignIn(false);
+            })
+            .catch(() => {
+                setLoadingSignIn(false);
+            });
+    };
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            handleSignIn();
+        };
     };
 
     useEffect(() => {
@@ -66,14 +79,15 @@ export function SignIn() {
                             type="password"
                             placeholder="Senha"
                             onChange={e => setPassword(e.target.value)}
+                            onKeyPress={handleKeyPress}
                         />
                     </Section>
 
                     <Button
                         onClick={handleSignIn}
-                    >
-                        Entrar
-                    </Button>
+                        loading={loadingSignIn}
+                        title="Entrar"
+                    />
 
                     <Link to="/register">Criar uma conta</Link>
                 </Form>
