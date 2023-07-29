@@ -26,8 +26,7 @@ export function CardOrder({ data }) {
   const [loadingStatus, setLoadingStatus] = useState(false);
 
   function formatDate(dateString) {
-    moment.tz.setDefault("America/Sao_Paulo");
-    const dateTime = moment(dateString, "DD/MM/YYYY, HH:mm:ss");
+    const dateTime = moment(dateString, "MM/DD/YYYY, HH:mm:ss");
 
     const formattedDate = dateTime.format("DD/MM [às] HH[h]mm");
 
