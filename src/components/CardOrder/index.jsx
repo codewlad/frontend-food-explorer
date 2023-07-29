@@ -26,6 +26,7 @@ export function CardOrder({ data }) {
   const [loadingStatus, setLoadingStatus] = useState(false);
 
   function formatDate(dateString) {
+    moment.locale('pt-br');
     const dateTime = moment(dateString, "DD/MM/YYYY, HH:mm:ss");
 
     const formattedDate = dateTime.format("DD/MM [às] HH[h]mm");
