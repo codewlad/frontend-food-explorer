@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 
-import moment from 'moment/moment';
+import moment from 'moment-timezone';
 import { ThemeContext } from 'styled-components';
 import { FaCircle } from 'react-icons/fa';
 
@@ -26,7 +26,7 @@ export function CardOrder({ data }) {
   const [loadingStatus, setLoadingStatus] = useState(false);
 
   function formatDate(dateString) {
-    moment.locale('pt-br');
+    moment.tz.setDefault("America/Sao_Paulo");
     const dateTime = moment(dateString, "DD/MM/YYYY, HH:mm:ss");
 
     const formattedDate = dateTime.format("DD/MM [às] HH[h]mm");
