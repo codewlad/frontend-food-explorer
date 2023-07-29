@@ -111,7 +111,8 @@ export const IconMenu = styled.div`
 `;
 
 export const TitleMenu = styled.div`
-    ${({ theme }) => theme.COLORS.LIGHT_100};
+    color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    background-color: ${({ theme }) => theme.COLORS.DARK_600};
     font: normal 2.16rem/2.48rem Roboto, sans-serif;
     z-index: 3;
     animation-name: openMenu;

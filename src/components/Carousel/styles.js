@@ -4,6 +4,7 @@ export const Container = styled.div`
     max-width: 100%;
     overflow-x: auto;
     position: relative;
+    animation: leftToRight 0.3s ease-in;
 
     > h2 {
         position: relative;

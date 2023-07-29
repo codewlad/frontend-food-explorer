@@ -1,18 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import GlobalStyles from './styles/global';
-import { ThemeProvider } from 'styled-components';
+
 import { Routes } from './routes';
-import theme from './styles/theme';
 import { AuthProvider } from './hooks/auth';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            <AuthProvider>
-                <Routes />
-            </AuthProvider>
-        </ThemeProvider>
-    </React.StrictMode>,
-)
+import GlobalStyles from './styles/global';
+import { ThemeProvider } from 'styled-components';
+import { ThemeSlider } from './components/ThemeSlider';
+import { themeLight, themeDark } from './styles/theme';
+import { themeConfig } from './styles/themeConfig';
+
+function App() {
+    const { theme, toggleTheme } = themeConfig();
+    const themeMode = theme === "themeLight" ? themeLight : themeDark;
+
+    return (
+        <React.StrictMode>
+            <ThemeProvider theme={themeMode}>
+                <GlobalStyles />
+                <AuthProvider>
+                    <Routes />
+                    <ThemeSlider theme={theme} toggleTheme={toggleTheme} />
+                </AuthProvider>
+            </ThemeProvider>
+        </React.StrictMode>
+    );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);

@@ -14,6 +14,7 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4.2rem;
+    animation: leftToRight 0.3s ease-in;
 
     > h1 {
         color: ${({ theme }) => theme.COLORS.LIGHT_300};

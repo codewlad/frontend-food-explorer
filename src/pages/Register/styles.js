@@ -6,6 +6,11 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    + div {
+        top: 3rem;
+        right: 2.4rem;
+    }
 `;
 
 export const Welcome = styled.div`
@@ -15,6 +20,7 @@ export const Welcome = styled.div`
     align-items: flex-end;
     justify-content: center;
     max-width: 70rem;
+    animation: rightToLeft 0.3s ease-in;
 
     > svg {
         position: relative;
@@ -86,6 +92,7 @@ export const Logo = styled.div`
     display: flex;
     font: ${({ theme }) => theme.FONTS.ROBOTO_GIANT_BOLD};
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    animation: topToDown 0.3s ease-in;
 
     svg {
         align-self: center;
@@ -104,6 +111,7 @@ export const Form = styled.div`
     border-radius: 1.6rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
     background-color: ${({ theme }) => theme.COLORS.DARK_700};
+    animation: downToTop 0.3s ease-in;
 
     > h1 {
         font: ${({ theme }) => theme.FONTS.POPPINS_400};
@@ -124,5 +132,6 @@ export const Form = styled.div`
         padding: 0;
         max-width: 47.6rem;
         width: 100%;
+        animation: downToTop 0.3s ease-in;
     }
 `;

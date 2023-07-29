@@ -10,6 +10,7 @@ export const Container = styled.div`
         height: 10.4rem;
         width: 100%;
         background-color: ${({ theme }) => theme.COLORS.DARK_600};
+        animation: topToDown 0.3s ease-in;
     }
 
     > div:first-child {
@@ -17,6 +18,7 @@ export const Container = styled.div`
         left: 2.8rem;
         top: 3.5rem;
         z-index: 1;
+        animation: topToDown 0.3s ease-in;
 
         @media (max-width: 1049px) {
             font-size: 2rem;
@@ -40,6 +42,7 @@ export const Form = styled.div`
     padding: 0 4.6rem 4.6rem;
     border-radius: 1.6rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    animation: downToTop 0.3s ease-in;
 
     > div:nth-child(3), div:nth-child(5) {
         margin-bottom: 1.6rem;

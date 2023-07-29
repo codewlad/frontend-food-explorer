@@ -13,6 +13,7 @@ export const Container = styled.div`
     width: 100%;
     flex-shrink: 0;
     padding: 0 12.3rem;
+    animation: leftToRight 0.3s ease-in;
 
     svg {
         margin-right: 1.1rem;

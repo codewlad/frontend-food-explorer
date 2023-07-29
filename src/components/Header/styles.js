@@ -14,6 +14,7 @@ export const Container = styled.header`
     background-color: ${({ theme }) => theme.COLORS.DARK_600};
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
     padding: 2.8rem 12.3rem;
+    animation: topToDown 0.3s ease-in;
 
     input {
         text-align: center;
@@ -112,6 +113,7 @@ export const ProfileMenu = styled.div`
     right: 0;
     width: max-content;
     box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 20px;
+    border-radius: 0.8rem;
 
     &::before {
         content: "";
@@ -161,6 +163,7 @@ export const SearchList = styled.div`
     background-color: ${({ theme }) => theme.COLORS.DARK_600};
     border-radius: 0.8rem;
     padding: 1.6rem;
+    animation: topToDown 0.1s ease-in;
 
     img {
         width: 3rem;

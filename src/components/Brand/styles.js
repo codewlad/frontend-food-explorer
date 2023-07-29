@@ -5,9 +5,11 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    animation: leftToRight 0.3s ease-in;
 
     @media (max-width: 1049px) {        
         flex-direction: row;
+        animation: topToDown 0.3s ease-in;
     }
 `;
 

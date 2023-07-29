@@ -25,6 +25,7 @@ export const Banner = styled.div`
     display: flex;
     max-width: 100%;
     position: relative;
+    animation: rightToLeft 0.3s ease-in;
 
     @media (max-width: 1049px) {
         display: flex;
@@ -143,4 +144,5 @@ export const NoResults = styled.div`
     text-align: center;
     color: ${({ theme }) => theme.COLORS.LIGHT_300};
     font: ${({ theme }) => theme.FONTS.POPPINS_400};
+    animation: leftToRight 0.3s ease-in;
 `;
