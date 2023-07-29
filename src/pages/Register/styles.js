@@ -39,7 +39,7 @@ export const WelcomeMessage = styled.div`
 
     font: ${({ theme }) => theme.FONTS.POPPINS_200};
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
-    background-color: ${({ theme }) => theme.COLORS.DARK_100};
+    background-color: ${({ theme }) => theme.COLORS.DARK_300};
     border-radius: 0.8rem;
     padding: 2.4rem;
 
@@ -71,7 +71,7 @@ export const Triangle = styled.div`
     height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
-    border-top: 50px solid ${({ theme }) => theme.COLORS.DARK_100};
+    border-top: 50px solid ${({ theme }) => theme.COLORS.DARK_300};
 `;
 
 export const Main = styled.div`
