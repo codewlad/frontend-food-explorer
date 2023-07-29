@@ -39,7 +39,7 @@ O foodExplorer é uma aplicação web que simula um cardápio digital para um re
 <div align="center">
 	<img src="https://i.ibb.co/pLDmkcs/screenshot-01.jpg" alt="" width="250px" />&nbsp;&nbsp;&nbsp;&nbsp;
 	<img src="https://i.ibb.co/TTxYNyC/screenshot-02.jpg" alt="" width="250px" />&nbsp;&nbsp;&nbsp;&nbsp;
-	<img src="https://i.ibb.co/Z103qny/screenshot-03.jpg" alt="" width="250px" />&nbsp;&nbsp;&nbsp;&nbsp;
+	<img src="https://i.ibb.co/Z103qny/screenshot-03.jpg" alt="" width="250px" />
 	<br /><br />
 	<img src="https://i.ibb.co/zhL861Q/screenshot-04.jpg" alt="" width="250px" />&nbsp;&nbsp;&nbsp;&nbsp;
 	<img src="https://i.ibb.co/LNhcVXT/screenshot-05.jpg" alt="" width="250px" />&nbsp;&nbsp;&nbsp;&nbsp;
