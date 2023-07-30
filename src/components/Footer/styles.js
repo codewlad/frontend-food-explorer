@@ -14,6 +14,7 @@ export const Container = styled.div`
     flex-shrink: 0;
     padding: 0 12.3rem;
     animation: leftToRight 0.3s ease-in;
+    margin-top: auto;
 
     svg {
         margin-right: 1.1rem;

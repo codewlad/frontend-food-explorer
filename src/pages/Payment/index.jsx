@@ -8,6 +8,7 @@ import { MdPix } from 'react-icons/md';
 import { PiCheckCircleLight } from 'react-icons/pi';
 import { FaRegCreditCard } from 'react-icons/fa';
 import { TfiReceipt } from 'react-icons/tfi';
+import moment from 'moment-timezone';
 
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
@@ -189,6 +190,10 @@ export function Payment() {
         if (confirmed) {
             const order = JSON.parse(localStorage.getItem("@foodexplorer:order"));
             order.status = "Pendente";
+
+            const dateOrder = moment();
+            const dateOrderUTC = dateOrder.utc().format();
+            order.orders_at = dateOrderUTC;
 
             setProcessingPayment(true);
 

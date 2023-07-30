@@ -8,6 +8,7 @@ import { TfiUser, TfiEmail, TfiLock } from 'react-icons/tfi';
 import { BackButton } from '../../components/BackButton';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+import { Footer } from '../../components/Footer';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -113,6 +114,7 @@ export function Profile() {
                 />
                 <Button onClick={handleUpdate}>Salvar</Button>
             </Form>
+            <Footer />
             <ToastContainer autoClose={1500} draggable={false} />
         </Container>
     );

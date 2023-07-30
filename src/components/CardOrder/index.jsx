@@ -3,7 +3,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
 
-import moment from 'moment-timezone';
+import moment from 'moment';
+import 'moment-timezone';
 import { ThemeContext } from 'styled-components';
 import { FaCircle } from 'react-icons/fa';
 
@@ -26,12 +27,14 @@ export function CardOrder({ data }) {
   const [loadingStatus, setLoadingStatus] = useState(false);
 
   function formatDate(dateString) {
-    const dateTime = moment(dateString, "MM/DD/YYYY, HH:mm:ss");
+    const dataMoment = moment(dateString);
 
-    const formattedDate = dateTime.format("DD/MM [às] HH[h]mm");
+    dataMoment.tz(moment.tz.guess());
+
+    const formattedDate = dataMoment.format("DD/MM [às] HH[h]mm");
 
     return formattedDate;
-  }
+  };
 
   async function handleUpdateOrderStatus(status) {
     const confirmed = await new Promise((resolve) => {

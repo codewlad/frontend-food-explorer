@@ -12,6 +12,10 @@ export default createGlobalStyle`
 			${({ theme }) => theme.COLORS.LIGHT_700}
 		);
     }
+
+	#root {
+		min-height: 100vh;
+	}
     
     * {
         margin: 0;
@@ -21,7 +25,7 @@ export default createGlobalStyle`
 
     html, body {
 		margin: 0;
-        height: 100%;
+		min-height: 100vh;
 		font-size: 1.6rem;
     }
 

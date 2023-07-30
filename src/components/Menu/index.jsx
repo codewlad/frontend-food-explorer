@@ -42,11 +42,9 @@ export function Menu() {
 
         if (expandedMenuRef) {
             if (!isChecked) {
-                document.documentElement.style.overflowY = "hidden";
                 expandedMenuRef.current.classList.remove("animateCloseMenu");
                 expandedMenuRef.current.classList.add("animateOpenMenu");
             } else {
-                document.documentElement.style.overflowY = "auto";
                 expandedMenuRef.current.classList.remove("animateOpenMenu");
                 expandedMenuRef.current.classList.add("animateCloseMenu");
                 setTimeout(() => {
@@ -69,7 +67,6 @@ export function Menu() {
             window.location.reload();
         } else {
             setIsChecked(false);
-            document.documentElement.style.overflowY = "auto";
             expandedMenuRef.current.classList.remove("animateOpenMenu");
             document.querySelector(".expandedMenu input").value = "";
             setSearch("");
@@ -106,7 +103,15 @@ export function Menu() {
         };
 
         fetchDishes();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (isChecked) {
+            document.documentElement.style.overflowY = "hidden";
+        } else {
+            document.documentElement.style.overflowY = "auto";
+        }
+    }, [isChecked]);
 
     useEffect(() => {
         function filterDishesByNameOrIngredient(searchQuery) {

@@ -107,7 +107,6 @@ export function Header(props) {
             if (window.innerWidth >= queryWidth) {
                 setIsProfileMenuHidden(false);
             } else {
-                document.documentElement.style.overflowY = "auto";
                 setIsProfileMenuHidden(true);
                 setIsProfileMenuVisible(false);
                 setSearch("");
