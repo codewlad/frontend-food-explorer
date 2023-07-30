@@ -9,8 +9,8 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    padding-top: 10.4rem;
-    margin: 3.2rem 12.3rem;
+    padding-top: 13.6rem;
+    margin: 0 12.3rem 3.2rem;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@ export const Content = styled.div`
     animation: leftToRight 0.3s ease-in;
 
     @media (max-width: 1049px) {
-        margin: 3.2rem 2.8rem;
+        margin: 0 2.8rem 3.2rem;
         gap: 1.6rem;
     }
 `;
