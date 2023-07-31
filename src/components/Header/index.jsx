@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
@@ -32,11 +32,13 @@ export function Header(props) {
     const queryWidth = 1050;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
-    const [isProfileMenuHidden, setIsProfileMenuHidden] = useState(false);
 
     const [search, setSearch] = useState("");
     const [hasSearchPlaceholder, setHasSearchPlaceholder] = useState(false);
     const [filteredSearch, setFilteredSearch] = useState([]);
+
+    const profileMenuRef = useRef(null);
+    const profileRef = useRef(null);
 
     function handleSignOut() {
         document.documentElement.style.overflowY = "auto";
@@ -56,6 +58,35 @@ export function Header(props) {
             setSearch("");
         };
     };
+
+    function toggleProfileMenu() {
+        if (isProfileMenuVisible) {
+            setIsProfileMenuVisible(false);
+        } else {
+            setIsProfileMenuVisible(true);
+        };
+    };
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                profileMenuRef.current &&
+                !profileMenuRef.current.contains(event.target) &&
+                profileRef.current &&
+                !profileRef.current.contains(event.target)
+            ) {
+                if (profileMenuRef.current.classList.contains("profile-menu-visible")) {
+                    setIsProfileMenuVisible(false);
+                };
+            };
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         setHasSearchPlaceholder(!search);
@@ -104,10 +135,7 @@ export function Header(props) {
         function handleResize() {
             setWindowWidth(window.innerWidth);
 
-            if (window.innerWidth >= queryWidth) {
-                setIsProfileMenuHidden(false);
-            } else {
-                setIsProfileMenuHidden(true);
+            if (window.innerWidth < queryWidth) {
                 setIsProfileMenuVisible(false);
                 setSearch("");
             };
@@ -203,31 +231,38 @@ export function Header(props) {
                 )
             )}
             {windowWidth >= queryWidth && (
-                <Profile style={avatarStyle} onClick={() => setIsProfileMenuVisible(!isProfileMenuVisible)}>
+                <Profile
+                    ref={profileRef}
+                    style={avatarStyle}
+                    onClick={toggleProfileMenu}
+                >
                     {
                         !user.avatar && <TfiUser />
                     }
-                    <ProfileMenu className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}>
-                        <ProfileMenuOptions>
-                            <Link to="/orders">
-                                {
-                                    isAdmin ? <ItemMenu icon={TfiReceipt} title="Pedidos" /> : <ItemMenu icon={TfiReceipt} title="Meus pedidos" />
-                                }
-                            </Link>
-                            {
-                                !isAdmin &&
-                                <Link to="/favorites"><ItemMenu icon={TfiHeart} title="Favoritos" /></Link>
-                            }
-                            <Link to="/profile"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
-                            <ItemMenu
-                                icon={FiLogOut}
-                                title="Sair"
-                                onClick={handleSignOut}
-                            />
-                        </ProfileMenuOptions>
-                    </ProfileMenu>
                 </Profile>
             )}
+            <ProfileMenu
+                ref={profileMenuRef}
+                className={`profile-menu ${isProfileMenuVisible ? 'profile-menu-visible' : 'profile-menu-transition'}`}
+            >
+                <ProfileMenuOptions>
+                    <Link to="/orders">
+                        {
+                            isAdmin ? <ItemMenu icon={TfiReceipt} title="Pedidos" /> : <ItemMenu icon={TfiReceipt} title="Meus pedidos" />
+                        }
+                    </Link>
+                    {
+                        !isAdmin &&
+                        <Link to="/favorites"><ItemMenu icon={TfiHeart} title="Favoritos" /></Link>
+                    }
+                    <Link to="/profile"><ItemMenu icon={TfiUser} title="Atualizar dados" /></Link>
+                    <ItemMenu
+                        icon={FiLogOut}
+                        title="Sair"
+                        onClick={handleSignOut}
+                    />
+                </ProfileMenuOptions>
+            </ProfileMenu>
         </Container>
     );
 }

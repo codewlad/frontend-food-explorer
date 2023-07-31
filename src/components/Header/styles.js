@@ -35,6 +35,18 @@ export const Container = styled.header`
         }
     }
 
+    .profile-menu-transition {
+        opacity: 0;
+        transition: all 0.3s ease;
+        visibility: hidden;
+    }
+
+    .profile-menu-visible {
+        opacity: 1;
+        transition: all 0.3s ease;
+        visibility: visible;
+    }
+
     @media (max-width: 1049px) {
         padding: 2.8rem;
 
@@ -93,27 +105,16 @@ export const Profile = styled.div`
     > svg {
         font-size: 3rem;
     }
-
-    .profile-menu-transition {
-        opacity: 0;
-        transition: all 0.3s ease;
-        visibility: hidden;
-    }
-
-    .profile-menu-visible {
-        opacity: 1;
-        transition: all 0.3s ease;
-        visibility: visible;
-    }
 `;
 
 export const ProfileMenu = styled.div`
     position: absolute;
-    top: 9.6rem;
-    right: 0;
+    top: 12rem;
+    right: 12.3rem;
     width: max-content;
     box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 20px;
     border-radius: 0.8rem;
+    opacity: 0;
 
     &::before {
         content: "";

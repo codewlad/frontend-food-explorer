@@ -44,6 +44,8 @@ export const Form = styled.div`
     border-radius: 1.6rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
     animation: downToTop 0.3s ease-in;
+    min-height: calc(100vh - 23.2rem);
+    margin-bottom: -5rem;
 
     > div:nth-child(3), div:nth-child(5) {
         margin-bottom: 1.6rem;
