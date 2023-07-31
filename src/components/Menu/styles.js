@@ -89,6 +89,7 @@ export const IconMenu = styled.div`
     justify-content: center;
     width: 2.4rem;
     gap: .5rem;
+    z-index: 4;
 
     &:hover {
         cursor: pointer;
@@ -106,7 +107,6 @@ export const IconMenu = styled.div`
 
     @media (max-width: 1049px) {
         display: flex;
-        z-index: 3;
     }
 `;
 
@@ -117,14 +117,15 @@ export const TitleMenu = styled.div`
     z-index: 3;
     animation-name: openMenu;
     animation-duration: 0.3s;
-    position: fixed;
+    position: absolute;
     top: 0rem;
-    left: 7rem;
-    width: calc(100% - 7rem);
+    left: 0rem;
+    width: calc(100% - 1rem);
     height: 10.4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: 7rem;
     padding-right: 2.8rem;
 
     svg {
@@ -134,18 +135,19 @@ export const TitleMenu = styled.div`
 
 export const ExpandedMenu = styled.div`
     display: none;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    top: 0rem;
+    left: 0rem;
+    background-color: ${({ theme }) => theme.COLORS.DARK_400};
+    z-index: 2;
 
     @media (max-width: 1049px) {
-        position: relative;
-        display: none;
-        flex-direction: column;
-        position: fixed;
-        top: 0rem;
-        left: 0rem;
-        background-color: ${({ theme }) => theme.COLORS.DARK_400};
-        height: 100%;
-        width: 100%;
-        z-index: 2;
+        
 
         &::before {
             content: "";
@@ -156,10 +158,7 @@ export const ExpandedMenu = styled.div`
 `;
 
 export const ExpandedMenuOptions = styled.div`
-    padding: 3.6rem 2.8rem 1.4rem;
-    padding-bottom: 7.7rem;
-    overflow-y: auto;
-    height: 100%;
+    padding: 2.8rem;
 
     > div:first-child {
         margin-bottom: 3.6rem;

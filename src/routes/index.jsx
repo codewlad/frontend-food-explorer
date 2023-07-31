@@ -40,8 +40,6 @@ export function Routes() {
 
     if (!loaded) {
         return (
-            <div></div>
-            /*
             <div className='loading'>
                 <div>
                     <div id="circular3dG">
@@ -57,7 +55,6 @@ export function Routes() {
                 </div>
                 <span>Carregando...</span>
             </div>
-            */
         );
     };
 
