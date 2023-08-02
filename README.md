@@ -2,9 +2,9 @@
 
 <p align="center">
 	  <img alt="Project status" src="https://img.shields.io/badge/Status-Em construção-orange">
-	  <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/codewlad/backend-food-explorer">
-	  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/codewlad/backend-food-explorer">
-	  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/codewlad%2Fbackend-food-explorer?style=social">
+	  <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/codewlad/frontend-food-explorer">
+	  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/codewlad/frontend-food-explorer">
+	  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/codewlad%2Ffrontend-food-explorer?style=social">
 </p>
 
 # 📄 Descrição
