@@ -16,12 +16,12 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.COLORS.LIGHT_400};
         background-color: transparent;
         border: 0;
-        padding: 1.6rem;
+        padding: 1.2rem;
         outline: none;
         z-index: 1;
     }
 
     > svg {
-        margin-left: 1.6rem;
+        margin-left: 1.2rem;
     }
 `;

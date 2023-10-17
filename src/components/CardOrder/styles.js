@@ -17,10 +17,10 @@ export const Order = styled.div`
     @media (max-width: 1049px) {
         border: 2px solid ${({ theme }) => theme.COLORS.DARK_1000};
         border-radius: 0.8rem;
-        padding: 2rem;
+        padding: 1.2rem;
         row-gap: 1.6rem;
 
-        grid-template-columns: 24% auto 36%;
+        grid-template-columns: 25% auto 37%;
         grid-template-rows: auto auto;
     }
 `;
@@ -35,10 +35,10 @@ export const OrderAdmin = styled.div`
     @media (max-width: 1049px) {
         border: 2px solid ${({ theme }) => theme.COLORS.DARK_1000};
         border-radius: 0.8rem;
-        padding: 2rem;
+        padding: 1.2rem;
         row-gap: 1.6rem;
 
-        grid-template-columns: 24% auto 36%;
+        grid-template-columns: 25% auto 37%;
         grid-template-rows: auto auto auto;
     }
 `;

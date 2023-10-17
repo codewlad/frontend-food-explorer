@@ -38,7 +38,7 @@ export const WelcomeMessage = styled.div`
     justify-content: center;
     gap: 2.4rem;
 
-    font: ${({ theme }) => theme.FONTS.POPPINS_200};
+    font: ${({ theme }) => theme.FONTS.POPPINS_050};
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
     background-color: ${({ theme }) => theme.COLORS.DARK_300};
     border-radius: 0.8rem;
@@ -46,6 +46,11 @@ export const WelcomeMessage = styled.div`
 
     > p {
         text-align: center;
+        font: ${({ theme }) => theme.FONTS.POPPINS_150};
+
+        @media (max-width: 1049px) {
+            font: ${({ theme }) => theme.FONTS.POPPINS_100};
+        }
     }
 
     > div {
@@ -60,7 +65,7 @@ export const WelcomeMessage = styled.div`
 
     @media (max-width: 1049px) {
         font: ${({ theme }) => theme.FONTS.POPPINS_150};
-    } 
+    }
 `;
 
 export const Triangle = styled.div`
@@ -84,8 +89,9 @@ export const Main = styled.div`
     gap: 2.8rem;
 
     @media (max-width: 1049px) {        
-        min-width: 39.8rem;
+        min-width: 360px;
         max-width: 47.6rem;
+        padding: 2rem;
     }
 `;
 

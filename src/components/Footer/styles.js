@@ -27,7 +27,7 @@ export const Container = styled.div`
     }
 
     @media (max-width: 1049px) {
-        padding: 0 2.8rem;
+        padding: 0 1.4rem;
         font: ${({ theme }) => theme.FONTS.ROBOTO_15};
 
         svg {

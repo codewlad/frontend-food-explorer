@@ -33,7 +33,7 @@ export default createGlobalStyle`
         background-color: ${({ theme }) => theme.COLORS.DARK_400};
         color: ${({ theme }) => theme.COLORS.LIGHT_100};
         -webkit-font-smoothing: antialiased;
-        min-width: 38.8rem;
+        min-width: 360px;
     }
 
     .loading {
