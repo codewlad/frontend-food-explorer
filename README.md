@@ -2,13 +2,17 @@
 
 <p align="center">
 	  <img alt="Project status" src="https://img.shields.io/badge/Status-Em construção-orange">
-	  <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/codewlad/backend-food-explorer">
-	  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/codewlad/backend-food-explorer">
-	  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/codewlad%2Fbackend-food-explorer?style=social">
+	  <img alt="GitHub last commit (by committer)" src="https://img.shields.io/github/last-commit/codewlad/frontend-food-explorer">
+	  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/codewlad/frontend-food-explorer">
+	  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/codewlad%2Ffrontend-food-explorer?style=social">
 </p>
 
 # 📄 Descrição
 O foodExplorer é uma aplicação web que simula um cardápio digital para um restaurante fictício. Este é o projeto final do curso Explorer da Rocketseat!
+<br /><br />
+
+# 🚀 Acesse o Food Explorer
+https://codewlad-foodexplorer.netlify.app/
 <br /><br />
 
 # ✅ Funcionalidades
@@ -55,7 +59,7 @@ O foodExplorer é uma aplicação web que simula um cardápio digital para um re
 </div>
 <br /><br />
 
-# 🚀 Como rodar o projeto
+# 💻 Como rodar o projeto
 
 ### Pré-requisitos:
 
@@ -119,7 +123,7 @@ A porta padrão para o Front End é 5173 - acesse <http://localhost:5173>
 ### Autor
 ---
 
-<a href="https://codewlad.com.br">
+<a href="https://codewlad.vercel.app/">
  <img style="border-radius: 50%;" src="https://github.com/codewlad.png" width="100px;" alt="Imagem de codewlad"/>
  <br />
  <sub><b>Wladimir Gonçalves</b></sub></a>
@@ -129,3 +133,4 @@ Feito com ❤️ por Wladimir Gonçalves 👋🏽 Entre em contato!
 
 [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/wladimir-gonçalves/)](https://www.linkedin.com/in/wladimir-gonçalves/) 
 [![Gmail Badge](https://img.shields.io/badge/-codewlad@gmail.com-c14438?logo=Gmail&logoColor=white&link=mailto:codewlad@gmail.com)](mailto:codewlad@gmail.com)
+[![Static Badge](https://img.shields.io/badge/Portfolio-orange?link=https://codewlad.vercel.app/)](https://codewlad.vercel.app/)
